@@ -1,0 +1,46 @@
+name: Update Maximum Combined Trackers
+
+on:
+  schedule:
+    - cron: '0 0,12 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-trackers:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Fetch Maximum Trackers from All Sources
+      run: |
+        touch temp_trackers.txt
+
+        curl -s https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt >> temp_trackers.txt
+        echo "" >> temp_trackers.txt
+
+        curl -s https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt >> temp_trackers.txt
+        echo "" >> temp_trackers.txt
+
+        curl -s https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all.txt >> temp_trackers.txt
+        echo "" >> temp_trackers.txt
+
+        curl -s https://newtrackon.com/api/stable >> temp_trackers.txt
+        echo "" >> temp_trackers.txt
+        curl -s https://newtrackon.com/api/all >> temp_trackers.txt
+        echo "" >> temp_trackers.txt
+
+        curl -s https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all.txt >> temp_trackers.txt
+        echo "" >> temp_trackers.txt
+
+        curl -s https://raw.githubusercontent.com/Naunter/BT_Trackers/master/Trackers/trackers_all.txt >> temp_trackers.txt
+        echo "" >> temp_trackers.txt
+
+        awk NF temp_trackers.txt | sort -u > trackers.txt
+        rm temp_trackers.txt
+
+    - name: Commit changes
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: 'Auto-update maximum trackers list from all sources'
+        file_pattern: trackers.txt
