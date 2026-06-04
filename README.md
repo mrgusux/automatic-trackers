@@ -11,19 +11,19 @@ The tracker lists are automatically updated **every 6 hours** using GitHub Actio
 Copy the link of the format you need and paste it into your torrent client (e.g., qBittorrent, Transmission, Deluge).
 
 * 🌟 **All Trackers (Recommended):**
-  `https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME/main/all_trackers.txt`
+  `https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/all_trackers.txt`
 
 * 🚀 **UDP Trackers Only:**
-  `https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME/main/udp.txt`
+  `https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/udp.txt`
 
 * 🔒 **HTTPS Trackers Only:**
-  `https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME/main/https.txt`
+  `https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/https.txt`
 
 * 🌐 **HTTP Trackers Only:**
-  `https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME/main/http.txt`
+  `https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/http.txt`
 
 * 🧲 **Comma-Separated (For Magnet Links):**
-  `https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME/main/all_trackers_comma.txt`
+  `https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/all_trackers_comma.txt`
 
 ---
 
