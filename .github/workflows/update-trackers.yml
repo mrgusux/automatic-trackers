@@ -1,49 +1,191 @@
-name: Update Maximum Combined Trackers
+name: Ultimate Tracker Aggregator Pro Max
 
 on:
   schedule:
-    - cron: '0 0,12 * * *'
+    # Proti 6 ghonta por por (dine 4 bar) auto run hobe
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: tracker-update
+  cancel-in-progress: true
+
 jobs:
   update-trackers:
     runs-on: ubuntu-latest
+    # Ekta ekta kore namate time beshi lagbe, tai timeout barano hoyeche
+    timeout-minutes: 45
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Fetch Maximum Trackers from All Sources
+    - name: Fetch, Clean & Build Ultimate Tracker List
       run: |
-        touch temp_trackers.txt
+        set -euo pipefail
+        
+        WORK_DIR=$(mktemp -d)
+        trap 'rm -rf "$WORK_DIR"' EXIT
 
-        curl -s https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt >> temp_trackers.txt
-        echo "" >> temp_trackers.txt
+        # 83 ti Unique Source Links (Kono link katan ba baad deoa hoyni)
+        SOURCES=(
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/best.txt"
+          "https://newtrackon.com/api/all"
+          "https://newtrackon.com/api/stable"
+          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all.txt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all.txt"
+          "https://raw.githubusercontent.com/Naunter/BT_Trackers/master/Trackers/trackers_all.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_http.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_udp.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_ws.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_https.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/http.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/https.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/udp.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best_ip.txt"
+          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_best.txt"
+          "https://raw.githubusercontent.com/duckbytes/trackerslist/master/trackers_all.txt"
+          "https://raw.githubusercontent.com/slacky-1965/tracker_list/main/trackers_all.txt"
+          "https://raw.githubusercontent.com/fei0316/trackerslist/master/trackers_all.txt"
+          "https://raw.githubusercontent.com/CorralPeltzer/trackerslist/master/trackers_all.txt"
+          "https://raw.githubusercontent.com/AndrewSwann93/trackers/main/trackers_all.txt"
+          "https://raw.githubusercontent.com/crazy-max/blocklist/master/trackers.txt"
+          "https://raw.githubusercontent.com/bitjerry/BlackList/master/TrackerList.txt"
+          "https://raw.githubusercontent.com/Mysteriously/TrackersList/master/trackers_all.txt"
+          "https://raw.githubusercontent.com/MrOtherGuy/Transmission-trackerslist/master/trackers.txt"
+          "https://raw.githubusercontent.com/ZeroMemoryEX/tracker-list/master/trackers.txt"
+          "https://raw.githubusercontent.com/LightDestory/trackerslist/master/trackers_all.txt"
+          "https://raw.githubusercontent.com/GeoffreyCoulaud/Torrent-Trackers-List/main/trackers.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/nohttp.txt"
+          "https://cf.trackerslist.com/all.txt"
+          "https://cf.trackerslist.com/best.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_udp.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_http.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_https.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ws.txt"
+          "https://newtrackon.com/api/live"
+          "https://newtrackon.com/api/udp"
+          "https://newtrackon.com/api/http"
+          "https://newtrackon.com/api/100"
+          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_udp.txt"
+          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_http.txt"
+          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_https.txt"
+          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_ws.txt"
+          "https://cdn.jsdelivr.net/gh/DeSireFire/animeTrackerList/AT_all.txt"
+          "https://raw.githubusercontent.com/1265578519/OpenTracker/master/tracker.txt"
+          "https://github.itzmx.com/1265578519/OpenTracker/master/tracker.txt"
+          "https://raw.githubusercontent.com/gsrbr/torrentTracker/main/trackers.txt"
+          "https://raw.githubusercontent.com/GuangYu-yu/Tracker-URL/main/all.txt"
+          "https://cdn.jsdelivr.net/gh/XIU2/TrackersListCollection/all.txt"
+          "https://fastly.jsdelivr.net/gh/XIU2/TrackersListCollection/all.txt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_best.txt"
+          "https://trackerslist.com/all.txt"
+          "https://trackerslist.com/best.txt"
+          "https://cdn.jsdelivr.net/gh/ngosang/trackerslist@master/trackers_all.txt"
+          "https://raw.githubusercontent.com/opentracker/opentracker-trackers/master/trackers.txt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_best_ip.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all_aria2.txt"
+          "https://cdn.staticaly.com/gh/ngosang/trackerslist/master/trackers_all.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_udp.txt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_http.txt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_https.txt"
+          "https://raw.githubusercontent.com/Naunter/BT_Trackers/master/Trackers/trackers_best.txt"
+          "https://raw.githubusercontent.com/kris3713/UltimateBTTrackersList/main/trackers_all.txt"
+          "https://cdn.jsdelivr.net/gh/ngosang/trackerslist@master/trackers_all_ip.txt"
+          "https://cdn.jsdelivr.net/gh/XIU2/TrackersListCollection@master/all.txt"
+          "https://raw.githubusercontent.com/adysec/trackerslist/main/trackers_all.txt"
+          "https://raw.githubusercontent.com/adysec/trackerslist/main/trackers_best.txt"
+          "https://www.torrenttrackerlist.com/trackers.txt"
+          "https://raw.githubusercontent.com/acgtracker/public-trackers/master/trackers.txt"
+          "https://opentracker.cc/all.txt"
+          "https://trackerslist.com/http.txt"
+          "https://trackerslist.com/https.txt"
+          "https://trackerslist.com/udp.txt"
+          "https://raw.githubusercontent.com/AnimeTrackerList/AnimeTrackerList/main/trackers_all.txt"
+          "https://newtrackon.com/api/75"
+          "https://trackerlist.xyz/trackers_best.txt"
+          "https://trackerlist.xyz/trackers_all.txt"
+          "https://raw.githubusercontent.com/tdulcet/Distributed-Computing-Scripts/master/torrent-trackers.txt"
+          "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_hot.txt"
+        )
 
-        curl -s https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt >> temp_trackers.txt
-        echo "" >> temp_trackers.txt
+        echo "🚀 Fetching trackers ONE-BY-ONE sequentially..."
+        # Ekta ekta kore loop er maddhome download korbe
+        for url in "${SOURCES[@]}"; do
+          slug=$(echo "$url" | md5sum | cut -c1-10)
+          out="${WORK_DIR}/${slug}.txt"
+          
+          echo "Fetching: $url"
+          if curl -sSfL --max-time 15 --connect-timeout 10 --retry 2 --retry-delay 2 \
+             -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+             "$url" > "$out" 2>/dev/null; then
+             
+             # HTML ba choto error page hole delete korbe
+             if [ $(stat -c%s "$out" 2>/dev/null || echo 0) -lt 50 ] || grep -qi '<!doctype html\|<html' "$out"; then
+               rm -f "$out"
+             fi
+          fi
+        done
 
-        curl -s https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all.txt >> temp_trackers.txt
-        echo "" >> temp_trackers.txt
+        echo "🧹 Combining and cleaning trackers..."
+        cat "$WORK_DIR"/*.txt > "$WORK_DIR/raw.txt" 2>/dev/null || true
 
-        curl -s https://newtrackon.com/api/stable >> temp_trackers.txt
-        echo "" >> temp_trackers.txt
-        curl -s https://newtrackon.com/api/all >> temp_trackers.txt
-        echo "" >> temp_trackers.txt
+        # Clean and Filter Process
+        sed 's/\r//g' "$WORK_DIR/raw.txt" | \
+        sed 's/<[^>]*>//g' | \
+        grep -iE '^(udp|https?|wss?)://' | \
+        grep -viE '(localhost|127\.0\.0\.1|0\.0\.0\.0|example\.com)' | \
+        tr '[:upper:]' '[:lower:]' | \
+        sed 's|/[[:space:]]*$||' | \
+        sort -u > "$WORK_DIR/clean.txt"
 
-        curl -s https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all.txt >> temp_trackers.txt
-        echo "" >> temp_trackers.txt
+        # ==============================================================
+        # CATEGORIZE TRACKERS INTO SEPARATE FILES
+        # ==============================================================
+        grep '^udp://' "$WORK_DIR/clean.txt" > udp.txt || true
+        grep '^http://' "$WORK_DIR/clean.txt" > http.txt || true
+        grep '^https://' "$WORK_DIR/clean.txt" > https.txt || true
+        grep -E '^wss?://' "$WORK_DIR/clean.txt" > ws.txt || true
 
-        curl -s https://raw.githubusercontent.com/Naunter/BT_Trackers/master/Trackers/trackers_all.txt >> temp_trackers.txt
-        echo "" >> temp_trackers.txt
+        # Master priority sort
+        awk '
+          /^udp:\/\// {print "1\t" $0}
+          /^https:\/\// {print "2\t" $0}
+          /^http:\/\// {print "3\t" $0}
+          /^wss?:\/\// {print "4\t" $0}
+        ' "$WORK_DIR/clean.txt" | sort -t$'\t' -k1,1n -k2,2 | cut -f2- > "$WORK_DIR/sorted.txt"
 
-        awk NF temp_trackers.txt | sort -u > trackers.txt
-        rm temp_trackers.txt
+        FINAL_COUNT=$(wc -l < "$WORK_DIR/sorted.txt")
+        if [ "$FINAL_COUNT" -lt 200 ]; then
+          echo "::error::Warning! Tracker count is abnormally low ($FINAL_COUNT). Aborting commit."
+          exit 1
+        fi
 
-    - name: Commit changes
+        # ==============================================================
+        # FORMATTING FOR qBITTORRENT (Add empty lines between trackers)
+        # ==============================================================
+        # Main files
+        awk 'NR>1{print ""}1' "$WORK_DIR/sorted.txt" > all_trackers.txt
+        paste -sd ',' "$WORK_DIR/sorted.txt" > all_trackers_comma.txt
+
+        # Protocol specific files formatting
+        if [ -s udp.txt ]; then awk 'NR>1{print ""}1' udp.txt > tmp_udp && mv tmp_udp udp.txt; fi
+        if [ -s http.txt ]; then awk 'NR>1{print ""}1' http.txt > tmp_http && mv tmp_http http.txt; fi
+        if [ -s https.txt ]; then awk 'NR>1{print ""}1' https.txt > tmp_https && mv tmp_https https.txt; fi
+        if [ -s ws.txt ]; then awk 'NR>1{print ""}1' ws.txt > tmp_ws && mv tmp_ws ws.txt; fi
+
+        echo "✅ Created all format files successfully ($FINAL_COUNT trackers)!"
+
+    - name: Commit & Push Changes
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message: 'Auto-update maximum trackers list from all sources'
-        file_pattern: trackers.txt
+        commit_message: "🚀 Auto-update: Categorized trackers (All, UDP, HTTP, HTTPS, WS)"
+        file_pattern: "*.txt"
