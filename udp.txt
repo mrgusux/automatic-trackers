@@ -28,6 +28,8 @@ udp://118.196.100.63:6969/announce
 
 udp://119.28.71.45:8080/announce
 
+udp://120.78.150.131:6969/announce
+
 udp://128.199.70.66:5944/announce
 
 udp://135.125.106.92:6969/announce
@@ -72,6 +74,10 @@ udp://182.176.139.129:6969/announce
 
 udp://185.102.219.163:6969/announce
 
+udp://185.121.168.96:1337/announce
+
+udp://185.146.233.150:6969/announce
+
 udp://185.171.202.111:6969/announce
 
 udp://185.181.60.155:80/announce
@@ -83,6 +89,8 @@ udp://185.189.13.108:6969/announce
 udp://185.216.179.62:25/announce
 
 udp://185.230.4.150:1337/announce
+
+udp://185.243.218.213:80/announce
 
 udp://185.44.82.25:1337/announce
 
@@ -128,7 +136,11 @@ udp://208.67.16.113:8000/announce
 
 udp://209.126.11.233:6969/announce
 
+udp://209.141.59.16:6969/announce
+
 udp://209.141.59.25:6969/announce
+
+udp://211.75.205.189:6969/announce
 
 udp://211.75.210.221:6969/announce
 
@@ -864,8 +876,6 @@ udp://ttk2.nbaonlineservice.com:6969/announce
 
 udp://uabits.today:6990/announce
 
-udp://udp.trackarr.org:6969/announce
-
 udp://udp.tracker.projectk.org:23333/announce
 
 udp://udp1.torrust-tracker-demo.com:6969/announce
@@ -883,6 +893,8 @@ udp://v74853.hosted-by-vdsina.com:6969/announce
 udp://vibe.sleepyinternetfun.xyz:1738/announce
 
 udp://vito-tracker.duckdns.org:6969/announce
+
+udp://vito-tracker.space:6969/announce
 
 udp://vps-dd0a0715.vps.ovh.net:6969/announce
 

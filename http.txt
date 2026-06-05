@@ -6,6 +6,8 @@ http://004430.xyz:80/announce
 
 http://0123456789nonexistent.com/announce
 
+http://0123456789nonexistent.com:80/announce
+
 http://0205.uptm.ch:6969/announce
 
 http://0d.kebhana.mx:443/announce
@@ -33,6 +35,8 @@ http://107.189.31.134:6969/announce
 http://107.189.7.143:6969/announce
 
 http://109.121.134.121:1337/announce
+
+http://113.16.153.116:6969/announce
 
 http://113.17.152.30:6969/announce
 
@@ -108,6 +112,8 @@ http://163.172.29.130:80/announce
 
 http://167.235.245.209/announce
 
+http://167.253.78.20:8080/announce
+
 http://171.104.110.193:6969/announce
 
 http://171.104.110.21:6969/announce
@@ -157,6 +163,8 @@ http://185.130.47.2:6969/announce
 http://185.148.3.231/announce
 
 http://185.148.3.231:80/announce
+
+http://185.171.202.111:6969/announce
 
 http://185.185.40.51:6969/announce
 
@@ -247,6 +255,12 @@ http://217.30.10.77:6969/announce
 http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
+
+http://34.66.57.33:11450/announce
+
+http://34.66.57.33:2710/announce
+
+http://34.66.57.33:6969/announce
 
 http://34.89.30.59/announce
 
@@ -361,6 +375,8 @@ http://60-fps.org/bt:80/announce.php
 http://60-fps.org:80/bt/announce.php
 
 http://60-fps.org:80/bt:80/announce.php
+
+http://60.249.37.20:80/announce
 
 http://61.216.109.95:6969/announce
 
@@ -928,6 +944,10 @@ http://retracker.spark-rostov.ru/announce
 
 http://retracker.spark-rostov.ru:80/announce
 
+http://retracker01-msk-virt.corbina.net/announce
+
+http://retracker01-msk-virt.corbina.net:80/announce
+
 http://rfc5746.mywaifu.best:6969/announce
 
 http://rotracker.ohys.net/announce
@@ -961,6 +981,8 @@ http://servandroidkino.ru/announce
 http://share.camoe.cn:8080/announce
 
 http://share.hkg-fansub.info/announce.php
+
+http://share.hkg-fansub.info:80/announce.php
 
 http://shogiroom.com:6969/announce
 
@@ -1121,8 +1143,6 @@ http://tracker.breizh.pm:6969/announce
 http://tracker.bt-chat.com/announce
 
 http://tracker.bt-hash.com/announce
-
-http://tracker.bt-hash.com:80/announce
 
 http://tracker.bt4g.com:2095/announce
 
