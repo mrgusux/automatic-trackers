@@ -226,6 +226,8 @@ https://tracker.bangumi.zip:443/announce
 
 https://tracker.belmult.online:443/announce
 
+https://tracker.bigbewbs.online:443/announce
+
 https://tracker.bjut.jp:443/announce
 
 https://tracker.bt-hash.com/announce
