@@ -1,8 +1,8 @@
-name: Ultimate Tracker Aggregator Pro Max
+name: Ultimate Tracker Aggregator Pro Max — God Tier
 
 on:
   schedule:
-    # Proti 6 ghonta por por (dine 4 bar) auto run hobe
+    # প্রতিদিন ৪ বার (প্রতি ৬ ঘণ্টা পরপর) আপডেট হবে
     - cron: '0 */6 * * *'
   workflow_dispatch:
 
@@ -16,22 +16,31 @@ concurrency:
 jobs:
   update-trackers:
     runs-on: ubuntu-latest
-    # Ekta ekta kore namate time beshi lagbe, tai timeout barano hoyeche
-    timeout-minutes: 45
+    timeout-minutes: 60
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
-    - name: Fetch, Clean & Build Ultimate Tracker List
+    - name: 🚀 Fetch, Sanitize & Build Ultimate Tracker List
+      id: build
       run: |
         set -euo pipefail
         
+        # ─────────────────────────────────────────────────────────
+        # ১. ওয়ার্কিং ডিরেক্টরি এবং টাইমার সেটআপ
+        # ─────────────────────────────────────────────────────────
+        START_TS=$(date +%s)
         WORK_DIR=$(mktemp -d)
         trap 'rm -rf "$WORK_DIR"' EXIT
 
-        # 83 ti Unique Source Links (Kono link katan ba baad deoa hoyni)
+        # ─────────────────────────────────────────────────────────
+        # ২. ৯৮টি ইউনিক সোর্স লিংক (৮৩ অরিজিনাল + ১৫ নতুন ফ্রেশ লিংক)
+        # ─────────────────────────────────────────────────────────
         SOURCES=(
+          # --- Original 83 Sources ---
           "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"
           "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt"
           "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt"
@@ -115,77 +124,196 @@ jobs:
           "https://raw.githubusercontent.com/tdulcet/Distributed-Computing-Scripts/master/torrent-trackers.txt"
           "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bt"
           "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_hot.txt"
+          
+          # --- 15 New Highly-Reputable Sources (Minimax + v0) ---
+          "https://raw.githubusercontent.com/HDVinnie/open-tracker-list/master/open-tracker-list.txt"
+          "https://raw.githubusercontent.com/HDVinnie/open-tracker-list/master/ip-only-trackers.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/http_ip.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/https_ip.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/udp_ip.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_udp_ip.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_http_ip.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_https_ip.txt"
+          "https://raw.githubusercontent.com/duckbytes/trackerslist/master/trackers_best.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt.bak"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/best_aria2.txt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_ip.txt"
+          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_https.txt"
+          "https://raw.githubusercontent.com/anthonyfok/trackerslist-mirror/master/trackers_all.txt"
+          "https://newtrackon.com/api/all?include_ipv4_only_trackers=true"
+        )
+        TOTAL_SOURCES=${#SOURCES[@]}
+
+        # ─────────────────────────────────────────────────────────
+        # ৩. WAF/Anti-Bot User-Agent Pool (Cloudflare Bypass)
+        # ─────────────────────────────────────────────────────────
+        UAS=(
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15"
+          "Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0"
         )
 
-        echo "🚀 Fetching trackers ONE-BY-ONE sequentially..."
-        # Ekta ekta kore loop er maddhome download korbe
-        for url in "${SOURCES[@]}"; do
-          slug=$(echo "$url" | md5sum | cut -c1-10)
-          out="${WORK_DIR}/${slug}.txt"
+        SUCCESS_COUNT=0
+        FAIL_COUNT=0
+        FAILED_URLS=()
+
+        # ─────────────────────────────────────────────────────────
+        # ৪. Exponential Backoff with Jitter (Smart Retry Logic)
+        # ─────────────────────────────────────────────────────────
+        fetch_with_backoff() {
+          local url="$1" out="$2" attempt=1 max_attempts=4 base_delay=2
+          while [ "$attempt" -le "$max_attempts" ]; do
+            local ua="${UAS[$RANDOM % ${#UAS[@]}]}"
+            
+            if curl -sSfL --http1.1 --tlsv1.2 --compressed \
+                 --max-time 20 --connect-timeout 10 \
+                 -A "$ua" \
+                 -H "Accept: text/plain,text/html,application/json;q=0.9,*/*;q=0.8" \
+                 -H "Sec-Fetch-Dest: document" \
+                 -H "Sec-Fetch-Mode: navigate" \
+                 -H "Sec-Fetch-Site: none" \
+                 "$url" -o "$out" 2>/dev/null; then
+                 
+              # HTML/Cloudflare ব্লক চেক
+              local size=$(stat -c%s "$out" 2>/dev/null || echo 0)
+              if [ "$size" -ge 20 ] && ! grep -qiE '<!doctype html|<html|<head|cloudflare|just a moment' "$out"; then
+                return 0
+              fi
+              rm -f "$out"
+            fi
+            
+            local jitter=$(awk -v d="$base_delay" 'BEGIN{srand(); printf "%.1f", rand()*d}')
+            sleep "$jitter"
+            base_delay=$(( base_delay * 2 ))
+            attempt=$(( attempt + 1 ))
+          done
+          return 1
+        }
+
+        # ─────────────────────────────────────────────────────────
+        # ৫. Sequential Fetching (১টি ১টি করে নিখুঁত ডাউনলোড)
+        # ─────────────────────────────────────────────────────────
+        echo "🚀 Fetching ${TOTAL_SOURCES} trackers sequentially..."
+        for idx in "${!SOURCES[@]}"; do
+          url="${SOURCES[$idx]}"
+          out="${WORK_DIR}/temp_${idx}.txt"
           
-          echo "Fetching: $url"
-          if curl -sSfL --max-time 15 --connect-timeout 10 --retry 2 --retry-delay 2 \
-             -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
-             "$url" > "$out" 2>/dev/null; then
-             
-             # HTML ba choto error page hole delete korbe
-             if [ $(stat -c%s "$out" 2>/dev/null || echo 0) -lt 50 ] || grep -qi '<!doctype html\|<html' "$out"; then
-               rm -f "$out"
-             fi
+          printf "[%02d/%02d] Fetching... " "$((idx+1))" "$TOTAL_SOURCES"
+          if fetch_with_backoff "$url" "$out"; then
+            SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+            echo "✅ OK"
+          else
+            FAIL_COUNT=$((FAIL_COUNT + 1))
+            FAILED_URLS+=("$url")
+            echo "❌ FAILED"
           fi
         done
 
-        echo "🧹 Combining and cleaning trackers..."
-        cat "$WORK_DIR"/*.txt > "$WORK_DIR/raw.txt" 2>/dev/null || true
+        cat "$WORK_DIR"/temp_*.txt > "$WORK_DIR/raw.txt" 2>/dev/null || true
 
-        # Clean and Filter Process
-        sed 's/\r//g' "$WORK_DIR/raw.txt" | \
+        # ─────────────────────────────────────────────────────────
+        # ৬. Enterprise-Grade Sanitization (১২-ধাপের ডিপ ক্লিনিং)
+        # ─────────────────────────────────────────────────────────
+        echo "🧹 Sanitizing and filtering trackers..."
+        
+        sed '1s/^\xEF\xBB\xBF//' "$WORK_DIR/raw.txt" | \
+        tr -d '\r' | \
+        LC_ALL=C sed 's/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]//g' | \
         sed 's/<[^>]*>//g' | \
-        grep -iE '^(udp|https?|wss?)://' | \
-        grep -viE '(localhost|127\.0\.0\.1|0\.0\.0\.0|example\.com)' | \
+        sed 's/^[[:space:]]*//; s/[[:space:]]*$//' | \
+        grep -iE '^(udp|https?|wss?)://[^[:space:]]+$' | \
+        sed 's|/[[:space:]]*$||; s|/$||' | \
         tr '[:upper:]' '[:lower:]' | \
-        sed 's|/[[:space:]]*$||' | \
+        grep -viE '://(localhost|127\.|0\.0\.0\.0|255\.255\.255\.255)' | \
+        grep -viE '://(10\.[0-9]+\.[0-9]+\.[0-9]+)' | \
+        grep -viE '://(192\.168\.[0-9]+\.[0-9]+)' | \
+        grep -viE '://(172\.(1[6-9]|2[0-9]|3[0-1])\.[0-9]+\.[0-9]+)' | \
+        grep -viE '://(169\.254\.[0-9]+\.[0-9]+)' | \
+        grep -viE '(example\.(com|org|net)|your\.tracker|\.local|\.onion)' | \
+        awk '!seen[$0]++' | \
         sort -u > "$WORK_DIR/clean.txt"
 
-        # ==============================================================
-        # CATEGORIZE TRACKERS INTO SEPARATE FILES
-        # ==============================================================
-        grep '^udp://' "$WORK_DIR/clean.txt" > udp.txt || true
-        grep '^http://' "$WORK_DIR/clean.txt" > http.txt || true
-        grep '^https://' "$WORK_DIR/clean.txt" > https.txt || true
-        grep -E '^wss?://' "$WORK_DIR/clean.txt" > ws.txt || true
+        # ─────────────────────────────────────────────────────────
+        # ৭. Categorization & qBittorrent Formatting
+        # ─────────────────────────────────────────────────────────
+        grep -E '^udp://'   "$WORK_DIR/clean.txt" > "$WORK_DIR/udp.txt"   || true
+        grep -E '^https://' "$WORK_DIR/clean.txt" > "$WORK_DIR/https.txt" || true
+        grep -E '^http://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/http.txt"  || true
+        grep -E '^wss?://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/ws.txt"    || true
 
-        # Master priority sort
+        # Master Priority Sort (UDP > HTTPS > HTTP > WS)
         awk '
-          /^udp:\/\// {print "1\t" $0}
-          /^https:\/\// {print "2\t" $0}
-          /^http:\/\// {print "3\t" $0}
-          /^wss?:\/\// {print "4\t" $0}
+          /^udp:\/\//   {print "1\t" $0; next}
+          /^https:\/\// {print "2\t" $0; next}
+          /^http:\/\//  {print "3\t" $0; next}
+          /^wss?:\/\//  {print "4\t" $0; next}
         ' "$WORK_DIR/clean.txt" | sort -t$'\t' -k1,1n -k2,2 | cut -f2- > "$WORK_DIR/sorted.txt"
 
-        FINAL_COUNT=$(wc -l < "$WORK_DIR/sorted.txt")
+        FINAL_COUNT=$(wc -l < "$WORK_DIR/sorted.txt" || echo 0)
         if [ "$FINAL_COUNT" -lt 200 ]; then
-          echo "::error::Warning! Tracker count is abnormally low ($FINAL_COUNT). Aborting commit."
+          echo "::error::Tracker count extremely low ($FINAL_COUNT). Aborting to prevent data loss."
           exit 1
         fi
 
-        # ==============================================================
-        # FORMATTING FOR qBITTORRENT (Add empty lines between trackers)
-        # ==============================================================
-        # Main files
-        awk 'NR>1{print ""}1' "$WORK_DIR/sorted.txt" > all_trackers.txt
-        paste -sd ',' "$WORK_DIR/sorted.txt" > all_trackers_comma.txt
+        # Format function: Exactly ONE blank line between trackers
+        format_qb() {
+          local src="$1" dst="$2"
+          if [ -s "$src" ]; then
+            awk 'NR>1{print ""} {print}' "$src" > "$dst"
+          else
+            rm -f "$dst"
+          fi
+        }
 
-        # Protocol specific files formatting
-        if [ -s udp.txt ]; then awk 'NR>1{print ""}1' udp.txt > tmp_udp && mv tmp_udp udp.txt; fi
-        if [ -s http.txt ]; then awk 'NR>1{print ""}1' http.txt > tmp_http && mv tmp_http http.txt; fi
-        if [ -s https.txt ]; then awk 'NR>1{print ""}1' https.txt > tmp_https && mv tmp_https https.txt; fi
-        if [ -s ws.txt ]; then awk 'NR>1{print ""}1' ws.txt > tmp_ws && mv tmp_ws ws.txt; fi
+        format_qb "$WORK_DIR/sorted.txt" "all_trackers.txt"
+        format_qb "$WORK_DIR/udp.txt"    "udp.txt"
+        format_qb "$WORK_DIR/https.txt"  "https.txt"
+        format_qb "$WORK_DIR/http.txt"   "http.txt"
+        format_qb "$WORK_DIR/ws.txt"     "ws.txt"
+        paste -sd ',' "$WORK_DIR/sorted.txt" > "all_trackers_comma.txt"
 
-        echo "✅ Created all format files successfully ($FINAL_COUNT trackers)!"
+        # ─────────────────────────────────────────────────────────
+        # ৮. Idempotency Check (অযথা কমিট বন্ধ করা)
+        # ─────────────────────────────────────────────────────────
+        NEW_HASH=$(sha256sum "all_trackers.txt" | cut -d' ' -f1)
+        OLD_HASH=""
+        [ -f .tracker_hash ] && OLD_HASH=$(cat .tracker_hash)
+        echo "$NEW_HASH" > .tracker_hash
 
-    - name: Commit & Push Changes
+        if [ "$NEW_HASH" = "$OLD_HASH" ]; then
+          echo "🟡 Data unchanged. Skipping commit."
+          echo "skip_commit=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "🟢 Changes detected. Preparing commit."
+          echo "skip_commit=false" >> "$GITHUB_OUTPUT"
+        fi
+
+        # ─────────────────────────────────────────────────────────
+        # ৯. GitHub Observability Dashboard Report
+        # ─────────────────────────────────────────────────────────
+        ELAPSED=$(( $(date +%s) - START_TS ))
+        {
+          echo "## 🚀 Ultimate Tracker Aggregator — God Tier Report"
+          echo ""
+          echo "| Metric | Value |"
+          echo "|---|---|"
+          echo "| 🌐 **Total Sources** | $TOTAL_SOURCES |"
+          echo "| ✅ **Success** | $SUCCESS_COUNT |"
+          echo "| ❌ **Failed** | $FAIL_COUNT |"
+          echo "| ⏱️ **Time Taken** | ${ELAPSED}s |"
+          echo "| 🧮 **Unique Trackers** | **$FINAL_COUNT** |"
+          echo "| 🔐 **Idempotency** | $([ "$NEW_HASH" = "$OLD_HASH" ] && echo 'Skipped (No Changes)' || echo 'Committed (Changes Detected)') |"
+          echo ""
+          echo "### 📊 Protocol Breakdown"
+          echo "- **UDP:** $(grep -c '^udp://' "$WORK_DIR/sorted.txt" || echo 0)"
+          echo "- **HTTPS:** $(grep -c '^https://' "$WORK_DIR/sorted.txt" || echo 0)"
+          echo "- **HTTP:** $(grep -c '^http://' "$WORK_DIR/sorted.txt" || echo 0)"
+          echo "- **WS/WSS:** $(grep -cE '^wss?://' "$WORK_DIR/sorted.txt" || echo 0)"
+        } >> "$GITHUB_STEP_SUMMARY"
+
+    - name: 💾 Commit & Push Changes
+      if: steps.build.outputs.skip_commit == 'false'
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message: "🚀 Auto-update: Categorized trackers (All, UDP, HTTP, HTTPS, WS)"
-        file_pattern: "*.txt"
+        commit_message: "🚀 Auto-update: God Tier Tracker List (98 Sources)"
+        file_pattern: "*.txt .tracker_hash"
