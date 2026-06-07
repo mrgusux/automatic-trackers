@@ -1,6 +1,26 @@
-{
-  "name": "Automatic Trackers API",
-  "description": "Machine-readable list of bittorrent trackers",
-  "status": "active",
-  "trackers": []
-}
+# .github/workflows/update-trackers.yml এ step যোগ করুন:
+- name: 📊 Generate API JSON
+  run: |
+    # trackers.json populate করুন
+    cat > api/trackers.json << 'EOF'
+    {
+      "name": "Automatic Trackers API",
+      "description": "Machine-readable list of bittorrent trackers",
+      "status": "active",
+      "updated_at": "$(date -Iseconds)",
+      "count": $(wc -l < all_trackers.txt),
+      "trackers": $(sed 's/^"/"/g; s/"$/"/g' all_trackers.txt | jq -R -s -c 'split("\n")[:-1]')
+    }
+    EOF
+    
+    # stats.json generate করুন
+    cat > api/stats.json << 'EOF'
+    {
+      "total": $(wc -l < all_trackers.txt),
+      "udp": $(wc -l < udp.txt),
+      "https": $(wc -l < https.txt),
+      "http": $(wc -l < http.txt),
+      "ws": $(wc -l < ws.txt),
+      "updated_at": "$(date -Iseconds)"
+    }
+    EOF
