@@ -70,16 +70,29 @@ jobs:
         mkdir -p "$CACHE_DIR"
         mkdir -p "$BACKUP_DIR"
         chmod 755 "$CACHE_DIR"
+        chmod 755 "$BACKUP_DIR"
         
-        # Install dependencies
-        apt-get update -qq
-        apt-get install -y -qq curl ca-certificates 2>/dev/null || true
+        echo "✓ Cache directory: $CACHE_DIR"
+        echo "✓ Backup directory: $BACKUP_DIR"
+        
+        # Check curl is available
+        which curl && echo "✓ curl available" || echo "⚠ curl not found"
+        
+        # Check SSL certificates
+        if [ -f /etc/ssl/certs/ca-certificates.crt ]; then
+          echo "✓ SSL certificates available"
+        else
+          echo "⚠ SSL certificates might be missing"
+        fi
 
     - name: Restore previous tracker backup
+      continue-on-error: true
       run: |
         if [ -f "$BACKUP_DIR/all_trackers.txt.bak" ]; then
           cp "$BACKUP_DIR/all_trackers.txt.bak" "$CACHE_DIR/all_trackers.txt.old"
-          echo "Restored previous tracker snapshot"
+          echo "✓ Restored previous tracker snapshot"
+        else
+          echo "ℹ No previous backup found"
         fi
 
     - name: Fetch, Sanitize & Build Ultimate Tracker List
@@ -110,17 +123,14 @@ jobs:
           fi
         }
 
-        # Enhanced source list - prioritized by reliability
+        # Tracker sources - 98 total
         declare -a SOURCES=(
-          # Tier 1: Most Reliable
           "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"
           "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt"
           "https://newtrackon.com/api/all"
           "https://newtrackon.com/api/stable"
           "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt"
           "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/best.txt"
-          
-          # Tier 2: Secondary Sources
           "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all.txt"
           "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all.txt"
           "https://raw.githubusercontent.com/Naunter/BT_Trackers/master/Trackers/trackers_all.txt"
@@ -219,7 +229,7 @@ jobs:
 
         export PARALLEL_DIR TIMEOUT_SECONDS CONNECT_TIMEOUT USER_AGENTS FAILED_LOG CACHE_DIR RETRY_ATTEMPTS DEBUG_MODE FORCE_FETCH
 
-        # Advanced fetch with improved error handling
+        # Fetch function
         fetch_source() {
           local idx="$1"
           local url="$2"
@@ -228,7 +238,6 @@ jobs:
           local attempt=0
           local delay=1
 
-          # Check cache if not forcing fetch
           if [ "$FORCE_FETCH" != "true" ] && [ -f "$cache_file" ] && [ -s "$cache_file" ]; then
             debug_log "Using cache for source $idx"
             cp "$cache_file" "$out"
@@ -236,7 +245,6 @@ jobs:
             return 0
           fi
 
-          # Retry logic with exponential backoff
           while [ "$attempt" -lt "$RETRY_ATTEMPTS" ]; do
             local ua="${USER_AGENTS[$RANDOM % ${#USER_AGENTS[@]}]}"
             
@@ -278,78 +286,69 @@ jobs:
 
         export -f fetch_source debug_log
 
-        echo "Starting parallel aggregation of $TOTAL_SOURCES sources..."
+        echo "Starting aggregation of $TOTAL_SOURCES sources..."
         echo "Configuration: force_fetch=$FORCE_FETCH, debug=$DEBUG_MODE"
         
-        # Sequential fetch with better error handling (slower but more reliable)
         SUCCESS_COUNT=0
         FAIL_COUNT=0
 
         for idx in "${!SOURCES[@]}"; do
           url="${SOURCES[$idx]}"
-          result=$(fetch_source "$idx" "$url" 2>&1)
+          result=$(fetch_source "$idx" "$url" 2>&1 || echo "FAILED")
           if [ "$result" = "OK" ] || [ "$result" = "CACHED" ]; then
+            SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
             if [ "$result" = "CACHED" ]; then
               echo "[$(printf "%02d" $((idx+1)))/$TOTAL_SOURCES] CACHED"
             else
               echo "[$(printf "%02d" $((idx+1)))/$TOTAL_SOURCES] OK"
             fi
-            SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
           else
-            echo "[$(printf "%02d" $((idx+1)))/$TOTAL_SOURCES] FAILED: $url"
             FAIL_COUNT=$((FAIL_COUNT + 1))
+            echo "[$(printf "%02d" $((idx+1)))/$TOTAL_SOURCES] FAILED"
           fi
         done
 
-        echo "Fetch Summary: $SUCCESS_COUNT successful, $FAIL_COUNT failed"
-        debug_log "Success: $SUCCESS_COUNT, Failed: $FAIL_COUNT"
+        echo ""
+        echo "Fetch Summary: $SUCCESS_COUNT OK, $FAIL_COUNT FAILED"
 
-        # Merge and deduplicate
+        # Merge
         find "$PARALLEL_DIR" -name "source_*.txt" -type f 2>/dev/null -exec cat {} \; | sort -u > "$WORK_DIR/raw.txt" 2>/dev/null || true
 
         RAW_COUNT=$(wc -l < "$WORK_DIR/raw.txt" 2>/dev/null || echo 0)
-        echo "Raw trackers collected: $RAW_COUNT"
+        echo "Raw trackers: $RAW_COUNT"
 
         if [ ! -s "$WORK_DIR/raw.txt" ] || [ "$RAW_COUNT" -lt 5 ]; then
-          echo "ERROR: Insufficient tracker data fetched ($RAW_COUNT lines)"
-          echo "Failed sources logged in: $FAILED_LOG"
-          cat "$FAILED_LOG" 2>/dev/null || echo "No failed sources log"
+          echo "ERROR: Insufficient data ($RAW_COUNT lines)"
           exit 1
         fi
 
-        echo "Applying 15-stage sanitization pipeline..."
+        echo "Sanitizing trackers..."
 
-        # Ultra-robust sanitization
+        # Sanitize
         sed '1s/^\xEF\xBB\xBF//' "$WORK_DIR/raw.txt" 2>/dev/null | \
         tr -d '\r\0' | \
         LC_ALL=C sed 's/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]//g' | \
-        sed 's/<[^>]*>//g; s/&[a-z]*;//g' | \
+        sed 's/<[^>]*>//g' | \
         sed 's/^[[:space:]]*//; s/[[:space:]]*$//' | \
         grep -iE '^(udp|https?|wss?)://[^[:space:]]+$' | \
-        sed 's|/[[:space:]]*$||; s|/$||g' | \
+        sed 's|/$||g' | \
         tr '[:upper:]' '[:lower:]' | \
-        grep -viE '^(udp|https?|wss?)://(localhost|127\.|0\.0\.0\.0|255\.255\.255\.255|::1)' | \
-        grep -viE '^(udp|https?|wss?)://(10\.|192\.168\.|172\.1[6-9]\.|172\.2[0-9]\.|172\.3[0-1]\.|169\.254\.)' | \
-        grep -viE '(example\.(com|org|net)|localhost|\.local|\.onion|\.internal)' | \
-        sed '/^[[:space:]]*$/d' | \
+        grep -viE '://(localhost|127\.|0\.0\.0\.0|255\.255\.255\.255|::1)' | \
+        grep -viE '://(10\.|192\.168\.|172\.1[6-9]\.|172\.2[0-9]\.|172\.3[0-1]\.|169\.254\.)' | \
+        grep -viE '(example\.(com|org|net)|\.local|\.onion|\.internal)' | \
         awk '!seen[$0]++ {if (NF) print}' | \
         sort -u > "$WORK_DIR/clean.txt" || true
 
         CLEAN_COUNT=$(wc -l < "$WORK_DIR/clean.txt" 2>/dev/null || echo 0)
-        echo "After sanitization: $CLEAN_COUNT valid trackers"
+        echo "Clean trackers: $CLEAN_COUNT"
 
-        if [ "$CLEAN_COUNT" -lt "$MIN_TRACKER_COUNT" ]; then
-          echo "WARNING: Only $CLEAN_COUNT trackers (minimum: $MIN_TRACKER_COUNT)"
-          echo "Continuing anyway..."
-        fi
-
-        # Protocol categorization
+        # Categorize
         grep -E '^udp://'   "$WORK_DIR/clean.txt" > "$WORK_DIR/udp.txt"   2>/dev/null || touch "$WORK_DIR/udp.txt"
         grep -E '^https://' "$WORK_DIR/clean.txt" > "$WORK_DIR/https.txt" 2>/dev/null || touch "$WORK_DIR/https.txt"
         grep -E '^http://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/http.txt"  2>/dev/null || touch "$WORK_DIR/http.txt"
         grep -E '^wss?://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/ws.txt"    2>/dev/null || touch "$WORK_DIR/ws.txt"
 
-        # Priority sort
+        # Sort by priority
         awk '
           /^udp:\/\//   {print "1\t" $0; next}
           /^https:\/\// {print "2\t" $0; next}
@@ -358,9 +357,9 @@ jobs:
         ' "$WORK_DIR/clean.txt" | sort -t$'\t' -k1,1n -k2,2 | cut -f2- > "$WORK_DIR/sorted.txt"
 
         FINAL_COUNT=$(wc -l < "$WORK_DIR/sorted.txt" 2>/dev/null || echo 0)
-        echo "Final tracker count: $FINAL_COUNT"
+        echo "Final trackers: $FINAL_COUNT"
 
-        # Format outputs
+        # Format
         format_output() {
           local src="$1" dst="$2"
           if [ -s "$src" ]; then
@@ -377,10 +376,10 @@ jobs:
         format_output "$WORK_DIR/ws.txt"     "ws.txt"
         paste -sd ',' "$WORK_DIR/sorted.txt" 2>/dev/null > "all_trackers_comma.txt" || touch "all_trackers_comma.txt"
 
-        # Create backup
+        # Backup
         cp "all_trackers.txt" "$BACKUP_DIR/all_trackers.txt.bak"
 
-        # Generate JSON APIs
+        # JSON APIs
         mkdir -p api
 
         UDP_COUNT=$(grep -c '^udp://' "$WORK_DIR/sorted.txt" 2>/dev/null || echo 0)
@@ -393,80 +392,50 @@ jobs:
         {
           "version": "1.0",
           "updated_at": "$(date -Iseconds)",
-          "aggregation": {
-            "total_trackers": $FINAL_COUNT,
-            "sources": {
-              "total": $TOTAL_SOURCES,
-              "successful": $SUCCESS_COUNT,
-              "failed": $FAIL_COUNT,
-              "success_rate": "${SUCCESS_RATE}%"
-            }
-          },
-          "protocols": {
-            "udp": $UDP_COUNT,
-            "https": $HTTPS_COUNT,
-            "http": $HTTP_COUNT,
-            "websocket": $WS_COUNT
-          }
+          "total": $FINAL_COUNT,
+          "sources": $TOTAL_SOURCES,
+          "success_rate": "${SUCCESS_RATE}%",
+          "protocols": {"udp": $UDP_COUNT, "https": $HTTPS_COUNT, "http": $HTTP_COUNT, "ws": $WS_COUNT}
         }
         EOF
 
         cat > api/badge.json << EOF
-        {
-          "schemaVersion": 1,
-          "label": "Active Trackers",
-          "message": "$FINAL_COUNT",
-          "color": "brightgreen"
-        }
+        {"schemaVersion": 1, "label": "Trackers", "message": "$FINAL_COUNT", "color": "brightgreen"}
         EOF
 
         {
-          echo "{"
-          echo "  \"version\":\"1.0\","
-          echo "  \"generated\":\"$(date -Iseconds)\","
-          echo "  \"total\":$FINAL_COUNT,"
-          echo "  \"trackers\":["
-          sed 's/^/"/; s/$/"/' "$WORK_DIR/sorted.txt" | paste -sd ',' - | sed 's/,$//'
+          echo "{\"version\":\"1.0\",\"generated\":\"$(date -Iseconds)\",\"total\":$FINAL_COUNT,\"trackers\":["
+          sed 's/^/"/; s/$/"/' "$WORK_DIR/sorted.txt" | paste -sd ',' -
           echo "]}"
         } > api/trackers.json
 
-        # Idempotency check
+        # Idempotency
         NEW_HASH=$(sha256sum "all_trackers.txt" | cut -d' ' -f1)
         OLD_HASH=$(cat .tracker_hash 2>/dev/null || echo "")
         echo "$NEW_HASH" > .tracker_hash
 
         if [ "$NEW_HASH" = "$OLD_HASH" ]; then
-          echo "No new trackers detected"
           echo "skip_commit=true" >> "$GITHUB_OUTPUT"
         else
-          echo "New trackers found!"
           echo "skip_commit=false" >> "$GITHUB_OUTPUT"
         fi
 
         ELAPSED=$(($(date +%s) - START_TS))
         
         cat >> "$GITHUB_STEP_SUMMARY" << EOF
-        ## Tracker Aggregation Report
-
-        ### Configuration
-        | Setting | Value |
-        |---------|-------|
-        | Force Fetch | $FORCE_FETCH |
-        | Debug Mode | $DEBUG_MODE |
-
-        ### Results
-        | Metric | Value |
-        |--------|-------|
+        ## Aggregation Report
+        | Key | Value |
+        |-----|-------|
         | Total Sources | $TOTAL_SOURCES |
-        | Successful | $SUCCESS_COUNT ✓ |
-        | Failed | $FAIL_COUNT ✗ |
+        | Successful | $SUCCESS_COUNT |
+        | Failed | $FAIL_COUNT |
         | Success Rate | ${SUCCESS_RATE}% |
-        | Execution Time | ${ELAPSED}s |
         | Final Trackers | $FINAL_COUNT |
         | UDP | $UDP_COUNT |
         | HTTPS | $HTTPS_COUNT |
         | HTTP | $HTTP_COUNT |
         | WebSocket | $WS_COUNT |
+        | Time | ${ELAPSED}s |
         EOF
 
     - name: Configure Git
@@ -474,26 +443,13 @@ jobs:
         git config --local user.email "actions@github.com"
         git config --local user.name "github-actions[bot]"
 
-    - name: Commit & Push Changes
+    - name: Commit & Push
       if: steps.build.outputs.skip_commit == 'false'
       run: |
         git add -A
-        git commit -m "Update: New trackers from 98 sources ($(date -u +'%Y-%m-%d %H:%M UTC'))" --no-verify || true
+        git commit -m "Update: Trackers from 98 sources" --no-verify || true
         git push origin main 2>&1 || true
 
-    - name: Cleanup
+    - name: Complete
       if: always()
-      run: |
-        echo "Workflow completed successfully"
-        echo "Cache size: $(du -sh "$CACHE_DIR" 2>/dev/null || echo 'N/A')"
-
-  notify:
-    name: Post-Completion Notification
-    runs-on: ubuntu-latest
-    needs: update-trackers
-    if: always()
-    steps:
-      - name: Workflow Status
-        run: |
-          echo "✓ Aggregation complete"
-          echo "✓ All validations passed"
+      run: echo "✓ Workflow complete"
