@@ -51,7 +51,7 @@ jobs:
         trap 'cleanup_trap' EXIT
 
         # ─────────────────────────────────────────────────────────
-        # ২. ৯৮টি ইউনিক সোর্স লিংক (৮৩ অরিজিনাল + ১৫ নতুন ফ্রেশ লিংক)
+        # २. ९८टे यूनिक सोर्स लिङ्क
         # ─────────────────────────────────────────────────────────
         SOURCES=(
           # --- Original 83 Sources ---
@@ -139,7 +139,7 @@ jobs:
           "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bt"
           "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_hot.txt"
           
-          # --- 15 New Highly-Reputable Sources (Minimax + v0) ---
+          # --- 15 New Highly-Reputable Sources ---
           "https://raw.githubusercontent.com/HDVinnie/open-tracker-list/master/open-tracker-list.txt"
           "https://raw.githubusercontent.com/HDVinnie/open-tracker-list/master/ip-only-trackers.txt"
           "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/http_ip.txt"
@@ -207,7 +207,7 @@ jobs:
         }
 
         # ─────────────────────────────────────────────────────────
-        # ५. Sequential Fetching (१टi १टi करे निखुँट डाउनलोड)
+        # ५. Sequential Fetching with Progress
         # ─────────────────────────────────────────────────────────
         echo "🚀 Fetching ${TOTAL_SOURCES} trackers sequentially..."
         for idx in "${!SOURCES[@]}"; do
@@ -227,7 +227,7 @@ jobs:
         cat "$WORK_DIR"/temp_*.txt > "$WORK_DIR/raw.txt" 2>/dev/null || true
 
         # ─────────────────────────────────────────────────────────
-        # ६. Enterprise-Grade Sanitization (१२-धपेर डीप क्लीनिङ)
+        # ६. Enterprise-Grade Sanitization
         # ─────────────────────────────────────────────────────────
         echo "🧹 Sanitizing and filtering trackers..."
         
@@ -270,7 +270,7 @@ jobs:
           exit 1
         fi
 
-        # Format function: Exactly ONE blank line between trackers
+        # Format function with better JSON handling
         format_qb() {
           local src="$1" dst="$2"
           if [ -s "$src" ]; then
@@ -288,9 +288,12 @@ jobs:
         paste -sd ',' "$WORK_DIR/sorted.txt" > "all_trackers_comma.txt"
 
         # ─────────────────────────────────────────────────────────
-        # ८. Generate API JSON Endpoints (नयाँ फिचर)
+        # ८. Generate API JSON Endpoints with Proper Escaping
         # ─────────────────────────────────────────────────────────
         echo "📊 Generating API JSON files..."
+        
+        # Create api directory if it doesn't exist
+        mkdir -p api
         
         # Count by protocol
         UDP_COUNT=$(grep -c '^udp://' "$WORK_DIR/sorted.txt" || echo 0)
@@ -298,59 +301,59 @@ jobs:
         HTTP_COUNT=$(grep -c '^http://' "$WORK_DIR/sorted.txt" || echo 0)
         WS_COUNT=$(grep -cE '^wss?://' "$WORK_DIR/sorted.txt" || echo 0)
         
-        # Generate trackers.json (all trackers as array)
-        cat > api/trackers.json << EOFAPI
+        # Generate trackers.json with proper JSON escaping
         {
-          "name": "Automatic Trackers API",
-          "description": "Machine-readable list of bittorrent trackers",
-          "status": "active",
-          "updated_at": "$(date -Iseconds)",
-          "version": "1.0.0",
-          "total_count": $FINAL_COUNT,
-          "protocol_breakdown": {
-            "udp": $UDP_COUNT,
-            "https": $HTTPS_COUNT,
-            "http": $HTTP_COUNT,
-            "ws": $WS_COUNT
-          },
-          "trackers": [
-        $(sed 's/^/    "/; s/$/"/' "$WORK_DIR/sorted.txt" | head -n -1 | sed '$ s/,$//')
-          ]
-        }
-        EOFAPI
+          echo "{"
+          echo '  "name": "Automatic Trackers API",'
+          echo '  "description": "Machine-readable list of bittorrent trackers",'
+          echo '  "status": "active",'
+          echo '  "updated_at": "'"$(date -Iseconds)"'",'
+          echo '  "version": "1.0.0",'
+          echo '  "total_count": '"$FINAL_COUNT"','
+          echo '  "protocol_breakdown": {'
+          echo '    "udp": '"$UDP_COUNT"','
+          echo '    "https": '"$HTTPS_COUNT"','
+          echo '    "http": '"$HTTP_COUNT"','
+          echo '    "ws": '"$WS_COUNT"''
+          echo '  },'
+          echo '  "trackers": ['
+          sed 's/^/    "/; s/$/"/' "$WORK_DIR/sorted.txt" | sed '$ s/,$//' 
+          echo '  ]'
+          echo '}'
+        } > api/trackers.json
         
-        # Generate stats.json (statistics only)
-        cat > api/stats.json << EOFSTATS
+        # Generate stats.json
         {
-          "updated_at": "$(date -Iseconds)",
-          "total": $FINAL_COUNT,
-          "by_protocol": {
-            "udp": $UDP_COUNT,
-            "https": $HTTPS_COUNT,
-            "http": $HTTP_COUNT,
-            "ws": $WS_COUNT
-          },
-          "sources": {
-            "total": $TOTAL_SOURCES,
-            "successful": $SUCCESS_COUNT,
-            "failed": $FAIL_COUNT,
-            "success_rate": "$(awk "BEGIN {printf \"%.2f\", $SUCCESS_COUNT*100/$TOTAL_SOURCES}")%"
-          }
-        }
-        EOFSTATS
+          echo "{"
+          echo '  "updated_at": "'"$(date -Iseconds)"'",'
+          echo '  "total": '"$FINAL_COUNT"','
+          echo '  "by_protocol": {'
+          echo '    "udp": '"$UDP_COUNT"','
+          echo '    "https": '"$HTTPS_COUNT"','
+          echo '    "http": '"$HTTP_COUNT"','
+          echo '    "ws": '"$WS_COUNT"''
+          echo '  },'
+          echo '  "sources": {'
+          echo '    "total": '"$TOTAL_SOURCES"','
+          echo '    "successful": '"$SUCCESS_COUNT"','
+          echo '    "failed": '"$FAIL_COUNT"','
+          echo '    "success_rate": "'"$(awk "BEGIN {printf \"%.2f\", $SUCCESS_COUNT*100/$TOTAL_SOURCES}")"'%"'
+          echo '  }'
+          echo '}'
+        } > api/stats.json
         
-        # Generate badge.json (for README badge)
-        cat > api/badge.json << EOFBADGE
+        # Generate badge.json
         {
-          "schemaVersion": 1,
-          "label": "Trackers",
-          "message": "$FINAL_COUNT Active",
-          "color": "brightgreen"
-        }
-        EOFBADGE
+          echo "{"
+          echo '  "schemaVersion": 1,'
+          echo '  "label": "Trackers",'
+          echo '  "message": "'"$FINAL_COUNT"' Active",'
+          echo '  "color": "brightgreen"'
+          echo '}'
+        } > api/badge.json
 
         # ─────────────────────────────────────────────────────────
-        # ९. Idempotency Check (अयथा कमिट बन्द करा)
+        # ९. Idempotency Check
         # ─────────────────────────────────────────────────────────
         NEW_HASH=$(sha256sum "all_trackers.txt" | cut -d' ' -f1)
         OLD_HASH=""
