@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+title: "Ultimate Torrent Tracker Aggregator Pro Max"
+message: "If you use this software or tracker list in your research or project, please cite it using the metadata from this file."
+type: software
+authors:
+  - given-names: "Mohammad"
+    family-names: "Munna"
+repository-code: "https://github.com/mrgusux/automatic-trackers"
+abstract: "Automatically fetches, sanitizes, and updates torrent trackers from 98 top-tier internet sources every 6 hours using GitHub Actions."
+keywords:
+  - torrent
+  - trackers
+  - automation
+  - github-actions
+license: MIT
