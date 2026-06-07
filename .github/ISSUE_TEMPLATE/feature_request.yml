@@ -1,0 +1,31 @@
+name: 💡 Feature Request
+description: Suggest a new tracker source, feature, or enhancement.
+title: "[FEATURE] "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting an improvement to the Ultimate Torrent Tracker Aggregator!
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Describe the feature or tracker source you'd like
+      description: A clear and concise description of what you want to happen.
+      placeholder: e.g., Add a new public tracker source from https://example.com/trackers.txt...
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Why is this feature needed?
+      description: Explain how this feature or new source will benefit the community.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Describe alternatives you've considered
+      description: Are there any other ways to achieve this right now?
+    validations:
+      required: false
