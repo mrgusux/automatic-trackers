@@ -6,12 +6,16 @@ services:
     container_name: automatic-trackers
     restart: unless-stopped
     
-    # Data persistence - create output dir if needed
+    # Data persistence - volumes for output
     volumes:
+      # Main output directory for generated tracker files
       - ./output:/app/output:rw
+      # API endpoint outputs
       - ./api:/app/api:rw
+      # Keep working files in app root too
+      - ./:/app:rw
     
-    # Environment variables
+    # Environment configuration
     environment:
       - TZ=UTC
       - LOG_LEVEL=info
@@ -27,10 +31,15 @@ services:
           cpus: '1'
           memory: 512M
     
-    # Health check
+    # Health check - verify tracker list is valid
     healthcheck:
       test: ["CMD", "sh", "-c", "[ -f /app/all_trackers.txt ] && [ $(wc -l < /app/all_trackers.txt) -gt 200 ]"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 10s
+
+# Named volume for persistent data (optional)
+volumes:
+  tracker_output:
+    driver: local
