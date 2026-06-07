@@ -5,3 +5,31 @@ services:
     build: .
     container_name: automatic-trackers
     restart: unless-stopped
+    
+    # Data persistence
+    volumes:
+      - ./output:/app:rw
+      - ./api:/app/api:rw
+    
+    # Environment
+    environment:
+      - TZ=UTC
+      - LOG_LEVEL=info
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1G
+        reservations:
+          cpus: '1'
+          memory: 512M
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "sh", "-c", "[ -f /app/all_trackers.txt ] && [ $(wc -l < /app/all_trackers.txt) -gt 200 ]"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
