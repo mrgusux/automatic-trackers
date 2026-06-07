@@ -1,0 +1,22 @@
+# PR Labeler Rule Configuration
+
+documentation:
+  - '**/*.md'
+
+github-actions:
+  - '.github/workflows/*.yml'
+  - '.github/**/*.yml'
+
+tracker-data:
+  - '*.txt'
+  - '.tracker_hash'
+
+scripts:
+  - '**/*.sh'
+  - 'Makefile'
+  - 'Dockerfile'
+
+infrastructure:
+  - '.editorconfig'
+  - '.gitignore'
+  - '*.json'
