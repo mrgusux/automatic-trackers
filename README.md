@@ -1,49 +1,45 @@
-# 🚀 Ultimate Torrent Tracker Aggregator
+# 🚀 Ultimate Tracker Aggregator Pro Max — God Tier Edition
 
-Welcome to the **Ultimate Torrent Tracker Aggregator**! This repository automatically fetches, cleans, deduplicates, and categorizes torrent trackers from 83+ top-tier internet sources. 
+[![Maintained by mrgusux](https://img.shields.io/badge/Maintained%20by-mrgusux-blueviolet.svg?style=for-the-badge)](https://github.com/mrgusux)
+[![License: MIT](https://img.shields.io/badge/License-MIT-success.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Automated Updates](https://img.shields.io/badge/Auto%20Updates-Every%206%20Hours-ff69b4.svg?style=for-the-badge)](#)
 
-The tracker lists are automatically updated **every 6 hours** using GitHub Actions to ensure maximum download speed and connectivity for your torrents.
-
----
-
-## 📋 Tracker Lists (Raw Links)
-
-Copy the link of the format you need and paste it into your torrent client (e.g., qBittorrent, Transmission, Deluge).
-
-* 🌟 **All Trackers (Recommended):**
-  `https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/all_trackers.txt`
-
-* 🚀 **UDP Trackers Only:**
-  `https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/udp.txt`
-
-* 🔒 **HTTPS Trackers Only:**
-  `https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/https.txt`
-
-* 🌐 **HTTP Trackers Only:**
-  `https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/http.txt`
-
-* 🧲 **Comma-Separated (For Magnet Links):**
-  `https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/all_trackers_comma.txt`
+> **Architected and Automated by [mrgusux](https://github.com/mrgusux)** > An enterprise-grade, fully automated BitTorrent tracker aggregator. It fetches from 98 highly reputable sources, sanitizes data with a 12-stage pipeline, and perfectly formats it for maximum download speeds.
 
 ---
 
-## ✨ Advanced Features
+## 🌟 God-Tier Features
 
-* **Massive Source Database:** Sequentially fetches from 83 highly reliable sources without missing any data.
-* **Strict Cleaning:** Automatically removes Cloudflare blocks, dead HTML pages, localhost IPs, and invalid formats.
-* **Protocol Priority:** Trackers are sorted to maximize speed (UDP > HTTPS > HTTP > WS).
-* **Format Optimized:** Perfectly formatted with empty lines between trackers for optimal qBittorrent performance.
-* **Data Loss Prevention:** Built-in fail-safes prevent the list from updating if a major network failure occurs.
+Developed by **mrgusux**, this aggregator uses advanced DevOps techniques that ordinary tracker lists lack:
+
+* **🛡️ WAF & Anti-Bot Evasion:** Bypasses Cloudflare and firewalls using rotating modern browser User-Agents.
+* **⏱️ Full Jitter Backoff:** Uses Amazon Web Services (AWS) architectural patterns for smart retry mechanisms.
+* **🧹 12-Stage Sanitization:** Strictly filters out fake IPs, private/local networks (RFC 1918), hidden BOM characters, and HTML error pages.
+* **🔁 Idempotency (Smart Save):** Automatically skips Git commits if the tracker data hasn't changed, keeping the repository clean and fast.
+* **📊 GitHub Observability:** Generates beautiful telemetry dashboards after every run.
 
 ---
 
-## ⚙️ How to use in qBittorrent
+## 📥 How to Use (Direct Links)
 
-1. Open **qBittorrent**.
-2. Go to `Tools` > `Options` (or `Preferences`).
-3. Click on the `BitTorrent` tab on the left.
-4. Check the box for **"Automatically add these trackers to new downloads"**.
-5. Paste the **"All Trackers"** Raw Link from above into the empty box.
-6. Click **Apply** and **OK**. 
+You can copy the links below and paste them directly into your torrent client (like qBittorrent or Aria2). These links automatically update every 6 hours!
 
-That's it! Your torrents will now automatically use this always-updated tracker list.
+| Tracker Type | Direct Raw Link |
+| :--- | :--- |
+| **All Trackers (Best)** | `https://raw.githubusercontent.com/mrgusux/YOUR-REPO-NAME/main/all_trackers.txt` |
+| **UDP Only** | `https://raw.githubusercontent.com/mrgusux/YOUR-REPO-NAME/main/udp.txt` |
+| **HTTPS Only** | `https://raw.githubusercontent.com/mrgusux/YOUR-REPO-NAME/main/https.txt` |
+| **HTTP Only** | `https://raw.githubusercontent.com/mrgusux/YOUR-REPO-NAME/main/http.txt` |
+| **WebSocket (WS)** | `https://raw.githubusercontent.com/mrgusux/YOUR-REPO-NAME/main/ws.txt` |
+
+*(Recommended: Go to qBittorrent Settings > BitTorrent > Check "Automatically add these trackers to new downloads" and paste the `all_trackers.txt` link)*
+
+---
+
+## 👨‍💻 Author
+
+**mrgusux** * GitHub: [@mrgusux](https://github.com/mrgusux)
+
+## 📄 License
+
+This project is open-source and available under the MIT License. Copyright (c) 2024 mrgusux.
