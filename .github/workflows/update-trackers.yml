@@ -1,4 +1,4 @@
-name: Ultimate Tracker Aggregator Pro Max by mrgusux
+name: Ultimate Tracker Aggregator Pro Max — mrgusux
 
 on:
   schedule:
@@ -37,10 +37,9 @@ jobs:
         trap 'rm -rf "$WORK_DIR"' EXIT
 
         # ─────────────────────────────────────────────────────────
-        # ২. ৯৮টি ইউনিক সোর্স লিংক (৮৩ অরিজিনাল + ১৫ নতুন ফ্রেশ লিংক)
+        # ২. ৯৮টি ইউনিক সোর্স লিংক
         # ─────────────────────────────────────────────────────────
         SOURCES=(
-          # --- Original 83 Sources ---
           "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"
           "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt"
           "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt"
@@ -144,9 +143,6 @@ jobs:
         )
         TOTAL_SOURCES=${#SOURCES[@]}
 
-        # ─────────────────────────────────────────────────────────
-        # ৩. WAF/Anti-Bot User-Agent Pool (Cloudflare Bypass)
-        # ─────────────────────────────────────────────────────────
         UAS=(
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
           "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15"
@@ -157,9 +153,6 @@ jobs:
         FAIL_COUNT=0
         FAILED_URLS=()
 
-        # ─────────────────────────────────────────────────────────
-        # ৪. Exponential Backoff with Jitter (Smart Retry Logic)
-        # ─────────────────────────────────────────────────────────
         fetch_with_backoff() {
           local url="$1" out="$2" attempt=1 max_attempts=4 base_delay=2
           while [ "$attempt" -le "$max_attempts" ]; do
@@ -190,9 +183,6 @@ jobs:
           return 1
         }
 
-        # ─────────────────────────────────────────────────────────
-        # ৫. Sequential Fetching (১টি ১টি করে নিখুঁত ডাউনলোড)
-        # ─────────────────────────────────────────────────────────
         echo "🚀 Fetching ${TOTAL_SOURCES} trackers sequentially..."
         for idx in "${!SOURCES[@]}"; do
           url="${SOURCES[$idx]}"
@@ -211,9 +201,6 @@ jobs:
 
         cat "$WORK_DIR"/temp_*.txt > "$WORK_DIR/raw.txt" 2>/dev/null || true
 
-        # ─────────────────────────────────────────────────────────
-        # ৬. Enterprise-Grade Sanitization (১২-ধাপের ডিপ ক্লিনিং)
-        # ─────────────────────────────────────────────────────────
         echo "🧹 Sanitizing and filtering trackers..."
         
         sed '1s/^\xEF\xBB\xBF//' "$WORK_DIR/raw.txt" | \
@@ -233,15 +220,11 @@ jobs:
         awk '!seen[$0]++' | \
         sort -u > "$WORK_DIR/clean.txt"
 
-        # ─────────────────────────────────────────────────────────
-        # ৭. Categorization & qBittorrent Formatting
-        # ─────────────────────────────────────────────────────────
         grep -E '^udp://'   "$WORK_DIR/clean.txt" > "$WORK_DIR/udp.txt"   || true
         grep -E '^https://' "$WORK_DIR/clean.txt" > "$WORK_DIR/https.txt" || true
         grep -E '^http://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/http.txt"  || true
         grep -E '^wss?://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/ws.txt"    || true
 
-        # Master Priority Sort (UDP > HTTPS > HTTP > WS)
         awk '
           /^udp:\/\//   {print "1\t" $0; next}
           /^https:\/\// {print "2\t" $0; next}
@@ -255,7 +238,6 @@ jobs:
           exit 1
         fi
 
-        # Format function: Exactly ONE blank line between trackers
         format_qb() {
           local src="$1" dst="$2"
           if [ -s "$src" ]; then
@@ -289,10 +271,10 @@ jobs:
         fi
 
         # ─────────────────────────────────────────────────────────
-        # ৯. JSON API Update & GitHub Dashboard
+        # ৯. JSON API Update (Python-based)
         # ─────────────────────────────────────────────────────────
         mkdir -p api
-        echo "{\"name\": \"Automatic Trackers API\", \"description\": \"Machine-readable list\", \"status\": \"active\", \"trackers\": $(jq -Rn --argjson count "$FINAL_COUNT" '[inputs]' "all_trackers.txt" | jq -c .)}" > api/trackers.json
+        python3 -c "import json; print(json.dumps({'name': 'Automatic Trackers API', 'description': 'Machine-readable list', 'status': 'active', 'trackers': [line.strip() for line in open('all_trackers.txt') if line.strip()]}))" > api/trackers.json
         echo "{\"last_updated\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\", \"total_trackers\": $FINAL_COUNT}" > api/stats.json
         echo "{\"schemaVersion\": 1, \"label\": \"Trackers\", \"message\": \"$FINAL_COUNT active\", \"color\": \"green\"}" > api/badge.json
 
