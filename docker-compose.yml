@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  automatic-trackers:
+    build: .
+    container_name: automatic-trackers
+    restart: unless-stopped
