@@ -14,29 +14,30 @@ Thumbs.db
 /build/
 /dist/
 
-# Generated tracker files
-# ⚠️ WARNING: Only if these are generated, not source controlled
-# all_trackers.txt
-# http*.txt
-# https*.txt
-# udp.txt
-# ws.txt
+# Generated tracker files (UNCOMMENTED - these are auto-generated)
+all_trackers.txt
+http.txt
+https.txt
+udp.txt
+ws.txt
+all_trackers_comma.txt
 
-# API artifacts
-api/*.json  # If generated
+# API artifacts (UNCOMMENTED - these are auto-generated)
+api/*.json
 
 # Local hashes
+.tracker_hash
 .tracker_hash_local
 
 # IDE/Editor
 .vscode/
 .idea/
 *.code-workspace
-.DS_Store
 
 # Docker
 .dockerignore
 docker-compose.override.yml
+output/
 
 # Node/Python (if added later)
 node_modules/
