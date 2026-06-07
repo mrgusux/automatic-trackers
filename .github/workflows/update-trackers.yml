@@ -2,9 +2,17 @@ name: Ultimate Tracker Aggregator Pro Max — God Tier
 
 on:
   schedule:
-    # প্রতিদিন ৪ বার (প্রতি ৬ ঘণ্টা পরপর) আপডেট হবে
     - cron: '0 */6 * * *'
   workflow_dispatch:
+    inputs:
+      force_update:
+        description: 'Force update even if data unchanged'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
 
 permissions:
   contents: write
@@ -37,14 +45,10 @@ jobs:
       run: |
         set -euo pipefail
         
-        # ─────────────────────────────────────────────────────────
-        # ১. ওয়ার্কিং ডিরেক্টরি এবং টাইমার সেটআপ
-        # ─────────────────────────────────────────────────────────
         START_TS=$(date +%s)
         WORK_DIR=$(mktemp -d)
         FAILED_LOG="${WORK_DIR}/failed_sources.log"
         
-        # Cleanup trap
         cleanup_trap() {
           if [ -d "$WORK_DIR" ]; then
             rm -rf "$WORK_DIR"
@@ -52,9 +56,6 @@ jobs:
         }
         trap 'cleanup_trap' EXIT
 
-        # ─────────────────────────────────────────────────────────
-        # २. ९८टे यूनिक सोर्स लिङ्क
-        # ─────────────────────────────────────────────────────────
         SOURCES=(
           # --- Original 83 Sources ---
           "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"
@@ -160,9 +161,6 @@ jobs:
         )
         TOTAL_SOURCES=${#SOURCES[@]}
 
-        # ─────────────────────────────────────────────────────────
-        # ३. WAF/Anti-Bot User-Agent Pool
-        # ─────────────────────────────────────────────────────────
         UAS=(
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
           "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15"
@@ -172,9 +170,6 @@ jobs:
         SUCCESS_COUNT=0
         FAIL_COUNT=0
 
-        # ─────────────────────────────────────────────────────────
-        # ४. Exponential Backoff with Jitter
-        # ─────────────────────────────────────────────────────────
         fetch_with_backoff() {
           local url="$1" out="$2" attempt=1 max_attempts=4 base_delay=2
           while [ "$attempt" -le "$max_attempts" ]; do
@@ -206,9 +201,6 @@ jobs:
           return 1
         }
 
-        # ─────────────────────────────────────────────────────────
-        # ५. Sequential Fetching with Progress
-        # ─────────────────────────────────────────────────────────
         echo "🚀 Fetching ${TOTAL_SOURCES} trackers sequentially..."
         for idx in "${!SOURCES[@]}"; do
           url="${SOURCES[$idx]}"
@@ -226,9 +218,6 @@ jobs:
 
         cat "$WORK_DIR"/temp_*.txt > "$WORK_DIR/raw.txt" 2>/dev/null || true
 
-        # ─────────────────────────────────────────────────────────
-        # ६. Enterprise-Grade Sanitization
-        # ─────────────────────────────────────────────────────────
         echo "🧹 Sanitizing and filtering trackers..."
         
         sed '1s/^\xEF\xBB\xBF//' "$WORK_DIR/raw.txt" | \
@@ -248,9 +237,6 @@ jobs:
         awk '!seen[$0]++' | \
         sort -u > "$WORK_DIR/clean.txt"
 
-        # ─────────────────────────────────────────────────────────
-        # ७. Categorization & qBittorrent Formatting
-        # ─────────────────────────────────────────────────────────
         grep -E '^udp://'   "$WORK_DIR/clean.txt" > "$WORK_DIR/udp.txt"   || true
         grep -E '^https://' "$WORK_DIR/clean.txt" > "$WORK_DIR/https.txt" || true
         grep -E '^http://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/http.txt"  || true
@@ -285,9 +271,6 @@ jobs:
         format_qb "$WORK_DIR/ws.txt"     "ws.txt"
         paste -sd ',' "$WORK_DIR/sorted.txt" > "all_trackers_comma.txt"
 
-        # ─────────────────────────────────────────────────────────
-        # ८. Generate API JSON Endpoints
-        # ─────────────────────────────────────────────────────────
         echo "📊 Generating API JSON files..."
         
         mkdir -p api
@@ -345,15 +328,16 @@ jobs:
           echo '}'
         } > api/badge.json
 
-        # ─────────────────────────────────────────────────────────
-        # ९. Idempotency Check
-        # ─────────────────────────────────────────────────────────
         NEW_HASH=$(sha256sum "all_trackers.txt" | cut -d' ' -f1)
         OLD_HASH=""
         [ -f .tracker_hash ] && OLD_HASH=$(cat .tracker_hash)
         echo "$NEW_HASH" > .tracker_hash
 
-        if [ "$NEW_HASH" = "$OLD_HASH" ]; then
+        # ✨ FORCE UPDATE OPTION
+        if [ "${{ github.event.inputs.force_update }}" = "true" ]; then
+          echo "🔴 FORCE UPDATE ENABLED - Will commit regardless of data changes"
+          echo "skip_commit=false" >> "$GITHUB_OUTPUT"
+        elif [ "$NEW_HASH" = "$OLD_HASH" ]; then
           echo "🟡 Data unchanged. Skipping commit."
           echo "skip_commit=true" >> "$GITHUB_OUTPUT"
         else
@@ -361,9 +345,6 @@ jobs:
           echo "skip_commit=false" >> "$GITHUB_OUTPUT"
         fi
 
-        # ─────────────────────────────────────────────────────────
-        # १०. GitHub Observability Dashboard Report
-        # ─────────────────────────────────────────────────────────
         ELAPSED=$(( $(date +%s) - START_TS ))
         
         {
@@ -378,7 +359,7 @@ jobs:
           echo "| 📈 **Success Rate** | \`$(awk "BEGIN {printf \"%.1f\", $SUCCESS_COUNT*100/$TOTAL_SOURCES}")%\` |"
           echo "| ⏱️ **Time Taken** | \`${ELAPSED}s\` |"
           echo "| 🧮 **Unique Trackers** | \`$FINAL_COUNT\` |"
-          echo "| 🔐 **Idempotency** | $([ "$NEW_HASH" = "$OLD_HASH" ] && echo '⏭️ Skipped (No Changes)' || echo '✅ Committed (Changes Detected)') |"
+          echo "| 🔐 **Status** | $([ "$NEW_HASH" = "$OLD_HASH" ] && echo '⏭️ No Changes' || echo '✅ Updated') |"
           echo ""
           echo "### 🔌 Protocol Breakdown"
           echo "- **UDP:** \`$UDP_COUNT\` trackers"
@@ -388,11 +369,11 @@ jobs:
           echo ""
           
           if [ -f "$FAILED_LOG" ] && [ -s "$FAILED_LOG" ]; then
-            echo "### ⚠️ Failed Sources"
+            echo "### ⚠️ Failed Sources ($(wc -l < "$FAILED_LOG"))"
             echo "\`\`\`"
-            cat "$FAILED_LOG" | head -20
-            if [ "$(wc -l < "$FAILED_LOG")" -gt 20 ]; then
-              echo "... and $(($(wc -l < "$FAILED_LOG") - 20)) more"
+            cat "$FAILED_LOG" | head -15
+            if [ "$(wc -l < "$FAILED_LOG")" -gt 15 ]; then
+              echo "... and $(($(wc -l < "$FAILED_LOG") - 15)) more"
             fi
             echo "\`\`\`"
           fi
@@ -420,7 +401,7 @@ jobs:
       if: steps.build.outputs.skip_commit == 'false'
       run: |
         git add -A
-        git commit -m "🚀 Auto-update: God Tier Tracker List (98 Sources)" || true
+        git commit -m "🚀 Auto-update: God Tier Tracker List (98 Sources) - $(date -u +'%Y-%m-%d %H:%M:%S UTC')" || true
         git push origin main --force-with-lease || echo "⚠️ No changes to push"
 
     - name: ✅ Workflow Summary
