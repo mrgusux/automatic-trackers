@@ -1,0 +1,14 @@
+# Temporary & OS Files
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.tmp
+
+# Working Directories
+/temp/
+/tmp/
+/payloads/
+
+# Ignore local hash files (if testing locally)
+.tracker_hash_local
