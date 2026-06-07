@@ -1,0 +1,28 @@
+{
+  "projectName": "automatic-trackers",
+  "projectOwner": "mrgusux",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "mrgusux",
+      "name": "Mohammad Munna",
+      "avatar_url": "https://avatars.githubusercontent.com/mrgusux",
+      "profile": "https://github.com/mrgusux",
+      "contributions": [
+        "code",
+        "design",
+        "doc",
+        "maintenance",
+        "infra"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
