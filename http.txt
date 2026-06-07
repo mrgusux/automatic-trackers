@@ -40,8 +40,6 @@ http://109.121.134.121:1337/announce
 
 http://113.17.66.164:6969/announce
 
-http://113.17.66.235:6969/announce
-
 http://114.55.113.60:6969/announce
 
 http://116.252.176.125:6969/announce
@@ -117,8 +115,6 @@ http://163.172.29.130/announce
 http://163.172.29.130:80/announce
 
 http://167.235.245.209/announce
-
-http://167.253.78.20:8080/announce
 
 http://171.104.110.193:6969/announce
 
@@ -238,10 +234,6 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
-http://211.75.205.187:80/announce
-
-http://211.75.205.188:6969/announce
-
 http://211.75.205.189:6969/announce
 
 http://211.75.210.221:6969/announce
@@ -271,8 +263,6 @@ http://34.66.57.33:2701/announce
 http://34.66.57.33:6969/announce
 
 http://34.66.57.33:80/announce
-
-http://34.66.57.33:80/announce.php
 
 http://34.89.30.59/announce
 
