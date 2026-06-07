@@ -1,2 +1,6 @@
-# This file defines the exact owners for the Ultimate Tracker Aggregator
+# Global owner of the Ultimate Torrent Tracker Aggregator Pro Max
 * @mrgusux
+
+# Explicit ownership for critical workflows and scripts
+/.github/       @mrgusux
+/*.sh           @mrgusux
