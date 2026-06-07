@@ -1,6 +1,5 @@
-.PHONY: help lint build run clean
+.PHONY: help lint build run clean test dev push
 
-# Default command when typing 'make'
 help:
 	@echo "🛠️ Ultimate Torrent Tracker Aggregator Pro Max"
 	@echo "Available commands:"
@@ -8,19 +7,34 @@ help:
 	@echo "  make build   - Build the Docker container"
 	@echo "  make run     - Run the aggregator inside Docker"
 	@echo "  make clean   - Remove generated text files"
+	@echo "  make test    - Run tests"
+	@echo "  make dev     - Development setup"
 
 lint:
-	@echo "🧹 Running ShellCheck..."
-	shellcheck .github/workflows/*.yml || echo "Note: Action files might need extraction for pure linting."
+	@echo "🧹 Running ShellCheck on shell scripts..."
+	@find . -name "*.sh" -type f | xargs shellcheck || true
 
 build:
 	@echo "📦 Building Docker Image..."
-	docker build -t automatic-trackers .
+	docker build -t automatic-trackers:latest .
 
 run:
 	@echo "🚀 Running the Aggregator..."
-	docker run --rm -v $(PWD):/app automatic-trackers
+	docker run --rm -v $(PWD):/app automatic-trackers:latest
 
 clean:
 	@echo "🗑️ Cleaning up generated files..."
-	rm -f *.txt .tracker_hash
+	rm -f *.txt .tracker_hash api/*.json
+
+test:
+	@echo "✅ Running tests..."
+	@[ -d tests ] && bash tests/run_tests.sh || echo "No tests found"
+
+dev:
+	@echo "🔧 Setting up development environment..."
+	@which docker > /dev/null || (echo "Docker not found!"; exit 1)
+	@echo "Development setup complete!"
+
+push: clean
+	@echo "📤 Pushing to GitHub..."
+	git add -A && git commit -m "update" && git push
