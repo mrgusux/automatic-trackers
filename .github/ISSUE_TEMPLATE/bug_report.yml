@@ -1,0 +1,34 @@
+name: 🐛 Bug Report
+description: Report a bug or issue with the tracker aggregator script or output.
+title: "[BUG] "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! 
+        **Note:** If a specific tracker is just dead/offline, please do NOT open a bug report. This form is strictly for script or automation pipeline errors.
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+      placeholder: e.g., The GitHub Actions workflow fails during the sanitization stage...
+    validations:
+      required: true
+  - type: input
+    id: torrent-client
+    attributes:
+      label: Torrent Client & Version
+      description: What torrent client are you using? (if applicable)
+      placeholder: e.g., qBittorrent v4.6.0
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Logs or Error Messages
+      description: Please copy and paste any relevant log output from GitHub Actions here.
+      render: shell
+    validations:
+      required: false
