@@ -6,15 +6,16 @@ services:
     container_name: automatic-trackers
     restart: unless-stopped
     
-    # Data persistence
+    # Data persistence - create output dir if needed
     volumes:
-      - ./output:/app:rw
+      - ./output:/app/output:rw
       - ./api:/app/api:rw
     
-    # Environment
+    # Environment variables
     environment:
       - TZ=UTC
       - LOG_LEVEL=info
+      - SHELL=/bin/bash
     
     # Resource limits
     deploy:
