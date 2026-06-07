@@ -1,7 +1,16 @@
 {
-  "last_updated": "",
-  "total_trackers": 0,
-  "active_trackers": 0,
-  "dead_trackers": 0,
-  "average_uptime": "0%"
+  "updated_at": "2026-06-07T23:12:53+00:00",
+  "total": 1536,
+  "by_protocol": {
+    "udp": 461,
+    "https": 254,
+    "http": 811,
+    "ws": 10
+  },
+  "sources": {
+    "total": 98,
+    "successful": 42,
+    "failed": 56,
+    "success_rate": "42.86%"
+  }
 }

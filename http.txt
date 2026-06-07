@@ -40,6 +40,8 @@ http://109.121.134.121:1337/announce
 
 http://113.17.66.164:6969/announce
 
+http://113.17.67.141:6969/announce
+
 http://114.55.113.60:6969/announce
 
 http://116.252.176.125:6969/announce
@@ -150,6 +152,8 @@ http://171.104.226.87:6969/announce
 
 http://173.254.204.71:1096/announce
 
+http://177.172.66.223:6969/announce
+
 http://178.175.143.27/announce
 
 http://178.33.73.26:2710/announce
@@ -258,7 +262,15 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
+http://34.66.57.33:11450/announce
+
+http://34.66.57.33:1337/announce
+
 http://34.66.57.33:2701/announce
+
+http://34.66.57.33:2710/announce
+
+http://34.66.57.33:443/announce
 
 http://34.66.57.33:6969/announce
 
@@ -291,6 +303,8 @@ http://37.235.174.46:2710/announce
 http://38.145.197.79:6961/announce
 
 http://43.139.20.56:6969/announce
+
+http://43.250.54.126:6969/announce
 
 http://45.154.253.10/announce
 
@@ -376,6 +390,8 @@ http://60-fps.org:80/bt/announce.php
 
 http://60-fps.org:80/bt:80/announce.php
 
+http://60.249.37.20:6969/announce
+
 http://61.216.109.95:6969/announce
 
 http://61.216.149.33:6969/announce
@@ -443,6 +459,8 @@ http://83.6.232.23:6969/announce
 http://83.6.234.75:6969/announce
 
 http://83.6.237.118:6969/announce
+
+http://85.121.5.80:6969/announce
 
 http://85.17.19.180/announce
 
@@ -1507,6 +1525,8 @@ http://uatracker.net/announce.php
 http://unknownsite.de:6969/announce
 
 http://uraniumhexafluori.de:1919/announce
+
+http://vito-tracker.space:6969/announce
 
 http://vps-c1adea63.vps.ovh.net:6969/announce
 

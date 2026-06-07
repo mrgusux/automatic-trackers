@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "label": "Trackers",
-  "message": "Updating...",
-  "color": "blue"
+  "label": "Active Trackers",
+  "message": "1536",
+  "color": "brightgreen"
 }
