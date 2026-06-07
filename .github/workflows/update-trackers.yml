@@ -1,4 +1,4 @@
-name: Ultimate Tracker Aggregator Pro Max — God Tier
+name: Ultimate Tracker Aggregator Pro Max by mrgusux
 
 on:
   schedule:
@@ -289,8 +289,13 @@ jobs:
         fi
 
         # ─────────────────────────────────────────────────────────
-        # ৯. GitHub Observability Dashboard Report
+        # ৯. JSON API Update & GitHub Dashboard
         # ─────────────────────────────────────────────────────────
+        mkdir -p api
+        echo "{\"name\": \"Automatic Trackers API\", \"description\": \"Machine-readable list\", \"status\": \"active\", \"trackers\": $(jq -Rn --argjson count "$FINAL_COUNT" '[inputs]' "all_trackers.txt" | jq -c .)}" > api/trackers.json
+        echo "{\"last_updated\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\", \"total_trackers\": $FINAL_COUNT}" > api/stats.json
+        echo "{\"schemaVersion\": 1, \"label\": \"Trackers\", \"message\": \"$FINAL_COUNT active\", \"color\": \"green\"}" > api/badge.json
+
         ELAPSED=$(( $(date +%s) - START_TS ))
         {
           echo "## 🚀 Ultimate Tracker Aggregator — God Tier Report"
@@ -316,4 +321,4 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: "🚀 Auto-update: God Tier Tracker List (98 Sources)"
-        file_pattern: "*.txt .tracker_hash"
+        file_pattern: "*.txt .tracker_hash api/*.json"
