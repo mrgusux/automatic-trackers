@@ -1,0 +1,34 @@
+name: 🧾 Generate SBOM
+
+on:
+  push:
+    branches: [ "main" ]
+  release:
+    types: [created]
+
+permissions:
+  contents: write
+
+jobs:
+  generate-sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup CycloneDX
+        run: |
+          wget https://github.com/CycloneDX/cyclonedx-cli/releases/latest/download/cyclonedx-linux-x64
+          chmod +x cyclonedx-linux-x64
+          sudo mv cyclonedx-linux-x64 /usr/local/bin/cyclonedx
+
+      - name: 🧾 Generate SBOM
+        run: |
+          # Since this is primarily a shell project, we generate a basic SBOM
+          cyclonedx analyze --output-format json --output-file bom.json .
+
+      - name: 💾 Upload SBOM as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-json
+          path: bom.json
