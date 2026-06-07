@@ -80,6 +80,9 @@ jobs:
 
     - name: Fetch, Sanitize & Build Ultimate Tracker List
       id: build
+      env:
+        DEBUG_MODE: ${{ github.event.inputs.debug_mode || 'false' }}
+        FORCE_FETCH: ${{ github.event.inputs.force_fetch || 'false' }}
       run: |
         set -euo pipefail
         
@@ -97,8 +100,8 @@ jobs:
         }
         trap 'cleanup_trap' EXIT
 
-        DEBUG_MODE="${{ github.event.inputs.debug_mode }}"
-        FORCE_FETCH="${{ github.event.inputs.force_fetch }}"
+        # Fixed: Use env variables directly
+        echo "Configuration: force_fetch=$FORCE_FETCH, debug_mode=$DEBUG_MODE"
 
         debug_log() {
           if [ "$DEBUG_MODE" = "true" ]; then
@@ -106,7 +109,7 @@ jobs:
           fi
         }
 
-        # Enhanced source list with categories
+        # Enhanced source list
         declare -A SOURCES=(
           [1]="https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"
           [2]="https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt"
@@ -276,6 +279,7 @@ jobs:
         export -f fetch_source debug_log
 
         echo "Starting parallel aggregation of $TOTAL_SOURCES sources (max $MAX_PARALLEL_JOBS concurrent)..."
+        echo "Mode: force_fetch=$FORCE_FETCH, debug=$DEBUG_MODE"
         echo "Cache: $(du -sh "$CACHE_DIR" 2>/dev/null || echo '0KB')"
         
         SUCCESS_COUNT=0
@@ -303,9 +307,9 @@ jobs:
 
         SUCCESS_COUNT=$(find "$PARALLEL_DIR" -name "source_*.txt" -type f 2>/dev/null | wc -l)
         FAIL_COUNT=$((TOTAL_SOURCES - SUCCESS_COUNT))
-        CACHE_HIT=$(find "$PARALLEL_DIR" -type f -exec grep -l 'CACHED' {} \; 2>/dev/null | wc -l)
+        CACHE_HIT=$(find "$PARALLEL_DIR" -type f 2>/dev/null | wc -l)
 
-        debug_log "Success: $SUCCESS_COUNT, Failed: $FAIL_COUNT, Cache Hit: $CACHE_HIT"
+        debug_log "Success: $SUCCESS_COUNT, Failed: $FAIL_COUNT, Files: $CACHE_HIT"
 
         # Merge and deduplicate
         find "$PARALLEL_DIR" -name "source_*.txt" -type f 2>/dev/null -exec cat {} \; | sort -u > "$WORK_DIR/raw.txt" 2>/dev/null || true
@@ -396,8 +400,7 @@ jobs:
               "total": $TOTAL_SOURCES,
               "successful": $SUCCESS_COUNT,
               "failed": $FAIL_COUNT,
-              "success_rate": "${SUCCESS_RATE}%",
-              "cache_hits": $CACHE_HIT
+              "success_rate": "${SUCCESS_RATE}%"
             }
           },
           "protocols": {
@@ -474,6 +477,12 @@ jobs:
         cat >> "$GITHUB_STEP_SUMMARY" << EOF
         ## Tracker Aggregation Report
 
+        ### Execution Configuration
+        | Setting | Value |
+        |---------|-------|
+        | **Force Fetch** | $FORCE_FETCH |
+        | **Debug Mode** | $DEBUG_MODE |
+
         ### Performance Metrics
         | Metric | Value |
         |--------|-------|
@@ -487,7 +496,6 @@ jobs:
         | **Total Sources** | $TOTAL_SOURCES |
         | **Successful Fetches** | $SUCCESS_COUNT ✓ |
         | **Failed Fetches** | $FAIL_COUNT ✗ |
-        | **Cache Hits** | $CACHE_HIT |
         | **Success Rate** | ${SUCCESS_RATE}% |
 
         ### Tracker Statistics
@@ -502,7 +510,6 @@ jobs:
         ### Status
         - **Last Update**: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
         - **Commit Status**: $([ "$NEW_HASH" = "$OLD_HASH" ] && echo "⏭️ No Changes" || echo "✅ Updated (+$TRACKER_DIFF)")
-        - **Cache Efficiency**: $(awk "BEGIN {printf \"%.1f\", ($CACHE_HIT*100)/$TOTAL_SOURCES}")%
         EOF
 
     - name: Configure Git
