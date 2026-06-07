@@ -1,0 +1,30 @@
+name: 🧮 Generate Checksums
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - '*.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-checksums:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🧮 Generate SHA256SUMS.txt
+        run: |
+          # সব .txt ফাইলের চেকলিস্ট তৈরি করা হচ্ছে
+          sha256sum *.txt > SHA256SUMS.txt
+          echo "Checksums generated successfully."
+
+      - name: 💾 Commit Checksums
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🧮 Auto-update: SHA256SUMS.txt"
+          file_pattern: "SHA256SUMS.txt"
