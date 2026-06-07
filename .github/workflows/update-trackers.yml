@@ -9,6 +9,7 @@ on:
 permissions:
   contents: write
   actions: read
+  pull-requests: write
 
 concurrency:
   group: tracker-update
@@ -29,6 +30,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: 🚀 Fetch, Sanitize & Build Ultimate Tracker List
       id: build
@@ -159,7 +161,7 @@ jobs:
         TOTAL_SOURCES=${#SOURCES[@]}
 
         # ─────────────────────────────────────────────────────────
-        # ३. WAF/Anti-Bot User-Agent Pool (Cloudflare Bypass)
+        # ३. WAF/Anti-Bot User-Agent Pool
         # ─────────────────────────────────────────────────────────
         UAS=(
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
@@ -171,7 +173,7 @@ jobs:
         FAIL_COUNT=0
 
         # ─────────────────────────────────────────────────────────
-        # ४. Exponential Backoff with Jitter (Smart Retry Logic)
+        # ४. Exponential Backoff with Jitter
         # ─────────────────────────────────────────────────────────
         fetch_with_backoff() {
           local url="$1" out="$2" attempt=1 max_attempts=4 base_delay=2
@@ -187,7 +189,6 @@ jobs:
                  -H "Sec-Fetch-Site: none" \
                  "$url" -o "$out" 2>/dev/null; then
                  
-              # HTML/Cloudflare ব্লক চেক
               local size=$(stat -c%s "$out" 2>/dev/null || echo 0)
               if [ "$size" -ge 20 ] && ! grep -qiE '<!doctype html|<html|<head|cloudflare|just a moment' "$out"; then
                 return 0
@@ -201,7 +202,6 @@ jobs:
             attempt=$(( attempt + 1 ))
           done
           
-          # Log failed URL
           echo "$url" >> "$FAILED_LOG"
           return 1
         }
@@ -256,7 +256,6 @@ jobs:
         grep -E '^http://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/http.txt"  || true
         grep -E '^wss?://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/ws.txt"    || true
 
-        # Master Priority Sort (UDP > HTTPS > HTTP > WS)
         awk '
           /^udp:\/\//   {print "1\t" $0; next}
           /^https:\/\// {print "2\t" $0; next}
@@ -270,7 +269,6 @@ jobs:
           exit 1
         fi
 
-        # Format function with better JSON handling
         format_qb() {
           local src="$1" dst="$2"
           if [ -s "$src" ]; then
@@ -288,20 +286,17 @@ jobs:
         paste -sd ',' "$WORK_DIR/sorted.txt" > "all_trackers_comma.txt"
 
         # ─────────────────────────────────────────────────────────
-        # ८. Generate API JSON Endpoints with Proper Escaping
+        # ८. Generate API JSON Endpoints
         # ─────────────────────────────────────────────────────────
         echo "📊 Generating API JSON files..."
         
-        # Create api directory if it doesn't exist
         mkdir -p api
         
-        # Count by protocol
         UDP_COUNT=$(grep -c '^udp://' "$WORK_DIR/sorted.txt" || echo 0)
         HTTPS_COUNT=$(grep -c '^https://' "$WORK_DIR/sorted.txt" || echo 0)
         HTTP_COUNT=$(grep -c '^http://' "$WORK_DIR/sorted.txt" || echo 0)
         WS_COUNT=$(grep -cE '^wss?://' "$WORK_DIR/sorted.txt" || echo 0)
         
-        # Generate trackers.json with proper JSON escaping
         {
           echo "{"
           echo '  "name": "Automatic Trackers API",'
@@ -322,7 +317,6 @@ jobs:
           echo '}'
         } > api/trackers.json
         
-        # Generate stats.json
         {
           echo "{"
           echo '  "updated_at": "'"$(date -Iseconds)"'",'
@@ -342,7 +336,6 @@ jobs:
           echo '}'
         } > api/stats.json
         
-        # Generate badge.json
         {
           echo "{"
           echo '  "schemaVersion": 1,'
@@ -412,20 +405,23 @@ jobs:
           echo "- \`https.txt\` - HTTPS trackers only"
           echo "- \`http.txt\` - HTTP trackers only"
           echo "- \`ws.txt\` - WebSocket trackers only"
-          echo "- \`api/trackers.json\` - API: All trackers (machine-readable)"
+          echo "- \`api/trackers.json\` - API: All trackers"
           echo "- \`api/stats.json\` - API: Statistics"
           echo "- \`api/badge.json\` - API: Badge data"
           
         } >> "$GITHUB_STEP_SUMMARY"
 
+    - name: Configure Git User
+      run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "github-actions[bot]"
+
     - name: 💾 Commit & Push Changes
       if: steps.build.outputs.skip_commit == 'false'
-      uses: stefanzweifel/git-auto-commit-action@v5
-      with:
-        commit_message: "🚀 Auto-update: God Tier Tracker List (98 Sources)"
-        file_pattern: "*.txt api/*.json .tracker_hash"
-        skip_dirty_check: false
-        commit_options: '--no-verify'
+      run: |
+        git add -A
+        git commit -m "🚀 Auto-update: God Tier Tracker List (98 Sources)" || true
+        git push origin main --force-with-lease || echo "⚠️ No changes to push"
 
     - name: ✅ Workflow Summary
       if: always()
