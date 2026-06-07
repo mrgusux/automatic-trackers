@@ -1,0 +1,6 @@
+{
+  "name": "Automatic Trackers API",
+  "description": "Machine-readable list of bittorrent trackers",
+  "status": "active",
+  "trackers": []
+}
