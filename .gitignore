@@ -4,11 +4,42 @@ Thumbs.db
 *~
 *.swp
 *.tmp
+*.bak
+*.log
 
 # Working Directories
 /temp/
 /tmp/
 /payloads/
+/build/
+/dist/
 
-# Ignore local hash files (if testing locally)
+# Generated tracker files
+# ⚠️ WARNING: Only if these are generated, not source controlled
+# all_trackers.txt
+# http*.txt
+# https*.txt
+# udp.txt
+# ws.txt
+
+# API artifacts
+api/*.json  # If generated
+
+# Local hashes
 .tracker_hash_local
+
+# IDE/Editor
+.vscode/
+.idea/
+*.code-workspace
+.DS_Store
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Node/Python (if added later)
+node_modules/
+__pycache__/
+*.pyc
+venv/
