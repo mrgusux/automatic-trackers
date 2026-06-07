@@ -1,306 +1,319 @@
-name: Ultimate Tracker Aggregator Pro Max — mrgusux
+name: Ultimate Tracker Aggregator Pro Max — God Tier
 
 on:
-  schedule:
-    # প্রতিদিন ৪ বার (প্রতি ৬ ঘণ্টা পরপর) আপডেট হবে
-    - cron: '0 */6 * * *'
-  workflow_dispatch:
+  schedule:
+    # প্রতিদিন ৪ বার (প্রতি ৬ ঘণ্টা পরপর) আপডেট হবে
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: write
 
 concurrency:
-  group: tracker-update
-  cancel-in-progress: true
+  group: tracker-update
+  cancel-in-progress: true
 
 jobs:
-  update-trackers:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+  update-trackers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
-    - name: 🚀 Fetch, Sanitize & Build Ultimate Tracker List
-      id: build
-      run: |
-        set -euo pipefail
-        
-        # ─────────────────────────────────────────────────────────
-        # ১. ওয়ার্কিং ডিরেক্টরি এবং টাইমার সেটআপ
-        # ─────────────────────────────────────────────────────────
-        START_TS=$(date +%s)
-        WORK_DIR=$(mktemp -d)
-        trap 'rm -rf "$WORK_DIR"' EXIT
+    - name: 🚀 Fetch, Sanitize & Build Ultimate Tracker List
+      id: build
+      run: |
+        set -euo pipefail
+        
+        # ─────────────────────────────────────────────────────────
+        # ১. ওয়ার্কিং ডিরেক্টরি এবং টাইমার সেটআপ
+        # ─────────────────────────────────────────────────────────
+        START_TS=$(date +%s)
+        WORK_DIR=$(mktemp -d)
+        trap 'rm -rf "$WORK_DIR"' EXIT
 
-        # ─────────────────────────────────────────────────────────
-        # ২. ৯৮টি ইউনিক সোর্স লিংক
-        # ─────────────────────────────────────────────────────────
-        SOURCES=(
-          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"
-          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt"
-          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt"
-          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/best.txt"
-          "https://newtrackon.com/api/all"
-          "https://newtrackon.com/api/stable"
-          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all.txt"
-          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all.txt"
-          "https://raw.githubusercontent.com/Naunter/BT_Trackers/master/Trackers/trackers_all.txt"
-          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_http.txt"
-          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_udp.txt"
-          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_ws.txt"
-          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_https.txt"
-          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/http.txt"
-          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/https.txt"
-          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/udp.txt"
-          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best_ip.txt"
-          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_best.txt"
-          "https://raw.githubusercontent.com/duckbytes/trackerslist/master/trackers_all.txt"
-          "https://raw.githubusercontent.com/slacky-1965/tracker_list/main/trackers_all.txt"
-          "https://raw.githubusercontent.com/fei0316/trackerslist/master/trackers_all.txt"
-          "https://raw.githubusercontent.com/CorralPeltzer/trackerslist/master/trackers_all.txt"
-          "https://raw.githubusercontent.com/AndrewSwann93/trackers/main/trackers_all.txt"
-          "https://raw.githubusercontent.com/crazy-max/blocklist/master/trackers.txt"
-          "https://raw.githubusercontent.com/bitjerry/BlackList/master/TrackerList.txt"
-          "https://raw.githubusercontent.com/Mysteriously/TrackersList/master/trackers_all.txt"
-          "https://raw.githubusercontent.com/MrOtherGuy/Transmission-trackerslist/master/trackers.txt"
-          "https://raw.githubusercontent.com/ZeroMemoryEX/tracker-list/master/trackers.txt"
-          "https://raw.githubusercontent.com/LightDestory/trackerslist/master/trackers_all.txt"
-          "https://raw.githubusercontent.com/GeoffreyCoulaud/Torrent-Trackers-List/main/trackers.txt"
-          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/nohttp.txt"
-          "https://cf.trackerslist.com/all.txt"
-          "https://cf.trackerslist.com/best.txt"
-          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_udp.txt"
-          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_http.txt"
-          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_https.txt"
-          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ws.txt"
-          "https://newtrackon.com/api/live"
-          "https://newtrackon.com/api/udp"
-          "https://newtrackon.com/api/http"
-          "https://newtrackon.com/api/100"
-          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_udp.txt"
-          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_http.txt"
-          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_https.txt"
-          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_ws.txt"
-          "https://cdn.jsdelivr.net/gh/DeSireFire/animeTrackerList/AT_all.txt"
-          "https://raw.githubusercontent.com/1265578519/OpenTracker/master/tracker.txt"
-          "https://github.itzmx.com/1265578519/OpenTracker/master/tracker.txt"
-          "https://raw.githubusercontent.com/gsrbr/torrentTracker/main/trackers.txt"
-          "https://raw.githubusercontent.com/GuangYu-yu/Tracker-URL/main/all.txt"
-          "https://cdn.jsdelivr.net/gh/XIU2/TrackersListCollection/all.txt"
-          "https://fastly.jsdelivr.net/gh/XIU2/TrackersListCollection/all.txt"
-          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_best.txt"
-          "https://trackerslist.com/all.txt"
-          "https://trackerslist.com/best.txt"
-          "https://cdn.jsdelivr.net/gh/ngosang/trackerslist@master/trackers_all.txt"
-          "https://raw.githubusercontent.com/opentracker/opentracker-trackers/master/trackers.txt"
-          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_best_ip.txt"
-          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all_aria2.txt"
-          "https://cdn.staticaly.com/gh/ngosang/trackerslist/master/trackers_all.txt"
-          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt"
-          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_udp.txt"
-          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_http.txt"
-          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_https.txt"
-          "https://raw.githubusercontent.com/Naunter/BT_Trackers/master/Trackers/trackers_best.txt"
-          "https://raw.githubusercontent.com/kris3713/UltimateBTTrackersList/main/trackers_all.txt"
-          "https://cdn.jsdelivr.net/gh/ngosang/trackerslist@master/trackers_all_ip.txt"
-          "https://cdn.jsdelivr.net/gh/XIU2/TrackersListCollection@master/all.txt"
-          "https://raw.githubusercontent.com/adysec/trackerslist/main/trackers_all.txt"
-          "https://raw.githubusercontent.com/adysec/trackerslist/main/trackers_best.txt"
-          "https://www.torrenttrackerlist.com/trackers.txt"
-          "https://raw.githubusercontent.com/acgtracker/public-trackers/master/trackers.txt"
-          "https://opentracker.cc/all.txt"
-          "https://trackerslist.com/http.txt"
-          "https://trackerslist.com/https.txt"
-          "https://trackerslist.com/udp.txt"
-          "https://raw.githubusercontent.com/AnimeTrackerList/AnimeTrackerList/main/trackers_all.txt"
-          "https://newtrackon.com/api/75"
-          "https://trackerlist.xyz/trackers_best.txt"
-          "https://trackerlist.xyz/trackers_all.txt"
-          "https://raw.githubusercontent.com/tdulcet/Distributed-Computing-Scripts/master/torrent-trackers.txt"
-          "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bt"
-          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_hot.txt"
-          
-          # --- 15 New Highly-Reputable Sources (Minimax + v0) ---
-          "https://raw.githubusercontent.com/HDVinnie/open-tracker-list/master/open-tracker-list.txt"
-          "https://raw.githubusercontent.com/HDVinnie/open-tracker-list/master/ip-only-trackers.txt"
-          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/http_ip.txt"
-          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/https_ip.txt"
-          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/udp_ip.txt"
-          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_udp_ip.txt"
-          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_http_ip.txt"
-          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_https_ip.txt"
-          "https://raw.githubusercontent.com/duckbytes/trackerslist/master/trackers_best.txt"
-          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt.bak"
-          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/best_aria2.txt"
-          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_ip.txt"
-          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_https.txt"
-          "https://raw.githubusercontent.com/anthonyfok/trackerslist-mirror/master/trackers_all.txt"
-          "https://newtrackon.com/api/all?include_ipv4_only_trackers=true"
-        )
-        TOTAL_SOURCES=${#SOURCES[@]}
+        # ─────────────────────────────────────────────────────────
+        # ২. ৯৮টি ইউনিক সোর্স লিংক (৮৩ অরিজিনাল + ১৫ নতুন ফ্রেশ লিংক)
+        # ─────────────────────────────────────────────────────────
+        SOURCES=(
+          # --- Original 83 Sources ---
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/best.txt"
+          "https://newtrackon.com/api/all"
+          "https://newtrackon.com/api/stable"
+          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all.txt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all.txt"
+          "https://raw.githubusercontent.com/Naunter/BT_Trackers/master/Trackers/trackers_all.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_http.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_udp.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_ws.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_https.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/http.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/https.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/udp.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best_ip.txt"
+          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_best.txt"
+          "https://raw.githubusercontent.com/duckbytes/trackerslist/master/trackers_all.txt"
+          "https://raw.githubusercontent.com/slacky-1965/tracker_list/main/trackers_all.txt"
+          "https://raw.githubusercontent.com/fei0316/trackerslist/master/trackers_all.txt"
+          "https://raw.githubusercontent.com/CorralPeltzer/trackerslist/master/trackers_all.txt"
+          "https://raw.githubusercontent.com/AndrewSwann93/trackers/main/trackers_all.txt"
+          "https://raw.githubusercontent.com/crazy-max/blocklist/master/trackers.txt"
+          "https://raw.githubusercontent.com/bitjerry/BlackList/master/TrackerList.txt"
+          "https://raw.githubusercontent.com/Mysteriously/TrackersList/master/trackers_all.txt"
+          "https://raw.githubusercontent.com/MrOtherGuy/Transmission-trackerslist/master/trackers.txt"
+          "https://raw.githubusercontent.com/ZeroMemoryEX/tracker-list/master/trackers.txt"
+          "https://raw.githubusercontent.com/LightDestory/trackerslist/master/trackers_all.txt"
+          "https://raw.githubusercontent.com/GeoffreyCoulaud/Torrent-Trackers-List/main/trackers.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/nohttp.txt"
+          "https://cf.trackerslist.com/all.txt"
+          "https://cf.trackerslist.com/best.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_udp.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_http.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_https.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ws.txt"
+          "https://newtrackon.com/api/live"
+          "https://newtrackon.com/api/udp"
+          "https://newtrackon.com/api/http"
+          "https://newtrackon.com/api/100"
+          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_udp.txt"
+          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_http.txt"
+          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_https.txt"
+          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_ws.txt"
+          "https://cdn.jsdelivr.net/gh/DeSireFire/animeTrackerList/AT_all.txt"
+          "https://raw.githubusercontent.com/1265578519/OpenTracker/master/tracker.txt"
+          "https://github.itzmx.com/1265578519/OpenTracker/master/tracker.txt"
+          "https://raw.githubusercontent.com/gsrbr/torrentTracker/main/trackers.txt"
+          "https://raw.githubusercontent.com/GuangYu-yu/Tracker-URL/main/all.txt"
+          "https://cdn.jsdelivr.net/gh/XIU2/TrackersListCollection/all.txt"
+          "https://fastly.jsdelivr.net/gh/XIU2/TrackersListCollection/all.txt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_best.txt"
+          "https://trackerslist.com/all.txt"
+          "https://trackerslist.com/best.txt"
+          "https://cdn.jsdelivr.net/gh/ngosang/trackerslist@master/trackers_all.txt"
+          "https://raw.githubusercontent.com/opentracker/opentracker-trackers/master/trackers.txt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_best_ip.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all_aria2.txt"
+          "https://cdn.staticaly.com/gh/ngosang/trackerslist/master/trackers_all.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_udp.txt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_http.txt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_https.txt"
+          "https://raw.githubusercontent.com/Naunter/BT_Trackers/master/Trackers/trackers_best.txt"
+          "https://raw.githubusercontent.com/kris3713/UltimateBTTrackersList/main/trackers_all.txt"
+          "https://cdn.jsdelivr.net/gh/ngosang/trackerslist@master/trackers_all_ip.txt"
+          "https://cdn.jsdelivr.net/gh/XIU2/TrackersListCollection@master/all.txt"
+          "https://raw.githubusercontent.com/adysec/trackerslist/main/trackers_all.txt"
+          "https://raw.githubusercontent.com/adysec/trackerslist/main/trackers_best.txt"
+          "https://www.torrenttrackerlist.com/trackers.txt"
+          "https://raw.githubusercontent.com/acgtracker/public-trackers/master/trackers.txt"
+          "https://opentracker.cc/all.txt"
+          "https://trackerslist.com/http.txt"
+          "https://trackerslist.com/https.txt"
+          "https://trackerslist.com/udp.txt"
+          "https://raw.githubusercontent.com/AnimeTrackerList/AnimeTrackerList/main/trackers_all.txt"
+          "https://newtrackon.com/api/75"
+          "https://trackerlist.xyz/trackers_best.txt"
+          "https://trackerlist.xyz/trackers_all.txt"
+          "https://raw.githubusercontent.com/tdulcet/Distributed-Computing-Scripts/master/torrent-trackers.txt"
+          "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_hot.txt"
+          
+          # --- 15 New Highly-Reputable Sources (Minimax + v0) ---
+          "https://raw.githubusercontent.com/HDVinnie/open-tracker-list/master/open-tracker-list.txt"
+          "https://raw.githubusercontent.com/HDVinnie/open-tracker-list/master/ip-only-trackers.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/http_ip.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/https_ip.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/udp_ip.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_udp_ip.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_http_ip.txt"
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_https_ip.txt"
+          "https://raw.githubusercontent.com/duckbytes/trackerslist/master/trackers_best.txt"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt.bak"
+          "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/best_aria2.txt"
+          "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_ip.txt"
+          "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_https.txt"
+          "https://raw.githubusercontent.com/anthonyfok/trackerslist-mirror/master/trackers_all.txt"
+          "https://newtrackon.com/api/all?include_ipv4_only_trackers=true"
+        )
+        TOTAL_SOURCES=${#SOURCES[@]}
 
-        UAS=(
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15"
-          "Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0"
-        )
+        # ─────────────────────────────────────────────────────────
+        # ৩. WAF/Anti-Bot User-Agent Pool (Cloudflare Bypass)
+        # ─────────────────────────────────────────────────────────
+        UAS=(
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15"
+          "Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0"
+        )
 
-        SUCCESS_COUNT=0
-        FAIL_COUNT=0
-        FAILED_URLS=()
+        SUCCESS_COUNT=0
+        FAIL_COUNT=0
+        FAILED_URLS=()
 
-        fetch_with_backoff() {
-          local url="$1" out="$2" attempt=1 max_attempts=4 base_delay=2
-          while [ "$attempt" -le "$max_attempts" ]; do
-            local ua="${UAS[$RANDOM % ${#UAS[@]}]}"
-            
-            if curl -sSfL --http1.1 --tlsv1.2 --compressed \
-                 --max-time 20 --connect-timeout 10 \
-                 -A "$ua" \
-                 -H "Accept: text/plain,text/html,application/json;q=0.9,*/*;q=0.8" \
-                 -H "Sec-Fetch-Dest: document" \
-                 -H "Sec-Fetch-Mode: navigate" \
-                 -H "Sec-Fetch-Site: none" \
-                 "$url" -o "$out" 2>/dev/null; then
-                 
-              # HTML/Cloudflare ব্লক চেক
-              local size=$(stat -c%s "$out" 2>/dev/null || echo 0)
-              if [ "$size" -ge 20 ] && ! grep -qiE '<!doctype html|<html|<head|cloudflare|just a moment' "$out"; then
-                return 0
-              fi
-              rm -f "$out"
-            fi
-            
-            local jitter=$(awk -v d="$base_delay" 'BEGIN{srand(); printf "%.1f", rand()*d}')
-            sleep "$jitter"
-            base_delay=$(( base_delay * 2 ))
-            attempt=$(( attempt + 1 ))
-          done
-          return 1
-        }
+        # ─────────────────────────────────────────────────────────
+        # ৪. Exponential Backoff with Jitter (Smart Retry Logic)
+        # ─────────────────────────────────────────────────────────
+        fetch_with_backoff() {
+          local url="$1" out="$2" attempt=1 max_attempts=4 base_delay=2
+          while [ "$attempt" -le "$max_attempts" ]; do
+            local ua="${UAS[$RANDOM % ${#UAS[@]}]}"
+            
+            if curl -sSfL --http1.1 --tlsv1.2 --compressed \
+                 --max-time 20 --connect-timeout 10 \
+                 -A "$ua" \
+                 -H "Accept: text/plain,text/html,application/json;q=0.9,*/*;q=0.8" \
+                 -H "Sec-Fetch-Dest: document" \
+                 -H "Sec-Fetch-Mode: navigate" \
+                 -H "Sec-Fetch-Site: none" \
+                 "$url" -o "$out" 2>/dev/null; then
+                 
+              # HTML/Cloudflare ব্লক চেক
+              local size=$(stat -c%s "$out" 2>/dev/null || echo 0)
+              if [ "$size" -ge 20 ] && ! grep -qiE '<!doctype html|<html|<head|cloudflare|just a moment' "$out"; then
+                return 0
+              fi
+              rm -f "$out"
+            fi
+            
+            local jitter=$(awk -v d="$base_delay" 'BEGIN{srand(); printf "%.1f", rand()*d}')
+            sleep "$jitter"
+            base_delay=$(( base_delay * 2 ))
+            attempt=$(( attempt + 1 ))
+          done
+          return 1
+        }
 
-        echo "🚀 Fetching ${TOTAL_SOURCES} trackers sequentially..."
-        for idx in "${!SOURCES[@]}"; do
-          url="${SOURCES[$idx]}"
-          out="${WORK_DIR}/temp_${idx}.txt"
-          
-          printf "[%02d/%02d] Fetching... " "$((idx+1))" "$TOTAL_SOURCES"
-          if fetch_with_backoff "$url" "$out"; then
-            SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
-            echo "✅ OK"
-          else
-            FAIL_COUNT=$((FAIL_COUNT + 1))
-            FAILED_URLS+=("$url")
-            echo "❌ FAILED"
-          fi
-        done
+        # ─────────────────────────────────────────────────────────
+        # ৫. Sequential Fetching (১টি ১টি করে নিখুঁত ডাউনলোড)
+        # ─────────────────────────────────────────────────────────
+        echo "🚀 Fetching ${TOTAL_SOURCES} trackers sequentially..."
+        for idx in "${!SOURCES[@]}"; do
+          url="${SOURCES[$idx]}"
+          out="${WORK_DIR}/temp_${idx}.txt"
+          
+          printf "[%02d/%02d] Fetching... " "$((idx+1))" "$TOTAL_SOURCES"
+          if fetch_with_backoff "$url" "$out"; then
+            SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
+            echo "✅ OK"
+          else
+            FAIL_COUNT=$((FAIL_COUNT + 1))
+            FAILED_URLS+=("$url")
+            echo "❌ FAILED"
+          fi
+        done
 
-        cat "$WORK_DIR"/temp_*.txt > "$WORK_DIR/raw.txt" 2>/dev/null || true
+        cat "$WORK_DIR"/temp_*.txt > "$WORK_DIR/raw.txt" 2>/dev/null || true
 
-        echo "🧹 Sanitizing and filtering trackers..."
-        
-        sed '1s/^\xEF\xBB\xBF//' "$WORK_DIR/raw.txt" | \
-        tr -d '\r' | \
-        LC_ALL=C sed 's/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]//g' | \
-        sed 's/<[^>]*>//g' | \
-        sed 's/^[[:space:]]*//; s/[[:space:]]*$//' | \
-        grep -iE '^(udp|https?|wss?)://[^[:space:]]+$' | \
-        sed 's|/[[:space:]]*$||; s|/$||' | \
-        tr '[:upper:]' '[:lower:]' | \
-        grep -viE '://(localhost|127\.|0\.0\.0\.0|255\.255\.255\.255)' | \
-        grep -viE '://(10\.[0-9]+\.[0-9]+\.[0-9]+)' | \
-        grep -viE '://(192\.168\.[0-9]+\.[0-9]+)' | \
-        grep -viE '://(172\.(1[6-9]|2[0-9]|3[0-1])\.[0-9]+\.[0-9]+)' | \
-        grep -viE '://(169\.254\.[0-9]+\.[0-9]+)' | \
-        grep -viE '(example\.(com|org|net)|your\.tracker|\.local|\.onion)' | \
-        awk '!seen[$0]++' | \
-        sort -u > "$WORK_DIR/clean.txt"
+        # ─────────────────────────────────────────────────────────
+        # ৬. Enterprise-Grade Sanitization (১২-ধাপের ডিপ ক্লিনিং)
+        # ─────────────────────────────────────────────────────────
+        echo "🧹 Sanitizing and filtering trackers..."
+        
+        sed '1s/^\xEF\xBB\xBF//' "$WORK_DIR/raw.txt" | \
+        tr -d '\r' | \
+        LC_ALL=C sed 's/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]//g' | \
+        sed 's/<[^>]*>//g' | \
+        sed 's/^[[:space:]]*//; s/[[:space:]]*$//' | \
+        grep -iE '^(udp|https?|wss?)://[^[:space:]]+$' | \
+        sed 's|/[[:space:]]*$||; s|/$||' | \
+        tr '[:upper:]' '[:lower:]' | \
+        grep -viE '://(localhost|127\.|0\.0\.0\.0|255\.255\.255\.255)' | \
+        grep -viE '://(10\.[0-9]+\.[0-9]+\.[0-9]+)' | \
+        grep -viE '://(192\.168\.[0-9]+\.[0-9]+)' | \
+        grep -viE '://(172\.(1[6-9]|2[0-9]|3[0-1])\.[0-9]+\.[0-9]+)' | \
+        grep -viE '://(169\.254\.[0-9]+\.[0-9]+)' | \
+        grep -viE '(example\.(com|org|net)|your\.tracker|\.local|\.onion)' | \
+        awk '!seen[$0]++' | \
+        sort -u > "$WORK_DIR/clean.txt"
 
-        grep -E '^udp://'   "$WORK_DIR/clean.txt" > "$WORK_DIR/udp.txt"   || true
-        grep -E '^https://' "$WORK_DIR/clean.txt" > "$WORK_DIR/https.txt" || true
-        grep -E '^http://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/http.txt"  || true
-        grep -E '^wss?://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/ws.txt"    || true
+        # ─────────────────────────────────────────────────────────
+        # ৭. Categorization & qBittorrent Formatting
+        # ─────────────────────────────────────────────────────────
+        grep -E '^udp://'   "$WORK_DIR/clean.txt" > "$WORK_DIR/udp.txt"   || true
+        grep -E '^https://' "$WORK_DIR/clean.txt" > "$WORK_DIR/https.txt" || true
+        grep -E '^http://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/http.txt"  || true
+        grep -E '^wss?://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/ws.txt"    || true
 
-        awk '
-          /^udp:\/\//   {print "1\t" $0; next}
-          /^https:\/\// {print "2\t" $0; next}
-          /^http:\/\//  {print "3\t" $0; next}
-          /^wss?:\/\//  {print "4\t" $0; next}
-        ' "$WORK_DIR/clean.txt" | sort -t$'\t' -k1,1n -k2,2 | cut -f2- > "$WORK_DIR/sorted.txt"
+        # Master Priority Sort (UDP > HTTPS > HTTP > WS)
+        awk '
+          /^udp:\/\//   {print "1\t" $0; next}
+          /^https:\/\// {print "2\t" $0; next}
+          /^http:\/\//  {print "3\t" $0; next}
+          /^wss?:\/\//  {print "4\t" $0; next}
+        ' "$WORK_DIR/clean.txt" | sort -t$'\t' -k1,1n -k2,2 | cut -f2- > "$WORK_DIR/sorted.txt"
 
-        FINAL_COUNT=$(wc -l < "$WORK_DIR/sorted.txt" || echo 0)
-        if [ "$FINAL_COUNT" -lt 200 ]; then
-          echo "::error::Tracker count extremely low ($FINAL_COUNT). Aborting to prevent data loss."
-          exit 1
-        fi
+        FINAL_COUNT=$(wc -l < "$WORK_DIR/sorted.txt" || echo 0)
+        if [ "$FINAL_COUNT" -lt 200 ]; then
+          echo "::error::Tracker count extremely low ($FINAL_COUNT). Aborting to prevent data loss."
+          exit 1
+        fi
 
-        format_qb() {
-          local src="$1" dst="$2"
-          if [ -s "$src" ]; then
-            awk 'NR>1{print ""} {print}' "$src" > "$dst"
-          else
-            rm -f "$dst"
-          fi
-        }
+        # Format function: Exactly ONE blank line between trackers
+        format_qb() {
+          local src="$1" dst="$2"
+          if [ -s "$src" ]; then
+            awk 'NR>1{print ""} {print}' "$src" > "$dst"
+          else
+            rm -f "$dst"
+          fi
+        }
 
-        format_qb "$WORK_DIR/sorted.txt" "all_trackers.txt"
-        format_qb "$WORK_DIR/udp.txt"    "udp.txt"
-        format_qb "$WORK_DIR/https.txt"  "https.txt"
-        format_qb "$WORK_DIR/http.txt"   "http.txt"
-        format_qb "$WORK_DIR/ws.txt"     "ws.txt"
-        paste -sd ',' "$WORK_DIR/sorted.txt" > "all_trackers_comma.txt"
+        format_qb "$WORK_DIR/sorted.txt" "all_trackers.txt"
+        format_qb "$WORK_DIR/udp.txt"    "udp.txt"
+        format_qb "$WORK_DIR/https.txt"  "https.txt"
+        format_qb "$WORK_DIR/http.txt"   "http.txt"
+        format_qb "$WORK_DIR/ws.txt"     "ws.txt"
+        paste -sd ',' "$WORK_DIR/sorted.txt" > "all_trackers_comma.txt"
 
-        # ─────────────────────────────────────────────────────────
-        # ৮. Idempotency Check (অযথা কমিট বন্ধ করা)
-        # ─────────────────────────────────────────────────────────
-        NEW_HASH=$(sha256sum "all_trackers.txt" | cut -d' ' -f1)
-        OLD_HASH=""
-        [ -f .tracker_hash ] && OLD_HASH=$(cat .tracker_hash)
-        echo "$NEW_HASH" > .tracker_hash
+        # ─────────────────────────────────────────────────────────
+        # ৮. Idempotency Check (অযথা কমিট বন্ধ করা)
+        # ─────────────────────────────────────────────────────────
+        NEW_HASH=$(sha256sum "all_trackers.txt" | cut -d' ' -f1)
+        OLD_HASH=""
+        [ -f .tracker_hash ] && OLD_HASH=$(cat .tracker_hash)
+        echo "$NEW_HASH" > .tracker_hash
 
-        if [ "$NEW_HASH" = "$OLD_HASH" ]; then
-          echo "🟡 Data unchanged. Skipping commit."
-          echo "skip_commit=true" >> "$GITHUB_OUTPUT"
-        else
-          echo "🟢 Changes detected. Preparing commit."
-          echo "skip_commit=false" >> "$GITHUB_OUTPUT"
-        fi
+        if [ "$NEW_HASH" = "$OLD_HASH" ]; then
+          echo "🟡 Data unchanged. Skipping commit."
+          echo "skip_commit=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "🟢 Changes detected. Preparing commit."
+          echo "skip_commit=false" >> "$GITHUB_OUTPUT"
+        fi
 
-        # ─────────────────────────────────────────────────────────
-        # ৯. JSON API Update (Python-based)
-        # ─────────────────────────────────────────────────────────
-        mkdir -p api
-        python3 -c "import json; print(json.dumps({'name': 'Automatic Trackers API', 'description': 'Machine-readable list', 'status': 'active', 'trackers': [line.strip() for line in open('all_trackers.txt') if line.strip()]}))" > api/trackers.json
-        echo "{\"last_updated\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\", \"total_trackers\": $FINAL_COUNT}" > api/stats.json
-        echo "{\"schemaVersion\": 1, \"label\": \"Trackers\", \"message\": \"$FINAL_COUNT active\", \"color\": \"green\"}" > api/badge.json
+        # ─────────────────────────────────────────────────────────
+        # ৯. GitHub Observability Dashboard Report
+        # ─────────────────────────────────────────────────────────
+        ELAPSED=$(( $(date +%s) - START_TS ))
+        {
+          echo "## 🚀 Ultimate Tracker Aggregator — God Tier Report"
+          echo ""
+          echo "| Metric | Value |"
+          echo "|---|---|"
+          echo "| 🌐 **Total Sources** | $TOTAL_SOURCES |"
+          echo "| ✅ **Success** | $SUCCESS_COUNT |"
+          echo "| ❌ **Failed** | $FAIL_COUNT |"
+          echo "| ⏱️ **Time Taken** | ${ELAPSED}s |"
+          echo "| 🧮 **Unique Trackers** | **$FINAL_COUNT** |"
+          echo "| 🔐 **Idempotency** | $([ "$NEW_HASH" = "$OLD_HASH" ] && echo 'Skipped (No Changes)' || echo 'Committed (Changes Detected)') |"
+          echo ""
+          echo "### 📊 Protocol Breakdown"
+          echo "- **UDP:** $(grep -c '^udp://' "$WORK_DIR/sorted.txt" || echo 0)"
+          echo "- **HTTPS:** $(grep -c '^https://' "$WORK_DIR/sorted.txt" || echo 0)"
+          echo "- **HTTP:** $(grep -c '^http://' "$WORK_DIR/sorted.txt" || echo 0)"
+          echo "- **WS/WSS:** $(grep -cE '^wss?://' "$WORK_DIR/sorted.txt" || echo 0)"
+        } >> "$GITHUB_STEP_SUMMARY"
 
-        ELAPSED=$(( $(date +%s) - START_TS ))
-        {
-          echo "## 🚀 Ultimate Tracker Aggregator — God Tier Report"
-          echo ""
-          echo "| Metric | Value |"
-          echo "|---|---|"
-          echo "| 🌐 **Total Sources** | $TOTAL_SOURCES |"
-          echo "| ✅ **Success** | $SUCCESS_COUNT |"
-          echo "| ❌ **Failed** | $FAIL_COUNT |"
-          echo "| ⏱️ **Time Taken** | ${ELAPSED}s |"
-          echo "| 🧮 **Unique Trackers** | **$FINAL_COUNT** |"
-          echo "| 🔐 **Idempotency** | $([ "$NEW_HASH" = "$OLD_HASH" ] && echo 'Skipped (No Changes)' || echo 'Committed (Changes Detected)') |"
-          echo ""
-          echo "### 📊 Protocol Breakdown"
-          echo "- **UDP:** $(grep -c '^udp://' "$WORK_DIR/sorted.txt" || echo 0)"
-          echo "- **HTTPS:** $(grep -c '^https://' "$WORK_DIR/sorted.txt" || echo 0)"
-          echo "- **HTTP:** $(grep -c '^http://' "$WORK_DIR/sorted.txt" || echo 0)"
-          echo "- **WS/WSS:** $(grep -cE '^wss?://' "$WORK_DIR/sorted.txt" || echo 0)"
-        } >> "$GITHUB_STEP_SUMMARY"
-
-    - name: 💾 Commit & Push Changes
-      if: steps.build.outputs.skip_commit == 'false'
-      uses: stefanzweifel/git-auto-commit-action@v5
-      with:
-        commit_message: "🚀 Auto-update: God Tier Tracker List (98 Sources)"
-        file_pattern: "*.txt .tracker_hash api/*.json"
+    - name: 💾 Commit & Push Changes
+      if: steps.build.outputs.skip_commit == 'false'
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "🚀 Auto-update: God Tier Tracker List (98 Sources)"
+        file_pattern: "*.txt .tracker_hash"
