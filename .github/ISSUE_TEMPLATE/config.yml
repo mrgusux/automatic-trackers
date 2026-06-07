@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/mrgusux/automatic-trackers/discussions
+    about: Please ask general questions, setup queries, or share ideas here instead of creating an issue.
+  - name: 🔒 Security Vulnerabilities
+    url: https://github.com/mrgusux/automatic-trackers/security/policy
+    about: Please report any security vulnerabilities privately.
