@@ -37,4 +37,9 @@ dev:
 
 push: clean
 	@echo "📤 Pushing to GitHub..."
-	git add -A && git commit -m "update" && git push
+	@if [ -z "$${CI+x}" ]; then \
+		echo "⚠️ Pushing to main branch locally..."; \
+		git add -A && git commit -m "🚀 Auto-update: God Tier Tracker List" && git push origin main; \
+	else \
+		echo "✅ Running in CI environment - skipping manual push"; \
+	fi
