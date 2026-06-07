@@ -1,45 +1,53 @@
-# 🚀 Ultimate Tracker Aggregator Pro Max — God Tier Edition
+<div align="center">
+  <img src="og-image.png" alt="Automatic Trackers Banner" width="100%" />
+  
+  # 🚀 Automatic Trackers
+  
+  **A frequently updated, automatically sanitized, and carefully curated list of BitTorrent Trackers.**
+  
+  [![Update Trackers](https://github.com/mrgusux/automatic-trackers/actions/workflows/update-trackers.yml/badge.svg)](https://github.com/mrgusux/automatic-trackers/actions)
+  [![Security Scorecard](https://api.securityscorecards.dev/projects/github.com/mrgusux/automatic-trackers/badge)](https://securityscorecards.dev/viewer/?uri=github.com/mrgusux/automatic-trackers)
+  [![Trackers Status](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/api/badge.json)](https://github.com/mrgusux/automatic-trackers/blob/main/api/stats.json)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-[![Maintained by mrgusux](https://img.shields.io/badge/Maintained%20by-mrgusux-blueviolet.svg?style=for-the-badge)](https://github.com/mrgusux)
-[![License: MIT](https://img.shields.io/badge/License-MIT-success.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![Automated Updates](https://img.shields.io/badge/Auto%20Updates-Every%206%20Hours-ff69b4.svg?style=for-the-badge)](#)
-
-> **Architected and Automated by [mrgusux](https://github.com/mrgusux)** > An enterprise-grade, fully automated BitTorrent tracker aggregator. It fetches from 98 highly reputable sources, sanitizes data with a 12-stage pipeline, and perfectly formats it for maximum download speeds.
-
----
-
-## 🌟 God-Tier Features
-
-Developed by **mrgusux**, this aggregator uses advanced DevOps techniques that ordinary tracker lists lack:
-
-* **🛡️ WAF & Anti-Bot Evasion:** Bypasses Cloudflare and firewalls using rotating modern browser User-Agents.
-* **⏱️ Full Jitter Backoff:** Uses Amazon Web Services (AWS) architectural patterns for smart retry mechanisms.
-* **🧹 12-Stage Sanitization:** Strictly filters out fake IPs, private/local networks (RFC 1918), hidden BOM characters, and HTML error pages.
-* **🔁 Idempotency (Smart Save):** Automatically skips Git commits if the tracker data hasn't changed, keeping the repository clean and fast.
-* **📊 GitHub Observability:** Generates beautiful telemetry dashboards after every run.
+  [Read the Documentation](https://mrgusux.github.io/automatic-trackers) • [Report a Bug](../../issues) • [Request a Feature](../../issues)
+</div>
 
 ---
 
-## 📥 How to Use (Direct Links)
+## 🌟 Why This List?
 
-You can copy the links below and paste them directly into your torrent client (like qBittorrent or Aria2). These links automatically update every 6 hours!
+Finding reliable and active BitTorrent trackers can be a hassle. This repository solves that by utilizing automated GitHub Actions to scrape, verify, sanitize, and update a massive list of trackers daily.
 
-| Tracker Type | Direct Raw Link |
-| :--- | :--- |
-| **All Trackers (Best)** | `https://raw.githubusercontent.com/mrgusux/YOUR-REPO-NAME/main/all_trackers.txt` |
-| **UDP Only** | `https://raw.githubusercontent.com/mrgusux/YOUR-REPO-NAME/main/udp.txt` |
-| **HTTPS Only** | `https://raw.githubusercontent.com/mrgusux/YOUR-REPO-NAME/main/https.txt` |
-| **HTTP Only** | `https://raw.githubusercontent.com/mrgusux/YOUR-REPO-NAME/main/http.txt` |
-| **WebSocket (WS)** | `https://raw.githubusercontent.com/mrgusux/YOUR-REPO-NAME/main/ws.txt` |
+- **⏱️ Always Fresh:** Automated workflows check for dead or slow trackers and update the lists.
+- **🛡️ Sanitized:** Malicious, fake, or honeypot trackers are strictly filtered out.
+- **🔌 API Ready:** Developer-friendly JSON endpoints are available for seamless app integration.
+- **🐳 Docker Support:** Easy local deployment using Docker and Docker Compose.
 
-*(Recommended: Go to qBittorrent Settings > BitTorrent > Check "Automatically add these trackers to new downloads" and paste the `all_trackers.txt` link)*
+## 📋 Tracker Lists (Raw Links)
 
----
+You can directly add these raw links to your torrent client (e.g., qBittorrent, Transmission, Aria2) to automatically fetch trackers:
 
-## 👨‍💻 Author
+* 🔥 **[All Trackers (Best)](https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/all_trackers.txt)** - The complete, sanitized list of all active trackers.
+* 🌐 **[HTTP/HTTPS Trackers](https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/https.txt)** - Web-based trackers only.
+* ⚡ **[UDP Trackers](https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/udp.txt)** - Fast, low-overhead UDP trackers.
+* 🕸️ **[WebSocket Trackers (WS)](https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/ws.txt)** - WebTorrent compatible trackers.
 
-**mrgusux** * GitHub: [@mrgusux](https://github.com/mrgusux)
+## 💻 Developer API (Machine-Readable)
 
-## 📄 License
+Building an app or tool? We provide pure JSON outputs that are automatically updated alongside the raw lists:
 
-This project is open-source and available under the MIT License. Copyright (c) 2024 mrgusux.
+- **Full Trackers API:** [`/api/trackers.json`](https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/api/trackers.json)
+- **Health & Statistics:** [`/api/stats.json`](https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/api/stats.json)
+
+## 🐳 Quick Start (Docker)
+
+If you want to run the tracking and sanitizing scripts locally, you can use Docker.
+
+```bash
+# Clone the repository
+git clone [https://github.com/mrgusux/automatic-trackers.git](https://github.com/mrgusux/automatic-trackers.git)
+cd automatic-trackers
+
+# Run via Docker Compose
+docker-compose up -d
