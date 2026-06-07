@@ -4,15 +4,6 @@ on:
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
-    inputs:
-      force_update:
-        description: 'Force update even if data unchanged'
-        required: false
-        default: 'false'
-        type: choice
-        options:
-          - 'false'
-          - 'true'
 
 permissions:
   contents: write
@@ -25,13 +16,14 @@ concurrency:
 
 env:
   MIN_TRACKER_COUNT: 200
-  TIMEOUT_SECONDS: 20
-  CONNECT_TIMEOUT: 10
+  TIMEOUT_SECONDS: 15
+  CONNECT_TIMEOUT: 8
+  MAX_PARALLEL_JOBS: 10
 
 jobs:
   update-trackers:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 45
 
     steps:
     - name: Checkout repository
@@ -40,7 +32,7 @@ jobs:
         fetch-depth: 0
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: 🚀 Fetch, Sanitize & Build Ultimate Tracker List
+    - name: Fetch, Sanitize & Build Ultimate Tracker List
       id: build
       run: |
         set -euo pipefail
@@ -48,6 +40,8 @@ jobs:
         START_TS=$(date +%s)
         WORK_DIR=$(mktemp -d)
         FAILED_LOG="${WORK_DIR}/failed_sources.log"
+        PARALLEL_DIR="${WORK_DIR}/parallel"
+        mkdir -p "$PARALLEL_DIR"
         
         cleanup_trap() {
           if [ -d "$WORK_DIR" ]; then
@@ -56,8 +50,8 @@ jobs:
         }
         trap 'cleanup_trap' EXIT
 
-        SOURCES=(
-          # --- Original 83 Sources ---
+        # Define 98 tracker sources
+        declare -a SOURCES=(
           "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"
           "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt"
           "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt"
@@ -141,8 +135,6 @@ jobs:
           "https://raw.githubusercontent.com/tdulcet/Distributed-Computing-Scripts/master/torrent-trackers.txt"
           "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bt"
           "https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_hot.txt"
-          
-          # --- 15 New Highly-Reputable Sources ---
           "https://raw.githubusercontent.com/HDVinnie/open-tracker-list/master/open-tracker-list.txt"
           "https://raw.githubusercontent.com/HDVinnie/open-tracker-list/master/ip-only-trackers.txt"
           "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/http_ip.txt"
@@ -161,7 +153,7 @@ jobs:
         )
         TOTAL_SOURCES=${#SOURCES[@]}
 
-        UAS=(
+        USER_AGENTS=(
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
           "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15"
           "Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0"
@@ -170,57 +162,74 @@ jobs:
         SUCCESS_COUNT=0
         FAIL_COUNT=0
 
-        fetch_with_backoff() {
-          local url="$1" out="$2" attempt=1 max_attempts=4 base_delay=2
+        # Optimized parallel fetch function with retry logic
+        fetch_source() {
+          local idx="$1"
+          local url="$2"
+          local out="${PARALLEL_DIR}/source_${idx}.txt"
+          local attempt=1
+          local max_attempts=3
+          local base_delay=1
+
           while [ "$attempt" -le "$max_attempts" ]; do
-            local ua="${UAS[$RANDOM % ${#UAS[@]}]}"
+            local ua="${USER_AGENTS[$RANDOM % ${#USER_AGENTS[@]}]}"
             
-            if curl -sSfL --http1.1 --tlsv1.2 --compressed \
+            if timeout $((TIMEOUT_SECONDS + 2)) curl -sSfL --http1.1 --tlsv1.2 --compressed \
                  --max-time "$TIMEOUT_SECONDS" --connect-timeout "$CONNECT_TIMEOUT" \
                  -A "$ua" \
-                 -H "Accept: text/plain,text/html,application/json;q=0.9,*/*;q=0.8" \
-                 -H "Sec-Fetch-Dest: document" \
-                 -H "Sec-Fetch-Mode: navigate" \
-                 -H "Sec-Fetch-Site: none" \
+                 -H "Accept: text/plain,application/json" \
+                 -H "User-Agent: $ua" \
                  "$url" -o "$out" 2>/dev/null; then
                  
               local size=$(stat -c%s "$out" 2>/dev/null || echo 0)
-              if [ "$size" -ge 20 ] && ! grep -qiE '<!doctype html|<html|<head|cloudflare|just a moment' "$out"; then
+              if [ "$size" -ge 15 ] && ! grep -qiE '<!doctype html|<html|cloudflare' "$out" 2>/dev/null; then
+                echo "OK"
                 return 0
               fi
               rm -f "$out"
             fi
             
-            local jitter=$(awk -v d="$base_delay" 'BEGIN{srand(); printf "%.1f", rand()*d}')
-            sleep "$jitter"
-            base_delay=$(( base_delay * 2 ))
-            attempt=$(( attempt + 1 ))
+            sleep "$base_delay"
+            base_delay=$((base_delay + 1))
+            attempt=$((attempt + 1))
           done
           
           echo "$url" >> "$FAILED_LOG"
+          echo "FAILED"
           return 1
         }
 
-        echo "🚀 Fetching ${TOTAL_SOURCES} trackers sequentially..."
-        for idx in "${!SOURCES[@]}"; do
-          url="${SOURCES[$idx]}"
-          out="${WORK_DIR}/temp_${idx}.txt"
-          
-          printf "[%02d/%02d] Fetching... " "$((idx+1))" "$TOTAL_SOURCES"
-          if fetch_with_backoff "$url" "$out"; then
-            SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
-            echo "✅ OK"
-          else
-            FAIL_COUNT=$((FAIL_COUNT + 1))
-            echo "❌ FAILED"
-          fi
-        done
+        export -f fetch_source
+        export PARALLEL_DIR TIMEOUT_SECONDS CONNECT_TIMEOUT USER_AGENTS FAILED_LOG
 
-        cat "$WORK_DIR"/temp_*.txt > "$WORK_DIR/raw.txt" 2>/dev/null || true
-
-        echo "🧹 Sanitizing and filtering trackers..."
+        echo "Starting parallel fetch from $TOTAL_SOURCES sources..."
         
-        sed '1s/^\xEF\xBB\xBF//' "$WORK_DIR/raw.txt" | \
+        # Execute all fetches in parallel with controlled concurrency
+        {
+          for idx in "${!SOURCES[@]}"; do
+            echo "$idx:${SOURCES[$idx]}"
+          done
+        } | xargs -P "$MAX_PARALLEL_JOBS" -n 1 -I {} bash -c '
+          idx=$(echo {} | cut -d: -f1)
+          url=$(echo {} | cut -d: -f2-)
+          result=$(fetch_source "$idx" "$url")
+          if [ "$result" = "OK" ]; then
+            echo "[$(printf "%02d" $((idx+1)))] SUCCESS: $(echo $url | cut -d/ -f4-)"
+          else
+            echo "[$(printf "%02d" $((idx+1)))] FAILED: $(echo $url | cut -d/ -f4-)"
+          fi
+        '
+
+        SUCCESS_COUNT=$(find "$PARALLEL_DIR" -name "source_*.txt" -type f 2>/dev/null | wc -l)
+        FAIL_COUNT=$((TOTAL_SOURCES - SUCCESS_COUNT))
+
+        # Merge all fetched files
+        find "$PARALLEL_DIR" -name "source_*.txt" -type f 2>/dev/null | xargs cat > "$WORK_DIR/raw.txt" 2>/dev/null || true
+
+        echo "Starting sanitization pipeline..."
+        
+        # Enterprise-grade 12-stage sanitization
+        sed '1s/^\xEF\xBB\xBF//' "$WORK_DIR/raw.txt" 2>/dev/null | \
         tr -d '\r' | \
         LC_ALL=C sed 's/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]//g' | \
         sed 's/<[^>]*>//g' | \
@@ -228,20 +237,19 @@ jobs:
         grep -iE '^(udp|https?|wss?)://[^[:space:]]+$' | \
         sed 's|/[[:space:]]*$||; s|/$||' | \
         tr '[:upper:]' '[:lower:]' | \
-        grep -viE '://(localhost|127\.|0\.0\.0\.0|255\.255\.255\.255)' | \
-        grep -viE '://(10\.[0-9]+\.[0-9]+\.[0-9]+)' | \
-        grep -viE '://(192\.168\.[0-9]+\.[0-9]+)' | \
-        grep -viE '://(172\.(1[6-9]|2[0-9]|3[0-1])\.[0-9]+\.[0-9]+)' | \
-        grep -viE '://(169\.254\.[0-9]+\.[0-9]+)' | \
-        grep -viE '(example\.(com|org|net)|your\.tracker|\.local|\.onion)' | \
+        grep -viE '://(localhost|127\.|0\.0\.0\.0|255\.255\.255\.255|::1)' | \
+        grep -viE '://(10\.[0-9]+\.[0-9]+\.[0-9]+|192\.168\.|172\.1[6-9]\.|172\.2[0-9]\.|172\.3[0-1]\.|169\.254\.)' | \
+        grep -viE '(example\.(com|org|net)|your\.tracker|\.local|\.onion|\.internal)' | \
         awk '!seen[$0]++' | \
         sort -u > "$WORK_DIR/clean.txt"
 
-        grep -E '^udp://'   "$WORK_DIR/clean.txt" > "$WORK_DIR/udp.txt"   || true
-        grep -E '^https://' "$WORK_DIR/clean.txt" > "$WORK_DIR/https.txt" || true
-        grep -E '^http://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/http.txt"  || true
-        grep -E '^wss?://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/ws.txt"    || true
+        # Categorize by protocol
+        grep -E '^udp://'   "$WORK_DIR/clean.txt" > "$WORK_DIR/udp.txt"   2>/dev/null || true
+        grep -E '^https://' "$WORK_DIR/clean.txt" > "$WORK_DIR/https.txt" 2>/dev/null || true
+        grep -E '^http://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/http.txt"  2>/dev/null || true
+        grep -E '^wss?://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/ws.txt"    2>/dev/null || true
 
+        # Priority sort: UDP > HTTPS > HTTP > WebSocket
         awk '
           /^udp:\/\//   {print "1\t" $0; next}
           /^https:\/\// {print "2\t" $0; next}
@@ -251,162 +259,136 @@ jobs:
 
         FINAL_COUNT=$(wc -l < "$WORK_DIR/sorted.txt" || echo 0)
         if [ "$FINAL_COUNT" -lt "$MIN_TRACKER_COUNT" ]; then
-          echo "::error::Tracker count extremely low ($FINAL_COUNT). Aborting to prevent data loss."
+          echo "ERROR: Tracker count too low ($FINAL_COUNT < $MIN_TRACKER_COUNT). Aborting."
           exit 1
         fi
 
-        format_qb() {
+        # Format files for qBittorrent compatibility
+        format_output() {
           local src="$1" dst="$2"
           if [ -s "$src" ]; then
             awk 'NR>1{print ""} {print}' "$src" > "$dst"
           else
-            rm -f "$dst"
+            touch "$dst"
           fi
         }
 
-        format_qb "$WORK_DIR/sorted.txt" "all_trackers.txt"
-        format_qb "$WORK_DIR/udp.txt"    "udp.txt"
-        format_qb "$WORK_DIR/https.txt"  "https.txt"
-        format_qb "$WORK_DIR/http.txt"   "http.txt"
-        format_qb "$WORK_DIR/ws.txt"     "ws.txt"
+        format_output "$WORK_DIR/sorted.txt" "all_trackers.txt"
+        format_output "$WORK_DIR/udp.txt"    "udp.txt"
+        format_output "$WORK_DIR/https.txt"  "https.txt"
+        format_output "$WORK_DIR/http.txt"   "http.txt"
+        format_output "$WORK_DIR/ws.txt"     "ws.txt"
         paste -sd ',' "$WORK_DIR/sorted.txt" > "all_trackers_comma.txt"
 
-        echo "📊 Generating API JSON files..."
-        
+        # Generate JSON API endpoints
+        echo "Generating API JSON files..."
         mkdir -p api
         
-        UDP_COUNT=$(grep -c '^udp://' "$WORK_DIR/sorted.txt" || echo 0)
-        HTTPS_COUNT=$(grep -c '^https://' "$WORK_DIR/sorted.txt" || echo 0)
-        HTTP_COUNT=$(grep -c '^http://' "$WORK_DIR/sorted.txt" || echo 0)
-        WS_COUNT=$(grep -cE '^wss?://' "$WORK_DIR/sorted.txt" || echo 0)
+        UDP_COUNT=$(grep -c '^udp://' "$WORK_DIR/sorted.txt" 2>/dev/null || echo 0)
+        HTTPS_COUNT=$(grep -c '^https://' "$WORK_DIR/sorted.txt" 2>/dev/null || echo 0)
+        HTTP_COUNT=$(grep -c '^http://' "$WORK_DIR/sorted.txt" 2>/dev/null || echo 0)
+        WS_COUNT=$(grep -cE '^wss?://' "$WORK_DIR/sorted.txt" 2>/dev/null || echo 0)
         
+        cat > api/trackers.json << 'EOF'
         {
-          echo "{"
-          echo '  "name": "Automatic Trackers API",'
-          echo '  "description": "Machine-readable list of bittorrent trackers",'
-          echo '  "status": "active",'
-          echo '  "updated_at": "'"$(date -Iseconds)"'",'
-          echo '  "version": "1.0.0",'
-          echo '  "total_count": '"$FINAL_COUNT"','
-          echo '  "protocol_breakdown": {'
-          echo '    "udp": '"$UDP_COUNT"','
-          echo '    "https": '"$HTTPS_COUNT"','
-          echo '    "http": '"$HTTP_COUNT"','
-          echo '    "ws": '"$WS_COUNT"''
-          echo '  },'
-          echo '  "trackers": ['
-          sed 's/^/    "/; s/$/"/' "$WORK_DIR/sorted.txt" | sed '$ s/,$//' 
-          echo '  ]'
-          echo '}'
-        } > api/trackers.json
-        
-        {
-          echo "{"
-          echo '  "updated_at": "'"$(date -Iseconds)"'",'
-          echo '  "total": '"$FINAL_COUNT"','
-          echo '  "by_protocol": {'
-          echo '    "udp": '"$UDP_COUNT"','
-          echo '    "https": '"$HTTPS_COUNT"','
-          echo '    "http": '"$HTTP_COUNT"','
-          echo '    "ws": '"$WS_COUNT"''
-          echo '  },'
-          echo '  "sources": {'
-          echo '    "total": '"$TOTAL_SOURCES"','
-          echo '    "successful": '"$SUCCESS_COUNT"','
-          echo '    "failed": '"$FAIL_COUNT"','
-          echo '    "success_rate": "'"$(awk "BEGIN {printf \"%.2f\", $SUCCESS_COUNT*100/$TOTAL_SOURCES}")"'%"'
-          echo '  }'
-          echo '}'
-        } > api/stats.json
-        
-        {
-          echo "{"
-          echo '  "schemaVersion": 1,'
-          echo '  "label": "Trackers",'
-          echo '  "message": "'"$FINAL_COUNT"' Active",'
-          echo '  "color": "brightgreen"'
-          echo '}'
-        } > api/badge.json
+          "name": "Automatic Trackers API",
+          "description": "Machine-readable list of BitTorrent trackers",
+          "status": "active",
+          "updated_at": "$(date -Iseconds)",
+          "version": "1.0.0",
+          "total_count": $FINAL_COUNT,
+          "protocol_breakdown": {
+            "udp": $UDP_COUNT,
+            "https": $HTTPS_COUNT,
+            "http": $HTTP_COUNT,
+            "ws": $WS_COUNT
+          },
+          "trackers": [
+            $(sed 's/^/"/; s/$/"/' "$WORK_DIR/sorted.txt" | paste -sd ',' -)
+          ]
+        }
+        EOF
+        sed -i "s/\$(date -Iseconds)/$(date -Iseconds)/g; s/\$FINAL_COUNT/$FINAL_COUNT/g; s/\$UDP_COUNT/$UDP_COUNT/g; s/\$HTTPS_COUNT/$HTTPS_COUNT/g; s/\$HTTP_COUNT/$HTTP_COUNT/g; s/\$WS_COUNT/$WS_COUNT/g" api/trackers.json
 
+        cat > api/stats.json << EOF
+        {
+          "updated_at": "$(date -Iseconds)",
+          "total": $FINAL_COUNT,
+          "by_protocol": {
+            "udp": $UDP_COUNT,
+            "https": $HTTPS_COUNT,
+            "http": $HTTP_COUNT,
+            "ws": $WS_COUNT
+          },
+          "sources": {
+            "total": $TOTAL_SOURCES,
+            "successful": $SUCCESS_COUNT,
+            "failed": $FAIL_COUNT,
+            "success_rate": "$(awk "BEGIN {printf \"%.2f\", $SUCCESS_COUNT*100/$TOTAL_SOURCES}")%"
+          }
+        }
+        EOF
+
+        cat > api/badge.json << EOF
+        {
+          "schemaVersion": 1,
+          "label": "Active Trackers",
+          "message": "$FINAL_COUNT",
+          "color": "brightgreen"
+        }
+        EOF
+
+        # Idempotency check - only commit if data changed
         NEW_HASH=$(sha256sum "all_trackers.txt" | cut -d' ' -f1)
         OLD_HASH=""
         [ -f .tracker_hash ] && OLD_HASH=$(cat .tracker_hash)
         echo "$NEW_HASH" > .tracker_hash
 
-        # ✨ FORCE UPDATE OPTION
-        if [ "${{ github.event.inputs.force_update }}" = "true" ]; then
-          echo "🔴 FORCE UPDATE ENABLED - Will commit regardless of data changes"
-          echo "skip_commit=false" >> "$GITHUB_OUTPUT"
-        elif [ "$NEW_HASH" = "$OLD_HASH" ]; then
-          echo "🟡 Data unchanged. Skipping commit."
+        if [ "$NEW_HASH" = "$OLD_HASH" ]; then
+          echo "No new trackers detected. Skipping commit."
           echo "skip_commit=true" >> "$GITHUB_OUTPUT"
         else
-          echo "🟢 Changes detected. Preparing commit."
+          echo "New trackers found! Preparing to commit."
           echo "skip_commit=false" >> "$GITHUB_OUTPUT"
         fi
 
         ELAPSED=$(( $(date +%s) - START_TS ))
         
         {
-          echo "## 🚀 Ultimate Tracker Aggregator — God Tier Report"
+          echo "## Tracker Aggregation Report"
           echo ""
-          echo "### 📊 Execution Summary"
           echo "| Metric | Value |"
-          echo "|---|---|"
-          echo "| 🌐 **Total Sources** | \`$TOTAL_SOURCES\` |"
-          echo "| ✅ **Success** | \`$SUCCESS_COUNT\` |"
-          echo "| ❌ **Failed** | \`$FAIL_COUNT\` |"
-          echo "| 📈 **Success Rate** | \`$(awk "BEGIN {printf \"%.1f\", $SUCCESS_COUNT*100/$TOTAL_SOURCES}")%\` |"
-          echo "| ⏱️ **Time Taken** | \`${ELAPSED}s\` |"
-          echo "| 🧮 **Unique Trackers** | \`$FINAL_COUNT\` |"
-          echo "| 🔐 **Status** | $([ "$NEW_HASH" = "$OLD_HASH" ] && echo '⏭️ No Changes' || echo '✅ Updated') |"
+          echo "|--------|-------|"
+          echo "| Total Sources | $TOTAL_SOURCES |"
+          echo "| Successful | $SUCCESS_COUNT |"
+          echo "| Failed | $FAIL_COUNT |"
+          echo "| Success Rate | $(awk "BEGIN {printf \"%.1f\", $SUCCESS_COUNT*100/$TOTAL_SOURCES}")% |"
+          echo "| Processing Time | ${ELAPSED}s |"
+          echo "| Total Trackers | $FINAL_COUNT |"
+          echo "| Status | $([ "$NEW_HASH" = "$OLD_HASH" ] && echo "No Changes" || echo "Updated") |"
           echo ""
-          echo "### 🔌 Protocol Breakdown"
-          echo "- **UDP:** \`$UDP_COUNT\` trackers"
-          echo "- **HTTPS:** \`$HTTPS_COUNT\` trackers"
-          echo "- **HTTP:** \`$HTTP_COUNT\` trackers"
-          echo "- **WS/WSS:** \`$WS_COUNT\` trackers"
-          echo ""
-          
-          if [ -f "$FAILED_LOG" ] && [ -s "$FAILED_LOG" ]; then
-            echo "### ⚠️ Failed Sources ($(wc -l < "$FAILED_LOG"))"
-            echo "\`\`\`"
-            cat "$FAILED_LOG" | head -15
-            if [ "$(wc -l < "$FAILED_LOG")" -gt 15 ]; then
-              echo "... and $(($(wc -l < "$FAILED_LOG") - 15)) more"
-            fi
-            echo "\`\`\`"
-          fi
-          
-          echo ""
-          echo "### 📁 Generated Files"
-          echo "- \`all_trackers.txt\` - Master list (sorted by protocol priority)"
-          echo "- \`all_trackers_comma.txt\` - Comma-separated format"
-          echo "- \`udp.txt\` - UDP trackers only"
-          echo "- \`https.txt\` - HTTPS trackers only"
-          echo "- \`http.txt\` - HTTP trackers only"
-          echo "- \`ws.txt\` - WebSocket trackers only"
-          echo "- \`api/trackers.json\` - API: All trackers"
-          echo "- \`api/stats.json\` - API: Statistics"
-          echo "- \`api/badge.json\` - API: Badge data"
+          echo "### Protocol Distribution"
+          echo "- UDP: $UDP_COUNT trackers"
+          echo "- HTTPS: $HTTPS_COUNT trackers"
+          echo "- HTTP: $HTTP_COUNT trackers"
+          echo "- WebSocket: $WS_COUNT trackers"
           
         } >> "$GITHUB_STEP_SUMMARY"
 
-    - name: Configure Git User
+    - name: Configure Git
       run: |
         git config --local user.email "actions@github.com"
         git config --local user.name "github-actions[bot]"
 
-    - name: 💾 Commit & Push Changes
+    - name: Commit & Push Changes
       if: steps.build.outputs.skip_commit == 'false'
       run: |
         git add -A
-        git commit -m "🚀 Auto-update: God Tier Tracker List (98 Sources) - $(date -u +'%Y-%m-%d %H:%M:%S UTC')" || true
-        git push origin main --force-with-lease || echo "⚠️ No changes to push"
+        git commit -m "Auto-update: Tracker list from 98 sources ($(date -u +'%Y-%m-%d %H:%M UTC'))" || true
+        git push origin main --force-with-lease 2>&1 || true
 
-    - name: ✅ Workflow Summary
+    - name: Workflow Complete
       if: always()
       run: |
-        echo "=== Workflow Execution Complete ==="
+        echo "Aggregation workflow completed"
         echo "Commit Status: ${{ steps.build.outputs.skip_commit }}"
-        echo "Check the job summary above for detailed reports."
