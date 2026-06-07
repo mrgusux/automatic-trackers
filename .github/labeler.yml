@@ -1,22 +1,32 @@
-# PR Labeler Rule Configuration
+# PR Labeler Rule Configuration (v5 syntax)
 
 documentation:
-  - '**/*.md'
+  - any:
+    - changed-files:
+      - any-glob-to-any-file: '**/*.md'
 
 github-actions:
-  - '.github/workflows/*.yml'
-  - '.github/**/*.yml'
+  - any:
+    - changed-files:
+      - any-glob-to-any-file: '.github/workflows/*.yml'
+      - any-glob-to-any-file: '.github/**/*.yml'
 
 tracker-data:
-  - '*.txt'
-  - '.tracker_hash'
+  - any:
+    - changed-files:
+      - any-glob-to-any-file: '*.txt'
+      - any-glob-to-any-file: '.tracker_hash'
 
 scripts:
-  - '**/*.sh'
-  - 'Makefile'
-  - 'Dockerfile'
+  - any:
+    - changed-files:
+      - any-glob-to-any-file: '**/*.sh'
+      - any-glob-to-any-file: 'Makefile'
+      - any-glob-to-any-file: 'Dockerfile'
 
 infrastructure:
-  - '.editorconfig'
-  - '.gitignore'
-  - '*.json'
+  - any:
+    - changed-files:
+      - any-glob-to-any-file: '.editorconfig'
+      - any-glob-to-any-file: '.gitignore'
+      - any-glob-to-any-file: '*.json'
