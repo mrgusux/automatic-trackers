@@ -1210,8 +1210,6 @@ http://tracker.encrypted-data.xyz:1337/announce
 
 http://tracker.enitin.xyz/announce
 
-http://tracker.enitin.xyz:80/announce
-
 http://tracker.etree.org:6969/announce
 
 http://tracker.ex.ua/announce
