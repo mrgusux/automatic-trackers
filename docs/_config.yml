@@ -1,4 +1,30 @@
+# =============================================================================
+# GitHub Pages (Jekyll) configuration
+# Site is published from the /docs folder.
+# Enable: GitHub repo -> Settings -> Pages -> Source: main branch, /docs folder
+# =============================================================================
+
 theme: jekyll-theme-cayman
-title: Automatic Trackers
-description: A frequently updated and carefully curated list of BitTorrent trackers.
+
+title: "Automatic Trackers"
+description: "A frequently updated, blacklist-filtered, and carefully curated list of BitTorrent trackers - refreshed every 6 hours."
+
+# Canonical site address (required for correct theme asset & SEO links)
+url: "https://mrgusux.github.io"
+baseurl: "/automatic-trackers"
+
+lang: en
+
+# Cayman theme option: show "Download .zip / .tar.gz" buttons in the header
 show_downloads: true
+
+# GitHub Pages whitelisted plugins
+plugins:
+  - jekyll-seo-tag      # generates meta/OpenGraph tags for search engines & link previews
+  - jekyll-sitemap      # generates sitemap.xml automatically
+
+markdown: kramdown
+
+# Never publish these as site pages
+exclude:
+  - _config.yml
