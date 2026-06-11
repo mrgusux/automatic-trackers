@@ -1,6 +1,12 @@
-# Global owner of the Ultimate Torrent Tracker Aggregator Pro Max
-* @mrgusux
+# Code owners are automatically requested for review on matching PRs.
+# Later rules override earlier ones.
 
-# Explicit ownership for critical workflows and scripts
+# Default owner for everything
+*               @mrgusux
+
+# Critical paths (explicit, for clarity)
 /.github/       @mrgusux
-/*.sh           @mrgusux
+/scripts/       @mrgusux
+/config/        @mrgusux
+/Dockerfile     @mrgusux
+/Makefile       @mrgusux
