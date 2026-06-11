@@ -1,14 +1,43 @@
+# =============================================================================
+# pre-commit hooks - catch problems BEFORE they reach the repository.
+# Setup (once):  pip install pre-commit && pre-commit install
+# Manual run:    pre-commit run --all-files
+# =============================================================================
+
+# Generated/output files are bot-managed - no hook may ever touch them
+exclude: >
+  (?x)^(
+    all_trackers\.txt|
+    all_trackers_comma\.txt|
+    udp\.txt|
+    http\.txt|
+    https\.txt|
+    ws\.txt|
+    blacklist\.txt|
+    SHA256SUMS\.txt|
+    \.tracker_hash|
+    api/.*
+  )$
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v5.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
+      - id: check-json
       - id: check-added-large-files
+        args: ["--maxkb=1024"]
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+      - id: detect-private-key
 
   - repo: https://github.com/koalaman/shellcheck-precommit
-    rev: v0.9.0
+    rev: v0.10.0
     hooks:
       - id: shellcheck
         args: ["--severity=warning"]
