@@ -3,12 +3,18 @@
   "projectOwner": "mrgusux",
   "repoType": "github",
   "repoHost": "https://github.com",
+  "branch": "main",
   "files": [
     "README.md"
   ],
   "imageSize": 100,
-  "commit": false,
+  "commit": true,
   "commitConvention": "angular",
+  "commitType": "docs",
+  "skipCi": true,
+  "linkToUsage": false,
+  "contributorsSortAlphabetically": true,
+  "contributorsPerLine": 7,
   "contributors": [
     {
       "login": "mrgusux",
@@ -20,9 +26,10 @@
         "design",
         "doc",
         "maintenance",
-        "infra"
+        "infra",
+        "ideas",
+        "review"
       ]
     }
-  ],
-  "contributorsPerLine": 7
+  ]
 }
