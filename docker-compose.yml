@@ -1,45 +1,56 @@
-version: '3.8'
+# =============================================================================
+# Ultimate Torrent Tracker Aggregator - Docker Compose
+#
+# Usage:
+#   docker compose up --build        -> run aggregation once, then exit
+#   docker compose run --rm trackers -> same, without leaving a stopped container
+#
+# Outputs land in ./output on the host. Fetch cache persists in a named
+# volume so repeated runs skip already-downloaded sources.
+# =============================================================================
 
 services:
-  automatic-trackers:
-    build: .
+  trackers:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: automatic-trackers:latest
     container_name: automatic-trackers
-    restart: unless-stopped
-    
-    # Data persistence - volumes for output
-    volumes:
-      # Main output directory for generated tracker files
-      - ./output:/app/output:rw
-      # API endpoint outputs
-      - ./api:/app/api:rw
-      # Keep working files in app root too
-      - ./:/app:rw
-    
-    # Environment configuration
+
+    # One-shot batch job: it must run once and exit cleanly.
+    # Auto-restart would create an infinite restart loop.
+    restart: "no"
+
     environment:
       - TZ=UTC
-      - LOG_LEVEL=info
-      - SHELL=/bin/bash
-    
-    # Resource limits
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 1G
-        reservations:
-          cpus: '1'
-          memory: 512M
-    
-    # Health check - verify tracker list is valid
-    healthcheck:
-      test: ["CMD", "sh", "-c", "[ -f /app/all_trackers.txt ] && [ $(wc -l < /app/all_trackers.txt) -gt 200 ]"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
+      - OUTPUT_DIR=/app/output
+      - CACHE_DIR=/app/.cache/trackers
+      # Tunables (override with: FORCE_FETCH=true docker compose up)
+      - FORCE_FETCH=${FORCE_FETCH:-false}
+      - DEBUG_MODE=${DEBUG_MODE:-false}
+      - MAX_PARALLEL_JOBS=${MAX_PARALLEL_JOBS:-8}
+      - MIN_TRACKER_COUNT=${MIN_TRACKER_COUNT:-150}
 
-# Named volume for persistent data (optional)
+    volumes:
+      # Generated tracker lists appear here on the host
+      - ./output:/app/output
+      # Persistent fetch cache between runs
+      - tracker-cache:/app/.cache
+
+    # Hardening: this job needs no privileges and no new capabilities
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp
+
+    # Resource limits that actually work in plain `docker compose`
+    # (the old `deploy:` block only applies to Swarm mode)
+    mem_limit: 1g
+    cpus: 2
+
 volumes:
-  tracker_output:
+  tracker-cache:
     driver: local
