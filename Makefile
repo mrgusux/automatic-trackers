@@ -1,63 +1,59 @@
-.PHONY: help lint build run clean test dev push docker-up docker-down
+# =============================================================================
+# Ultimate Torrent Tracker Aggregator - Makefile
+# Run `make` or `make help` to see all available commands.
+# =============================================================================
 
-help:
-	@echo "🛠️ Ultimate Torrent Tracker Aggregator Pro Max"
-	@echo ""
-	@echo "Available commands:"
-	@echo "  make lint           - Run ShellCheck for code quality"
-	@echo "  make build          - Build the Docker container"
-	@echo "  make run            - Run the aggregator inside Docker (once)"
-	@echo "  make docker-up      - Start Docker Compose daemon"
-	@echo "  make docker-down    - Stop Docker Compose daemon"
-	@echo "  make clean          - Remove generated text files"
-	@echo "  make test           - Run tests"
-	@echo "  make dev            - Development setup"
-	@echo "  make push           - Commit & push to GitHub (CI only)"
-	@echo ""
-
-lint:
-	@echo "🧹 Running ShellCheck on shell scripts..."
-	@find . -name "*.sh" -type f | xargs shellcheck -S warning || true
-
-build:
-	@echo "📦 Building Docker Image..."
-	docker build -t automatic-trackers:latest .
-
-run: build
-	@echo "🚀 Running the Aggregator (one-time)..."
-	docker run --rm -v $(PWD):/app automatic-trackers:latest
-
-docker-up: build
-	@echo "🐳 Starting Docker Compose daemon..."
-	docker-compose up -d
-	@echo "✅ Running at: docker ps | grep automatic-trackers"
-
-docker-down:
-	@echo "⛔ Stopping Docker Compose..."
-	docker-compose down
-
-clean:
-	@echo "🗑️ Cleaning up generated files..."
-	rm -f *.txt .tracker_hash api/*.json
-	rm -rf output/
-
-test:
-	@echo "✅ Running tests..."
-	@[ -d tests ] && bash tests/run_tests.sh || echo "⚠️ No tests found"
-
-dev:
-	@echo "🔧 Setting up development environment..."
-	@which docker > /dev/null || (echo "❌ Docker not found!"; exit 1)
-	@which curl > /dev/null || (echo "❌ curl not found!"; exit 1)
-	@echo "✅ Development environment OK!"
-
-push: clean
-	@echo "📤 Pushing to GitHub..."
-	@if [ -z "$${CI+x}" ]; then \
-		echo "⚠️ Local push - ensure you're on main branch"; \
-		git add -A && git commit -m "🚀 Auto-update: God Tier Tracker List" && git push origin main; \
-	else \
-		echo "✅ CI environment detected - skipping manual push"; \
-	fi
-
+SHELL := /usr/bin/env bash
 .DEFAULT_GOAL := help
+
+IMAGE_NAME := automatic-trackers:latest
+
+.PHONY: help lint test run build docker-up docker-down clean dev
+
+help: ## Show this help message
+    @echo "🛠️  Ultimate Torrent Tracker Aggregator"
+    @echo ""
+    @echo "Available commands:"
+    @grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
+        | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36mmake %-12s\033[0m %s\n", $$1, $$2}'
+    @echo ""
+
+lint: ## Run ShellCheck on all shell scripts
+    @echo "🧹 Running ShellCheck..."
+    shellcheck --severity=warning scripts/*.sh
+
+test: ## Run the bats test suite
+    @echo "✅ Running bats tests..."
+    bats tests/
+
+run: ## Run the aggregator locally (no Docker)
+    @echo "🚀 Running aggregator locally..."
+    bash scripts/update.sh
+
+build: ## Build the Docker image
+    @echo "📦 Building Docker image..."
+    docker build -t $(IMAGE_NAME) .
+
+docker-up: build ## Run the aggregator via Docker Compose (one-shot)
+    @echo "🐳 Running via Docker Compose..."
+    docker compose up --build
+
+docker-down: ## Stop and remove Docker Compose resources
+    @echo "⛔ Stopping Docker Compose..."
+    docker compose down
+
+clean: ## Remove generated files (tracked files restorable via `git restore .`)
+    @echo "🗑️  Removing generated files..."
+    rm -f all_trackers.txt all_trackers_comma.txt udp.txt http.txt https.txt ws.txt blacklist.txt .tracker_hash
+    rm -f api/stats.json api/badge.json api/trackers.json
+    rm -rf output/ .cache/
+
+dev: ## Verify development prerequisites
+    @echo "🔧 Checking development prerequisites..."
+    @command -v bash >/dev/null       || { echo "❌ bash not found"; exit 1; }
+    @command -v curl >/dev/null       || { echo "❌ curl not found"; exit 1; }
+    @command -v jq >/dev/null         || { echo "❌ jq not found"; exit 1; }
+    @command -v docker >/dev/null     || echo "⚠️  docker not found (needed for make build/docker-up)"
+    @command -v shellcheck >/dev/null || echo "⚠️  shellcheck not found (needed for make lint)"
+    @command -v bats >/dev/null       || echo "⚠️  bats not found (needed for make test)"
+    @echo "✅ Core prerequisites OK"
