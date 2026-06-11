@@ -8,6 +8,8 @@ udp://107.150.14.110:6969/announce
 
 udp://107.175.221.194:6969/announce
 
+udp://107.189.2.131:1337/announce
+
 udp://107.189.4.235:1337/announce
 
 udp://107.189.7.165:6969/announce
@@ -37,6 +39,10 @@ udp://148.251.53.72:6969/announce
 udp://149.106.106.25:443/announce
 
 udp://151.80.120.114:2710/announce
+
+udp://152.53.194.103:54123/announce
+
+udp://154.40.43.165:6969/announce
 
 udp://156.234.201.18:80/announce
 
@@ -126,11 +132,17 @@ udp://207.241.231.226:6969/announce
 
 udp://208.67.16.113:8000/announce
 
+udp://208.83.20.20:6969/announce
+
 udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
 
 udp://211.75.205.187:80/announce
+
+udp://211.75.205.189:80/announce
+
+udp://211.75.210.221:6969/announce
 
 udp://211.75.29.254:6969/announce
 
@@ -162,7 +174,11 @@ udp://37.19.5.155:2710/announce
 
 udp://37.59.48.81:6969/announce
 
+udp://43.250.54.126:6969/announce
+
 udp://44.30.4.4:6969/announce
+
+udp://45.134.88.121:6969/announce
 
 udp://45.9.60.30:6969/announce
 
@@ -171,6 +187,8 @@ udp://46.138.242.240:6969/announce
 udp://46.4.109.148:6969/announce
 
 udp://47.ip-51-68-199.eu:6969/announce
+
+udp://5.135.104.146:6969/announce
 
 udp://5.196.67.51:6969/announce
 
@@ -206,6 +224,8 @@ udp://60.172.236.18:6969/announce
 
 udp://60.249.37.20:6969/announce
 
+udp://60.249.37.20:80/announce
+
 udp://62.138.0.158:6969/announce
 
 udp://62.212.85.66:2710/announce
@@ -226,9 +246,13 @@ udp://85.17.19.180:80/announce
 
 udp://87.106.210.134:6969/announce
 
+udp://88.80.22.67:2710/announce
+
 udp://88.80.28.7:6969/announce
 
 udp://88.99.2.212:6969/announce
+
+udp://89.117.57.95:1337/announce
 
 udp://89.234.156.205:451/announce
 
@@ -243,6 +267,8 @@ udp://9.rarbg.me:2780/announce
 udp://9.rarbg.to:2730/announce
 
 udp://91.211.5.21:6969/announce
+
+udp://91.216.110.53:451/announce
 
 udp://91.218.230.81:6969/announce
 
@@ -747,6 +773,8 @@ udp://tracker.opentorrent.top:6969/announce
 udp://tracker.opentrackr.org:1337/announce
 
 udp://tracker.orsvarn.com:6969/announce
+
+udp://tracker.peerfect.org:6969/announce
 
 udp://tracker.piratepublic.com:1337/announce
 
