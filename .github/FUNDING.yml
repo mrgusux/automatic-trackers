@@ -1,3 +1,12 @@
-# These are supported funding model platforms
+# Code owners are automatically requested for review on matching PRs.
+# Later rules override earlier ones.
 
-github: mrgusux
+# Default owner for everything
+*               @mrgusux
+
+# Critical paths (explicit, for clarity)
+/.github/       @mrgusux
+/scripts/       @mrgusux
+/config/        @mrgusux
+/Dockerfile     @mrgusux
+/Makefile       @mrgusux
