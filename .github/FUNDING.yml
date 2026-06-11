@@ -1,12 +1,6 @@
-# Code owners are automatically requested for review on matching PRs.
-# Later rules override earlier ones.
+# Supported funding platforms - uncomment a line to activate it
 
-# Default owner for everything
-*               @mrgusux
-
-# Critical paths (explicit, for clarity)
-/.github/       @mrgusux
-/scripts/       @mrgusux
-/config/        @mrgusux
-/Dockerfile     @mrgusux
-/Makefile       @mrgusux
+github: mrgusux
+# ko_fi: yourusername
+# buy_me_a_coffee: yourusername
+# custom: ["https://example.com/donate"]
