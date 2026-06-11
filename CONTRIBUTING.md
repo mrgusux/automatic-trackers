@@ -42,3 +42,29 @@ make dev      # verify prerequisites (bash, curl, jq, shellcheck, bats)
 make lint     # ShellCheck on scripts/
 make test     # run the bats test suite
 make run      # run the full aggregation locally
+```
+
+Optional but recommended — install [pre-commit](https://pre-commit.com/) hooks so issues are caught before you even push:
+
+```bash
+pip install pre-commit
+pre-commit install
+```
+
+## 📦 Pull Request Process
+
+1. **Fork** the repo and create a branch: `feature/<short-name>` or `fix/<short-name>`.
+2. Make your changes. For shell code, `make lint` and `make test` must pass.
+3. Use clear commit messages, preferably [Conventional Commits](https://www.conventionalcommits.org/):
+   `feat: add XYZ tracker source`, `fix: handle BOM in sanitizer`, `docs: update setup guide`.
+4. Push and open a Pull Request against `main`, filling in the PR template.
+5. CI (lint + tests) must be green before review.
+6. A maintainer (see [MAINTAINERS.md](MAINTAINERS.md)) will review and merge.
+
+## 🐛 Bugs & 💡 Ideas
+
+- Reproducible bug? → [Bug Report template](https://github.com/mrgusux/automatic-trackers/issues/new?template=bug_report.yml)
+- Idea or question? → [GitHub Discussions](https://github.com/mrgusux/automatic-trackers/discussions) (see [SUPPORT.md](SUPPORT.md))
+- Security issue? → **Never a public issue** — follow [SECURITY.md](SECURITY.md)
+
+Thank you for making this project better! 🚀
