@@ -1,34 +1,50 @@
-FROM alpine:3.19
+# =============================================================================
+# Ultimate Torrent Tracker Aggregator
+# One-shot batch container: fetches, filters, and writes tracker lists,
+# then exits. Outputs land in $OUTPUT_DIR (mount it as a volume).
+# =============================================================================
 
-LABEL maintainer="Mohammad Munna <@mrgusux>"
-LABEL description="God-Tier Tracker Aggregator Environment"
+FROM alpine:3.21
 
-# Install dependencies with specific versions
+# OCI standard labels (machine-readable image metadata)
+LABEL org.opencontainers.image.title="automatic-trackers" \
+      org.opencontainers.image.description="Ultimate Torrent Tracker Aggregator - one-shot tracker list builder" \
+      org.opencontainers.image.authors="Mohammad Munna <@mrgusux>" \
+      org.opencontainers.image.source="https://github.com/mrgusux/automatic-trackers" \
+      org.opencontainers.image.licenses="MIT"
+
+# Pin reproducibility at the base-image level (alpine:3.21), not per-package:
+# exact apk version pins break as Alpine prunes old packages from its repos.
+# findutils provides GNU xargs (-d / -P), required for parallel fetching.
 RUN apk add --no-cache \
-    bash=5.2.21-r0 \
-    curl=8.5.0-r0 \
-    coreutils=9.4-r2 \
-    grep=3.11-r0 \
-    sed=4.9-r2 \
-    gawk=5.1.0-r0 \
-    zip=3.0-r12 \
-    git=2.43.0-r0 \
-    jq=1.7.1-r0
+    bash \
+    ca-certificates \
+    coreutils \
+    curl \
+    findutils \
+    gawk \
+    grep \
+    jq \
+    sed
 
 WORKDIR /app
 
-# Create non-root user FIRST
+# Non-root user: never run network-facing batch jobs as root
 RUN addgroup -g 1000 tracker && \
     adduser -D -u 1000 -G tracker tracker
 
-# Copy files and set permissions atomically
-COPY --chown=tracker:tracker . /app/
+# Copy only what the aggregator needs (keeps the image lean;
+# .dockerignore should exclude everything else)
+COPY --chown=tracker:tracker scripts/ /app/scripts/
+COPY --chown=tracker:tracker config/  /app/config/
 
 USER tracker
 
-# Health check - verify tracker list has minimum valid content
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD [ -f "/app/all_trackers.txt" ] && [ $(wc -l < /app/all_trackers.txt) -gt 200 ] || exit 1
+ENV OUTPUT_DIR=/app/output \
+    CACHE_DIR=/app/.cache/trackers \
+    MIN_TRACKER_COUNT=150 \
+    MAX_PARALLEL_JOBS=8
 
-# Entry point with error handling
-ENTRYPOINT ["/bin/bash", "-c", "cd /app && bash workflows/update.sh 2>&1 || exit $?"]
+RUN mkdir -p "$OUTPUT_DIR" "$CACHE_DIR"
+
+ENTRYPOINT ["/bin/bash", "/app/scripts/update.sh"]
