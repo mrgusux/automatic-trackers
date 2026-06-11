@@ -1,46 +1,40 @@
-# Temporary & OS Files
+# =============================================================================
+# NOTE: Generated tracker outputs (all_trackers.txt, udp.txt, http.txt,
+# https.txt, ws.txt, all_trackers_comma.txt, blacklist.txt, api/*.json,
+# .tracker_hash, SHA256SUMS.txt) are INTENTIONALLY COMMITTED by the CI bot.
+# They must NEVER be listed in this file.
+# =============================================================================
+
+# OS junk
 .DS_Store
 Thumbs.db
+
+# Editor temp files
 *~
 *.swp
 *.tmp
 *.bak
 *.log
 
-# Working Directories
+# Local working directories
 /temp/
 /tmp/
-/payloads/
 /build/
 /dist/
+output/
+.cache/
 
-# Generated tracker files (UNCOMMENTED - these are auto-generated)
-all_trackers.txt
-http.txt
-https.txt
-udp.txt
-ws.txt
-all_trackers_comma.txt
-
-# API artifacts (UNCOMMENTED - these are auto-generated)
-api/*.json
-
-# Local hashes
-.tracker_hash
-.tracker_hash_local
-
-# IDE/Editor
+# IDE / Editor
 .vscode/
 .idea/
 *.code-workspace
 
-# Docker
-.dockerignore
+# Docker (local-only override file; .dockerignore itself IS committed)
 docker-compose.override.yml
-output/
 
-# Node/Python (if added later)
+# Node / Python (future-proofing)
 node_modules/
 __pycache__/
 *.pyc
 venv/
+.venv/
