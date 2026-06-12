@@ -1,0 +1,20 @@
+# =============================================================================
+# Blacklist source URLs - one per line.
+# Lines starting with '#' and blank lines are ignored.
+#
+# IMPORTANT: These lists contain KNOWN-BAD trackers (dead, malicious,
+# or flooded). They are fetched ONLY to build blacklist.txt, which is
+# then used to EXCLUDE entries from the final tracker lists.
+# Trackers from these URLs are NEVER merged into all_trackers.txt.
+#
+# Referenced by: scripts/update_trackers.sh, SOURCES.md
+# =============================================================================
+
+# Official ngosang blacklist (dead/cheater trackers)
+https://raw.githubusercontent.com/ngosang/trackerslist/master/blacklist.txt
+
+# crazy-max blocklist (bad trackers collection)
+https://raw.githubusercontent.com/crazy-max/blocklist/master/trackers.txt
+
+# bitjerry BlackList (malicious/dead tracker list)
+https://raw.githubusercontent.com/bitjerry/BlackList/master/TrackerList.txt
