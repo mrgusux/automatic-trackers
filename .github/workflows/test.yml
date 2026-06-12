@@ -1,0 +1,48 @@
+name: ✅ Run Tests (bats)
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'tests/**'
+      - 'scripts/**'
+      - 'config/**'
+      - '.github/workflows/update-trackers.yml'
+      - '.github/workflows/test.yml'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'tests/**'
+      - 'scripts/**'
+      - 'config/**'
+      - '.github/workflows/update-trackers.yml'
+      - '.github/workflows/test.yml'
+  workflow_dispatch:
+
+# Cancel outdated runs when new commits are pushed to the same PR/branch
+concurrency:
+  group: test-${{ github.ref }}
+  cancel-in-progress: true
+
+# A test runner only ever needs to read the code
+permissions:
+  contents: read
+
+jobs:
+  bats:
+    name: Pipeline Test Suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🧪 Install bats
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq bats
+          bats --version
+
+      - name: ✅ Run test suite
+        run: bats tests/
