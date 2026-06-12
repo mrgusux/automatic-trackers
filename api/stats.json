@@ -1,8 +1,8 @@
 {
   "version": "1.0",
-  "updated_at": "2026-06-11T16:20:08+00:00",
-  "total": 1509,
+  "updated_at": "2026-06-12T04:52:53+00:00",
+  "total": 1521,
   "sources": 92,
   "success_rate": "42.39%",
-  "protocols": {"udp": 456, "https": 254, "http": 789, "ws": 10}
+  "protocols": {"udp": 457, "https": 254, "http": 800, "ws": 10}
 }

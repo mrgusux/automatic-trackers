@@ -28,6 +28,8 @@ udp://119.28.71.45:8080/announce
 
 udp://128.199.70.66:5944/announce
 
+udp://132.243.161.144:6969/announce
+
 udp://135.125.106.92:6969/announce
 
 udp://144.91.88.22:6969/announce
@@ -100,6 +102,8 @@ udp://192.3.130.53:1337/announce
 
 udp://192.95.46.115:6969/announce
 
+udp://193.148.251.143:6969/announce
+
 udp://193.187.90.12:6969/announce
 
 udp://193.37.214.12:6969/announce
@@ -129,6 +133,10 @@ udp://208.83.20.20:6969/announce
 udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
+
+udp://211.75.205.188:6969/announce
+
+udp://211.75.205.188:80/announce
 
 udp://211.75.205.189:80/announce
 
@@ -225,6 +233,8 @@ udp://83.102.180.21:80/announce
 udp://85.17.19.180:80/announce
 
 udp://87.106.210.134:6969/announce
+
+udp://88.80.22.67:2710/announce
 
 udp://88.80.28.7:6969/announce
 
@@ -526,8 +536,6 @@ udp://qtstm32fan.ru:6969/announce
 
 udp://r.l5.ca:6969/announce
 
-udp://rekcart.duckdns.org:15480/announce
-
 udp://rep-art.ynh.fr:6969/announce
 
 udp://retracker.hotplug.ru:2710/announce
@@ -684,8 +692,6 @@ udp://tracker.dorcus.digital:1337/announce
 
 udp://tracker.draatman.uk:6969/announce
 
-udp://tracker.ducks.party:1984/announce
-
 udp://tracker.eddie4.nl:6969/announce
 
 udp://tracker.edkj.club:6969/announce
@@ -749,8 +755,6 @@ udp://tracker.opentorrent.top:6969/announce
 udp://tracker.opentrackr.org:1337/announce
 
 udp://tracker.orsvarn.com:6969/announce
-
-udp://tracker.peerfect.org:6969/announce
 
 udp://tracker.piratepublic.com:1337/announce
 
@@ -879,8 +883,6 @@ udp://v74853.hosted-by-vdsina.com:6969/announce
 udp://vibe.sleepyinternetfun.xyz:1738/announce
 
 udp://vito-tracker.duckdns.org:6969/announce
-
-udp://vito-tracker.space:6969/announce
 
 udp://vps-dd0a0715.vps.ovh.net:6969/announce
 
