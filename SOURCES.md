@@ -41,7 +41,7 @@ Current blacklist sources include `crazy-max/blocklist`, `bitjerry/BlackList`, a
 
 ## 🧹 Sanitization Pipeline
 
-Every fetched line passes through the pipeline in [`scripts/update.sh`](scripts/update.sh):
+Every fetched line passes through the pipeline in [`scripts/update_trackers.sh`](scripts/update_trackers.sh):
 
 1. Strip BOM, carriage returns, control characters, and HTML tags
 2. Trim whitespace and normalize to lowercase
