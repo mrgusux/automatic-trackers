@@ -1,9 +1,44 @@
 title: "[Idea] "
+labels:
+  - "idea"
+  - "needs-triage"
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for suggesting an idea for the **Ultimate Torrent Tracker Aggregator Pro Max**!
+        ## 💡 Thanks for suggesting an idea for the **Ultimate Torrent Tracker Aggregator Pro Max**!
+
+        Before posting, please:
+        - 🔍 **Search [existing discussions](../discussions)** to make sure this idea hasn't already been suggested.
+        - 📖 Check the [ROADMAP.md](../blob/main/ROADMAP.md) — your idea might already be planned!
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: ✅ Pre-submission checklist
+      description: Please confirm the following before submitting.
+      options:
+        - label: I have searched existing discussions and this idea has not been suggested before.
+          required: true
+        - label: I have checked the ROADMAP.md and this idea is not already planned.
+          required: true
+
+  - type: dropdown
+    id: idea-category
+    attributes:
+      label: 🗂️ Idea category
+      description: Which part of the project does your idea relate to?
+      options:
+        - Tracker lists (new sources, filtering, blacklist)
+        - Automation / GitHub Actions workflows
+        - API (badge.json, stats.json, trackers.json)
+        - Documentation
+        - Docker / Deployment
+        - Other
+      default: 0
+    validations:
+      required: true
+
   - type: textarea
     id: idea-description
     attributes:
@@ -12,6 +47,16 @@ body:
       placeholder: I think it would be great if the script could...
     validations:
       required: true
+
+  - type: textarea
+    id: problem-solved
+    attributes:
+      label: 🎯 What problem does this solve?
+      description: Explain the problem or limitation this idea addresses. This helps maintainers prioritize.
+      placeholder: Currently, users cannot... and this idea would fix that by...
+    validations:
+      required: false
+
   - type: textarea
     id: alternatives
     attributes:
@@ -20,10 +65,20 @@ body:
       placeholder: Alternatively, we could...
     validations:
       required: false
+
   - type: textarea
     id: context
     attributes:
       label: 📝 Additional context
-      description: Add any other context or screenshots about the feature request here.
+      description: Add any other context, links, or screenshots about the feature request here.
     validations:
       required: false
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: 🤝 Contribution
+      description: Would you be willing to help implement this idea?
+      options:
+        - label: I am willing to submit a Pull Request to implement this idea.
+          required: false
