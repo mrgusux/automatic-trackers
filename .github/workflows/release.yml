@@ -5,27 +5,63 @@ on:
     tags:
       - 'v*' # Trigger on tags starting with 'v' (e.g., v1.0.0, v2.0)
 
+# One release run per tag; never cancel a half-finished release
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+# Default: read-only. Write is granted only to the job that needs it.
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build-and-release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
-
+    timeout-minutes: 15
+    permissions:
+      contents: write
     steps:
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
       - name: 📦 Zip Tracker Files
         run: |
-          zip ultimate-trackers.zip *.txt
-          echo "Zip file created successfully."
+          set -euo pipefail
+
+          # Verify tracker files actually exist before packaging
+          shopt -s nullglob
+          txt_files=(*.txt)
+          if [ "${#txt_files[@]}" -eq 0 ]; then
+            echo "::error::No .txt tracker files found. Aborting release."
+            exit 1
+          fi
+
+          # -9 = maximum compression, -X = strip extra metadata (reproducible),
+          # also bundle LICENSE so the archive is legally self-contained.
+          zip -9 -X ultimate-trackers.zip "${txt_files[@]}" LICENSE
+
+          # Verify the archive is not corrupted before uploading
+          unzip -t ultimate-trackers.zip > /dev/null
+          echo "✅ Zip file created and verified (${#txt_files[@]} tracker files + LICENSE)."
+
+      - name: 🧮 Generate Release Checksums
+        run: |
+          set -euo pipefail
+          export LC_ALL=C
+          # Checksum every asset we are about to upload, so users can verify downloads
+          sha256sum *.txt ultimate-trackers.zip > RELEASE_SHA256SUMS.txt
+          sha256sum --check --strict RELEASE_SHA256SUMS.txt
+          echo "✅ Release checksums generated and verified."
 
       - name: 🚀 Create Release and Upload Assets
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
+          make_latest: true
+          # Fail loudly if any expected asset is missing - never ship a partial release
+          fail_on_unmatched_files: true
           files: |
             *.txt
             ultimate-trackers.zip
+            RELEASE_SHA256SUMS.txt
