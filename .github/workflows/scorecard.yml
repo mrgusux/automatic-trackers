@@ -10,16 +10,23 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+# Only the latest analysis per branch matters
+concurrency:
+  group: scorecard-${{ github.ref }}
+  cancel-in-progress: true
+
+# Declare default permissions as read only.
 permissions: read-all
 
 jobs:
   analysis:
     name: Scorecard analysis
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       # Needed to upload the results to code-scanning dashboard.
       security-events: write
-      # Needed to publish results and get a badge
+      # Needed to publish results and get a badge (see publish_results below).
       id-token: write
 
     steps:
@@ -29,7 +36,7 @@ jobs:
           persist-credentials: false
 
       - name: "🔍 Run OpenSSF Scorecard analysis"
-        uses: ossf/scorecard-action@v2.3.1
+        uses: ossf/scorecard-action@v2.4.2
         with:
           results_file: results.sarif
           results_format: sarif
