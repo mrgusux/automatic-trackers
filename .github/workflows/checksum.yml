@@ -5,26 +5,63 @@ on:
     branches: [ "main" ]
     paths:
       - '*.txt'
+      - '!SHA256SUMS.txt'
   workflow_dispatch:
 
+# Prevent two checksum runs from racing each other on parallel pushes
+concurrency:
+  group: checksum-${{ github.ref }}
+  cancel-in-progress: true
+
+# Default: read-only. Write permission is granted only where needed (job level).
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   generate-checksums:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
     steps:
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
+        with:
+          # Always work on the latest commit of the branch
+          ref: ${{ github.ref }}
 
       - name: 🧮 Generate SHA256SUMS.txt
         run: |
-          # সব .txt ফাইলের চেকলিস্ট তৈরি করা হচ্ছে
-          sha256sum *.txt > SHA256SUMS.txt
-          echo "Checksums generated successfully."
+          set -euo pipefail
+
+          # Use a fixed locale so file ordering is 100% deterministic
+          export LC_ALL=C
+
+          # Collect all root-level .txt files EXCEPT SHA256SUMS.txt itself.
+          # CRITICAL FIX: hashing SHA256SUMS.txt into itself would change the
+          # file on every single run, creating endless useless commits.
+          mapfile -t files < <(find . -maxdepth 1 -type f -name '*.txt' ! -name 'SHA256SUMS.txt' -printf '%P\n' | sort)
+
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "::warning::No .txt files found to checksum. Skipping."
+            exit 0
+          fi
+
+          sha256sum "${files[@]}" > SHA256SUMS.txt
+          echo "✅ Checksums generated for ${#files[@]} files:"
+          cat SHA256SUMS.txt
+
+      - name: 🔎 Verify checksums (self-test)
+        run: |
+          set -euo pipefail
+          # Immediately verify what we just produced - guarantees the file is valid
+          sha256sum --check --strict SHA256SUMS.txt
+          echo "✅ Verification passed."
 
       - name: 💾 Commit Checksums
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "🧮 Auto-update: SHA256SUMS.txt"
+          commit_message: "🧮 Auto-update: SHA256SUMS.txt [skip ci]"
           file_pattern: "SHA256SUMS.txt"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
