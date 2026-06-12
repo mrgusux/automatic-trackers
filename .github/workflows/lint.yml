@@ -3,18 +3,59 @@ name: Lint Scripts (ShellCheck)
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - '**.sh'
+      - '**.bash'
+      - 'tests/**'
+      - '.github/workflows/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - '**.sh'
+      - '**.bash'
+      - 'tests/**'
+      - '.github/workflows/**'
+  workflow_dispatch:
+
+# Cancel outdated runs when new commits are pushed to the same PR/branch
+concurrency:
+  group: lint-${{ github.ref }}
+  cancel-in-progress: true
+
+# Read-only access is all a linter ever needs
+permissions:
+  contents: read
 
 jobs:
   shellcheck:
     name: Check Bash Code Quality
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
-        
+
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@2.0.0
         with:
           scandir: '.'
+          # 'style' = strictest level: catches style issues, warnings AND errors
+          severity: style
+        env:
+          # Follow sourced files and check optional extra rules
+          SHELLCHECK_OPTS: -x -o all
+
+  actionlint:
+    name: Check GitHub Workflows Quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Run actionlint
+        uses: raven-actions/actionlint@v2
+        with:
+          # actionlint also runs shellcheck on every inline `run:` block
+          # inside all workflow YAML files - full coverage.
+          flags: "-color"
