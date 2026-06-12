@@ -2,20 +2,61 @@ name: Close Stale Issues and PRs
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs every day at midnight
+    - cron: '0 0 * * *' # Runs every day at midnight (UTC)
+  workflow_dispatch:
+
+# Only one stale-sweep should ever run at a time
+concurrency:
+  group: stale-sweep
+  cancel-in-progress: true
+
+# Default: no permissions. Granted explicitly at the job level only.
+permissions: {}
 
 jobs:
   stale:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       issues: write
       pull-requests: write
     steps:
       - uses: actions/stale@v9
         with:
-          stale-issue-message: 'This issue is stale because it has been open for 30 days with no activity. Please leave a comment or remove the stale label, otherwise it will be closed in 7 days.'
-          stale-pr-message: 'This PR is stale because it has been open for 30 days with no activity. Please leave a comment or remove the stale label, otherwise it will be closed in 7 days.'
+          # ── Stale marking ────────────────────────────────────────────
+          days-before-stale: 30
+          stale-issue-message: >-
+            This issue is stale because it has been open for 30 days with no
+            activity. Please leave a comment or remove the `stale` label,
+            otherwise it will be closed in 7 days.
+          stale-pr-message: >-
+            This PR is stale because it has been open for 30 days with no
+            activity. Please leave a comment or remove the `stale` label,
+            otherwise it will be closed in 7 days.
           stale-issue-label: 'stale'
           stale-pr-label: 'stale'
-          days-before-stale: 30
+
+          # ── Closing ──────────────────────────────────────────────────
           days-before-close: 7
+          close-issue-message: >-
+            This issue was closed automatically because it remained inactive
+            for 7 days after being marked stale. Feel free to reopen it or
+            create a new issue if the problem persists.
+          close-pr-message: >-
+            This PR was closed automatically because it remained inactive
+            for 7 days after being marked stale. Feel free to reopen it
+            when you are ready to continue.
+          close-issue-reason: not_planned
+
+          # ── Protections (never mark these as stale) ─────────────────
+          exempt-issue-labels: 'pinned,security,never-stale,roadmap'
+          exempt-pr-labels: 'pinned,security,never-stale,work-in-progress'
+          exempt-all-milestones: true
+
+          # ── Behavior tuning ──────────────────────────────────────────
+          # Any new comment/commit removes the stale label automatically
+          remove-stale-when-updated: true
+          # Process oldest items first so nothing gets starved
+          ascending: true
+          # Allow up to 200 API operations per nightly run
+          operations-per-run: 200
