@@ -1,6 +1,18 @@
-# Supported funding platforms - uncomment a line to activate it
+# ── GitHub Sponsors funding configuration ──────────────────────────
+# Docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository
+# Supported funding platforms - uncomment a line to activate it.
 
 github: mrgusux
+
+# ── Other supported platforms (uncomment + fill in to activate) ────
+# patreon: yourusername
+# open_collective: yourproject
 # ko_fi: yourusername
+# liberapay: yourusername
+# issuehunt: yourusername
+# polar: yourusername
 # buy_me_a_coffee: yourusername
-# custom: ["https://example.com/donate"]
+# thanks_dev: u/gh/yourusername
+# tidelift: npm/yourpackage
+# lfx_crowdfunding: yourproject
+# custom: ["https://example.com/donate", "https://example.com/sponsor"]
