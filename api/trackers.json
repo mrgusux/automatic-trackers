@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-06-12T10:17:57+00:00",
-  "total": 1512,
+  "generated": "2026-06-12T10:26:12+00:00",
+  "total": 1511,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -380,7 +380,6 @@
     "udp://tracker.opentorrent.top:6969/announce",
     "udp://tracker.opentrackr.org:1337/announce",
     "udp://tracker.orsvarn.com:6969/announce",
-    "udp://tracker.peerfect.org:6969/announce",
     "udp://tracker.piratepublic.com:1337/announce",
     "udp://tracker.playground.ru:6969/announce",
     "udp://tracker.plx.im:6969/announce",
