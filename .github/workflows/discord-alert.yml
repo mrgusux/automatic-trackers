@@ -2,19 +2,74 @@ name: "Discord Alert on Failure"
 
 on:
   workflow_run:
-    workflows: ["Update Trackers"] ে
+    # NOTE: These names must EXACTLY match the `name:` field of the monitored workflows.
+    workflows:
+      - "Update Trackers"
+      - "🧮 Generate Checksums"
     types:
       - completed
+
+# This workflow needs no repository access at all - maximum security.
+permissions: {}
 
 jobs:
   notify:
     runs-on: ubuntu-latest
-    
+    timeout-minutes: 5
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    env:
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
     steps:
-      - name: Discord Webhook Notification
-        uses: Ilshidur/action-discord@master
+      - name: 📢 Send Discord Webhook Notification
+        # Skip gracefully (instead of failing) if the secret is not configured
+        if: ${{ env.DISCORD_WEBHOOK != '' }}
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        with:
-          args: "⚠️ **Warning:** The Automatic Trackers update workflow has failed! Please check the GitHub Actions logs."
+          WORKFLOW_NAME: ${{ github.event.workflow_run.name }}
+          RUN_URL: ${{ github.event.workflow_run.html_url }}
+          BRANCH: ${{ github.event.workflow_run.head_branch }}
+          COMMIT_SHA: ${{ github.event.workflow_run.head_sha }}
+          ACTOR: ${{ github.event.workflow_run.actor.login }}
+          RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+        run: |
+          set -euo pipefail
+
+          SHORT_SHA="${COMMIT_SHA:0:7}"
+
+          # Build the JSON payload safely with jq (handles all escaping for us)
+          PAYLOAD=$(jq -n \
+            --arg title "⚠️ Workflow Failed: ${WORKFLOW_NAME}" \
+            --arg url "$RUN_URL" \
+            --arg branch "$BRANCH" \
+            --arg sha "$SHORT_SHA" \
+            --arg actor "$ACTOR" \
+            --arg attempt "$RUN_ATTEMPT" \
+            '{
+              username: "Tracker Bot",
+              embeds: [
+                {
+                  title: $title,
+                  url: $url,
+                  description: "The workflow run has **failed**. Click the title above to open the logs.",
+                  color: 15158332,
+                  fields: [
+                    { name: "Branch",  value: $branch,  inline: true },
+                    { name: "Commit",  value: $sha,     inline: true },
+                    { name: "Actor",   value: $actor,   inline: true },
+                    { name: "Attempt", value: $attempt, inline: true }
+                  ],
+                  timestamp: (now | todate)
+                }
+              ]
+            }')
+
+          # Send to Discord; --fail makes the step error out on HTTP 4xx/5xx
+          curl --silent --show-error --fail \
+            -H "Content-Type: application/json" \
+            -d "$PAYLOAD" \
+            "$DISCORD_WEBHOOK"
+
+          echo "✅ Discord alert sent successfully."
+
+      - name: ℹ️ Webhook not configured
+        if: ${{ env.DISCORD_WEBHOOK == '' }}
+        run: echo "::warning::DISCORD_WEBHOOK secret is not set. Skipping notification."
