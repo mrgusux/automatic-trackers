@@ -1,0 +1,11 @@
+# =============================================================================
+# blacklist.txt - known-bad trackers (dead, malicious, or flooded).
+#
+# AUTO-GENERATED placeholder: this file is rebuilt on every run of the
+# "Update Trackers" workflow from the URLs in config/blacklist_sources.txt
+# (plus any entries already present here - the list is accumulative).
+# This header will be replaced by real entries after the first run.
+#
+# Every tracker listed here is EXCLUDED from all_trackers.txt, udp.txt,
+# http.txt, https.txt, and ws.txt. Do not edit manually.
+# =============================================================================
