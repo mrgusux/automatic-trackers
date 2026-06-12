@@ -1,4 +1,9 @@
-name: Ultimate Tracker Aggregator Pro Max — mrgusux
+# ════════════════════════════════════════════════════════════════════
+#  Ultimate Tracker Aggregator Pro Max — mrgusux
+#  NOTE: The workflow `name:` below MUST stay "Update Trackers" because
+#  discord-alert.yml monitors it by that exact name.
+# ════════════════════════════════════════════════════════════════════
+name: Update Trackers
 
 on:
   schedule:
@@ -6,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       force_fetch:
-        description: 'Force fetch from all sources (ignore cache)'
+        description: 'Force fetch from all sources (ignore cache fallback)'
         required: false
         default: 'false'
         type: choice
@@ -22,108 +27,74 @@ on:
           - 'false'
           - 'true'
 
-permissions:
-  contents: write
-  actions: read
-  pull-requests: write
-
+# Never run two aggregations at once; never kill one halfway
 concurrency:
   group: tracker-update
   cancel-in-progress: false
 
+# Default read-only; write is granted only at the job level
+permissions:
+  contents: read
+
 env:
   MIN_TRACKER_COUNT: 150
+  DROP_GUARD_PERCENT: 60        # Abort if new list shrinks below 60% of previous
   TIMEOUT_SECONDS: 15
   CONNECT_TIMEOUT: 8
   MAX_PARALLEL_JOBS: 8
   RETRY_ATTEMPTS: 3
   CACHE_DIR: /tmp/tracker_cache
-  BACKUP_DIR: .backups
 
 jobs:
-  validate:
-    name: Validate Configuration
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Validate source count
-        run: |
-          EXPECTED_SOURCES=98
-          echo "Checking configuration..."
-          echo "✓ Expected sources: $EXPECTED_SOURCES"
-
   update-trackers:
     name: Aggregate & Process Trackers
     runs-on: ubuntu-latest
     timeout-minutes: 40
-    needs: validate
+    permissions:
+      contents: write
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        fetch-depth: 1
-        token: ${{ secrets.GITHUB_TOKEN }}
+        # Full history so `git pull --rebase` works safely on push races
+        fetch-depth: 0
 
-    - name: Setup environment
-      run: |
-        mkdir -p "$CACHE_DIR"
-        mkdir -p "$BACKUP_DIR"
-        chmod 755 "$CACHE_DIR"
-        chmod 755 "$BACKUP_DIR"
-        
-        echo "✓ Cache directory: $CACHE_DIR"
-        echo "✓ Backup directory: $BACKUP_DIR"
-        
-        # Check curl is available
-        which curl && echo "✓ curl available" || echo "⚠ curl not found"
-        
-        # Check SSL certificates
-        if [ -f /etc/ssl/certs/ca-certificates.crt ]; then
-          echo "✓ SSL certificates available"
-        else
-          echo "⚠ SSL certificates might be missing"
-        fi
+    - name: Restore source fallback cache
+      uses: actions/cache@v4
+      with:
+        path: /tmp/tracker_cache
+        # A fresh key every run = the cache is always re-saved with new data;
+        # restore-keys pulls the most recent previous run's copies.
+        key: tracker-source-cache-${{ github.run_id }}
+        restore-keys: |
+          tracker-source-cache-
 
-    - name: Restore previous tracker backup
-      continue-on-error: true
-      run: |
-        if [ -f "$BACKUP_DIR/all_trackers.txt.bak" ]; then
-          cp "$BACKUP_DIR/all_trackers.txt.bak" "$CACHE_DIR/all_trackers.txt.old"
-          echo "✓ Restored previous tracker snapshot"
-        else
-          echo "ℹ No previous backup found"
-        fi
-
-    - name: Fetch, Sanitize & Build Ultimate Tracker List
+    - name: Fetch, Sanitize, Blacklist-Filter & Build Ultimate Tracker List
       id: build
       env:
         DEBUG_MODE: ${{ github.event.inputs.debug_mode || 'false' }}
         FORCE_FETCH: ${{ github.event.inputs.force_fetch || 'false' }}
       run: |
         set -euo pipefail
-        
+        export LC_ALL=C
+
         START_TS=$(date +%s)
         WORK_DIR=$(mktemp -d)
-        FAILED_LOG="${WORK_DIR}/failed_sources.log"
-        PARALLEL_DIR="${WORK_DIR}/parallel"
-        STATS_FILE="${WORK_DIR}/stats.json"
-        
-        mkdir -p "$PARALLEL_DIR"
+        PARALLEL_DIR="$WORK_DIR/parallel"
+        STATUS_DIR="$WORK_DIR/status"
+        FAILED_LOG="$WORK_DIR/failed_sources.log"
+        UA_FILE="$WORK_DIR/user_agents.txt"
+
+        mkdir -p "$PARALLEL_DIR" "$STATUS_DIR" "$CACHE_DIR"
         touch "$FAILED_LOG"
-        
-        cleanup_trap() {
-          [ -d "$WORK_DIR" ] && rm -rf "$WORK_DIR"
-        }
-        trap 'cleanup_trap' EXIT
+        trap '[ -d "$WORK_DIR" ] && rm -rf "$WORK_DIR"' EXIT
 
-        debug_log() {
-          if [ "$DEBUG_MODE" = "true" ]; then
-            echo "[DEBUG] $@" >&2
-          fi
-        }
-
-        # Tracker sources - 98 total
+        # ──────────────────────────────────────────────────────────────
+        # VALID TRACKER SOURCES
+        # All original sources preserved. Two entries that were actually
+        # BLACKLISTS were moved to BLACKLIST_SOURCES below (critical fix).
+        # ──────────────────────────────────────────────────────────────
         declare -a SOURCES=(
           "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"
           "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt"
@@ -215,21 +186,58 @@ jobs:
           "https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_https.txt"
           "https://raw.githubusercontent.com/anthonyfok/trackerslist-mirror/master/trackers_all.txt"
           "https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/nohttp.txt"
+          # ── NEW high-quality sources (added in this upgrade) ──
+          "https://ngosang.github.io/trackerslist/trackers_all.txt"
+          "https://ngosang.github.io/trackerslist/trackers_best.txt"
+          "https://newtrackon.com/api/90"
+          "https://cdn.jsdelivr.net/gh/XIU2/TrackersListCollection@master/best.txt"
+          "https://cdn.jsdelivr.net/gh/ngosang/trackerslist@master/trackers_best.txt"
+        )
+
+        # ──────────────────────────────────────────────────────────────
+        # BLACKLIST SOURCES (bad/dead/malicious trackers)
+        # These feed blacklist.txt and are used to FILTER, never to add.
+        # The two entries below were wrongly inside SOURCES before!
+        # ──────────────────────────────────────────────────────────────
+        declare -a BLACKLIST_SOURCES=(
+          "https://raw.githubusercontent.com/ngosang/trackerslist/master/blacklist.txt"
           "https://raw.githubusercontent.com/crazy-max/blocklist/master/trackers.txt"
           "https://raw.githubusercontent.com/bitjerry/BlackList/master/TrackerList.txt"
         )
-        
+
         TOTAL_SOURCES=${#SOURCES[@]}
 
-        USER_AGENTS=(
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15"
-          "Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0"
-        )
+        # ── Real configuration validation (the old job only echoed) ──
+        DUPES=$(printf '%s\n' "${SOURCES[@]}" | sort | uniq -d)
+        if [ -n "$DUPES" ]; then
+          echo "::error::Duplicate source URLs found:"
+          echo "$DUPES"
+          exit 1
+        fi
+        if printf '%s\n' "${SOURCES[@]}" | grep -vqE '^https?://'; then
+          echo "::error::Invalid (non-http/https) source URL detected."
+          exit 1
+        fi
+        echo "✓ Config valid: $TOTAL_SOURCES unique sources, ${#BLACKLIST_SOURCES[@]} blacklist sources"
 
-        export PARALLEL_DIR TIMEOUT_SECONDS CONNECT_TIMEOUT USER_AGENTS FAILED_LOG CACHE_DIR RETRY_ATTEMPTS DEBUG_MODE FORCE_FETCH
+        cat > "$UA_FILE" << 'UAEOF'
+        Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36
+        Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15
+        Mozilla/5.0 (X11; Linux x86_64; rv:125.0) Gecko/20100101 Firefox/125.0
+        UAEOF
+        sed -i 's/^[[:space:]]*//' "$UA_FILE"
 
-        # Fetch function
+        export PARALLEL_DIR STATUS_DIR CACHE_DIR UA_FILE FAILED_LOG
+        export TIMEOUT_SECONDS CONNECT_TIMEOUT RETRY_ATTEMPTS DEBUG_MODE FORCE_FETCH
+
+        debug_log() {
+          if [ "$DEBUG_MODE" = "true" ]; then
+            echo "[DEBUG] $*" >&2
+          fi
+        }
+
+        # Fetch one source. Fresh fetch FIRST; cached copy only as FALLBACK
+        # (the old logic served stale cache before even trying the network).
         fetch_source() {
           local idx="$1"
           local url="$2"
@@ -238,16 +246,10 @@ jobs:
           local attempt=0
           local delay=1
 
-          if [ "$FORCE_FETCH" != "true" ] && [ -f "$cache_file" ] && [ -s "$cache_file" ]; then
-            debug_log "Using cache for source $idx"
-            cp "$cache_file" "$out"
-            echo "CACHED"
-            return 0
-          fi
-
           while [ "$attempt" -lt "$RETRY_ATTEMPTS" ]; do
-            local ua="${USER_AGENTS[$RANDOM % ${#USER_AGENTS[@]}]}"
-            
+            local ua
+            ua=$(shuf -n1 "$UA_FILE")
+
             if timeout $((TIMEOUT_SECONDS + 5)) curl -sSfL \
               --http1.1 --tlsv1.2 --compressed \
               --max-time "$TIMEOUT_SECONDS" \
@@ -257,20 +259,20 @@ jobs:
               -A "$ua" \
               -H "Accept: text/plain,application/json" \
               -H "Cache-Control: no-cache" \
-              -H "Connection: keep-alive" \
               "$url" -o "$out" 2>/dev/null; then
-              
-              local size=$(stat -c%s "$out" 2>/dev/null || echo 0)
-              
+
+              local size
+              size=$(wc -c < "$out" 2>/dev/null || echo 0)
+
               if [ "$size" -ge 10 ] && ! grep -qiE '^<|<!doctype|<html' "$out" 2>/dev/null; then
                 cp "$out" "$cache_file"
-                debug_log "Cached source $idx ($size bytes)"
-                echo "OK"
+                echo "OK" > "${STATUS_DIR}/${idx}"
+                echo "[src $((idx+1))] OK       $url"
                 return 0
               fi
               rm -f "$out"
             fi
-            
+
             attempt=$((attempt + 1))
             if [ "$attempt" -lt "$RETRY_ATTEMPTS" ]; then
               debug_log "Retry $attempt/$RETRY_ATTEMPTS for source $idx after ${delay}s"
@@ -278,77 +280,125 @@ jobs:
               delay=$((delay * 2))
             fi
           done
-          
-          echo "$url" >> "$FAILED_LOG"
-          echo "FAILED"
-          return 1
-        }
 
+          # Network failed - fall back to last known-good cached copy
+          if [ "$FORCE_FETCH" != "true" ] && [ -s "$cache_file" ]; then
+            cp "$cache_file" "$out"
+            echo "CACHED" > "${STATUS_DIR}/${idx}"
+            echo "[src $((idx+1))] CACHED   $url"
+            return 0
+          fi
+
+          echo "$url" >> "$FAILED_LOG"
+          echo "FAILED" > "${STATUS_DIR}/${idx}"
+          echo "[src $((idx+1))] FAILED   $url"
+          return 0
+        }
         export -f fetch_source debug_log
 
-        echo "Starting aggregation of $TOTAL_SOURCES sources..."
+        echo ""
+        echo "Starting PARALLEL aggregation of $TOTAL_SOURCES sources (jobs: $MAX_PARALLEL_JOBS)..."
         echo "Configuration: force_fetch=$FORCE_FETCH, debug=$DEBUG_MODE"
-        
-        SUCCESS_COUNT=0
-        FAIL_COUNT=0
+        echo ""
 
+        # The old code defined MAX_PARALLEL_JOBS but fetched one-by-one.
+        # Now sources are fetched truly in parallel.
         for idx in "${!SOURCES[@]}"; do
-          url="${SOURCES[$idx]}"
-          result=$(fetch_source "$idx" "$url" 2>&1 || echo "FAILED")
-          if [ "$result" = "OK" ] || [ "$result" = "CACHED" ]; then
-            SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
-            if [ "$result" = "CACHED" ]; then
-              echo "[$(printf "%02d" $((idx+1)))/$TOTAL_SOURCES] CACHED"
-            else
-              echo "[$(printf "%02d" $((idx+1)))/$TOTAL_SOURCES] OK"
-            fi
-          else
-            FAIL_COUNT=$((FAIL_COUNT + 1))
-            echo "[$(printf "%02d" $((idx+1)))/$TOTAL_SOURCES] FAILED"
-          fi
-        done
+          printf '%s %s\n' "$idx" "${SOURCES[$idx]}"
+        done | xargs -P "$MAX_PARALLEL_JOBS" -L1 bash -c 'fetch_source "$1" "$2"' _
+
+        SUCCESS_COUNT=$(cat "$STATUS_DIR"/* 2>/dev/null | grep -cx 'OK' || true)
+        CACHED_COUNT=$(cat "$STATUS_DIR"/* 2>/dev/null | grep -cx 'CACHED' || true)
+        FAIL_COUNT=$(cat "$STATUS_DIR"/* 2>/dev/null | grep -cx 'FAILED' || true)
+        OK_TOTAL=$((SUCCESS_COUNT + CACHED_COUNT))
 
         echo ""
-        echo "Fetch Summary: $SUCCESS_COUNT OK, $FAIL_COUNT FAILED"
+        echo "Fetch Summary: $SUCCESS_COUNT OK, $CACHED_COUNT CACHED (fallback), $FAIL_COUNT FAILED"
 
-        # Merge
-        find "$PARALLEL_DIR" -name "source_*.txt" -type f 2>/dev/null -exec cat {} \; | sort -u > "$WORK_DIR/raw.txt" 2>/dev/null || true
+        # ── Shared sanitizer used for trackers AND blacklist entries ──
+        sanitize_stream() {
+          sed '1s/^\xEF\xBB\xBF//' | \
+          tr -d '\r\0' | \
+          LC_ALL=C sed 's/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]//g' | \
+          sed 's/<[^>]*>//g' | \
+          sed 's/^[[:space:]]*//; s/[[:space:]]*$//' | \
+          grep -iE '^(udp|https?|wss?)://[^[:space:]]+$' | \
+          sed 's|/*$||' | \
+          awk -F'://' '{
+            scheme = tolower($1)
+            rest = substr($0, length($1) + 4)
+            slash = index(rest, "/")
+            if (slash > 0) { host = substr(rest, 1, slash - 1); path = substr(rest, slash) }
+            else           { host = rest; path = "" }
+            print scheme "://" tolower(host) path
+          }' | \
+          grep -viE '^[a-z]+://(localhost|127\.|0\.0\.0\.0|255\.255\.255\.255|\[?::1)' | \
+          grep -viE '^[a-z]+://(10\.|192\.168\.|172\.1[6-9]\.|172\.2[0-9]\.|172\.3[0-1]\.|169\.254\.)' | \
+          grep -viE '(example\.(com|org|net)|\.local([:/]|$)|\.onion([:/]|$)|\.internal([:/]|$))' | \
+          sort -u
+        }
 
+        # ── Merge raw sources ──
+        find "$PARALLEL_DIR" -name "source_*.txt" -type f -exec cat {} + 2>/dev/null | sort -u > "$WORK_DIR/raw.txt" || true
         RAW_COUNT=$(wc -l < "$WORK_DIR/raw.txt" 2>/dev/null || echo 0)
-        echo "Raw trackers: $RAW_COUNT"
+        echo "Raw lines: $RAW_COUNT"
 
         if [ ! -s "$WORK_DIR/raw.txt" ] || [ "$RAW_COUNT" -lt 5 ]; then
-          echo "ERROR: Insufficient data ($RAW_COUNT lines)"
+          echo "::error::Insufficient data ($RAW_COUNT lines)"
           exit 1
         fi
 
         echo "Sanitizing trackers..."
+        sanitize_stream < "$WORK_DIR/raw.txt" > "$WORK_DIR/clean_pre.txt" || true
+        PRE_BL_COUNT=$(wc -l < "$WORK_DIR/clean_pre.txt" 2>/dev/null || echo 0)
+        echo "Sanitized trackers (pre-blacklist): $PRE_BL_COUNT"
 
-        # Sanitize
-        sed '1s/^\xEF\xBB\xBF//' "$WORK_DIR/raw.txt" 2>/dev/null | \
-        tr -d '\r\0' | \
-        LC_ALL=C sed 's/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]//g' | \
-        sed 's/<[^>]*>//g' | \
-        sed 's/^[[:space:]]*//; s/[[:space:]]*$//' | \
-        grep -iE '^(udp|https?|wss?)://[^[:space:]]+$' | \
-        sed 's|/$||g' | \
-        tr '[:upper:]' '[:lower:]' | \
-        grep -viE '://(localhost|127\.|0\.0\.0\.0|255\.255\.255\.255|::1)' | \
-        grep -viE '://(10\.|192\.168\.|172\.1[6-9]\.|172\.2[0-9]\.|172\.3[0-1]\.|169\.254\.)' | \
-        grep -viE '(example\.(com|org|net)|\.local|\.onion|\.internal)' | \
-        awk '!seen[$0]++ {if (NF) print}' | \
-        sort -u > "$WORK_DIR/clean.txt" || true
+        # ──────────────────────────────────────────────────────────────
+        # BLACKLIST: fetch -> merge with existing blacklist.txt -> filter
+        # ──────────────────────────────────────────────────────────────
+        echo "Building blacklist..."
+        BL_RAW="$WORK_DIR/blacklist_raw.txt"
+        : > "$BL_RAW"
+        # Start from the previously committed blacklist (accumulative)
+        [ -f blacklist.txt ] && cat blacklist.txt >> "$BL_RAW"
+        for bl_url in "${BLACKLIST_SOURCES[@]}"; do
+          if curl -sSfL --max-time "$TIMEOUT_SECONDS" --connect-timeout "$CONNECT_TIMEOUT" \
+               "$bl_url" >> "$BL_RAW" 2>/dev/null; then
+            echo "  ✓ blacklist source: $bl_url"
+          else
+            echo "  ⚠ blacklist source unreachable (skipped): $bl_url"
+          fi
+          echo "" >> "$BL_RAW"
+        done
+
+        sanitize_stream < "$BL_RAW" > blacklist.txt || true
+        BL_COUNT=$(wc -l < blacklist.txt 2>/dev/null || echo 0)
+        echo "Blacklist entries: $BL_COUNT"
+
+        # Filter: drop any tracker whose host:port appears in the blacklist
+        if [ -s blacklist.txt ]; then
+          awk -F'://' '
+            NR == FNR { rest = substr($0, length($1) + 4); sub(/\/.*/, "", rest); bad[rest] = 1; badurl[$0] = 1; next }
+            {
+              rest = substr($0, length($1) + 4); sub(/\/.*/, "", rest)
+              if (!($0 in badurl) && !(rest in bad)) print
+            }
+          ' blacklist.txt "$WORK_DIR/clean_pre.txt" > "$WORK_DIR/clean.txt"
+        else
+          cp "$WORK_DIR/clean_pre.txt" "$WORK_DIR/clean.txt"
+        fi
 
         CLEAN_COUNT=$(wc -l < "$WORK_DIR/clean.txt" 2>/dev/null || echo 0)
-        echo "Clean trackers: $CLEAN_COUNT"
+        BL_REMOVED=$((PRE_BL_COUNT - CLEAN_COUNT))
+        echo "Clean trackers: $CLEAN_COUNT (blacklist removed: $BL_REMOVED)"
 
-        # Categorize
+        # ── Categorize ──
         grep -E '^udp://'   "$WORK_DIR/clean.txt" > "$WORK_DIR/udp.txt"   2>/dev/null || touch "$WORK_DIR/udp.txt"
         grep -E '^https://' "$WORK_DIR/clean.txt" > "$WORK_DIR/https.txt" 2>/dev/null || touch "$WORK_DIR/https.txt"
         grep -E '^http://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/http.txt"  2>/dev/null || touch "$WORK_DIR/http.txt"
         grep -E '^wss?://'  "$WORK_DIR/clean.txt" > "$WORK_DIR/ws.txt"    2>/dev/null || touch "$WORK_DIR/ws.txt"
 
-        # Sort by priority
+        # ── Sort by protocol priority ──
         awk '
           /^udp:\/\//   {print "1\t" $0; next}
           /^https:\/\// {print "2\t" $0; next}
@@ -359,96 +409,145 @@ jobs:
         FINAL_COUNT=$(wc -l < "$WORK_DIR/sorted.txt" 2>/dev/null || echo 0)
         echo "Final trackers: $FINAL_COUNT"
 
-        # Format
+        # ── Safety guards (BEFORE overwriting anything) ──
+        if [ "$FINAL_COUNT" -lt "$MIN_TRACKER_COUNT" ]; then
+          echo "::error::Only $FINAL_COUNT trackers found (minimum: $MIN_TRACKER_COUNT). Aborting to protect existing lists."
+          exit 1
+        fi
+        PREV_COUNT=$(grep -c '^[a-z]' all_trackers.txt 2>/dev/null || echo 0)
+        if [ "$PREV_COUNT" -gt 0 ]; then
+          THRESHOLD=$((PREV_COUNT * DROP_GUARD_PERCENT / 100))
+          if [ "$FINAL_COUNT" -lt "$THRESHOLD" ]; then
+            echo "::error::New list ($FINAL_COUNT) dropped below ${DROP_GUARD_PERCENT}% of previous ($PREV_COUNT). Possible mass source failure. Aborting."
+            exit 1
+          fi
+        fi
+
+        # ── Write output files (blank-line separated, aria2 friendly) ──
         format_output() {
           local src="$1" dst="$2"
           if [ -s "$src" ]; then
             awk 'NR>1{print ""} {print}' "$src" > "$dst"
           else
-            touch "$dst"
+            : > "$dst"
           fi
         }
-
         format_output "$WORK_DIR/sorted.txt" "all_trackers.txt"
         format_output "$WORK_DIR/udp.txt"    "udp.txt"
         format_output "$WORK_DIR/https.txt"  "https.txt"
         format_output "$WORK_DIR/http.txt"   "http.txt"
         format_output "$WORK_DIR/ws.txt"     "ws.txt"
-        paste -sd ',' "$WORK_DIR/sorted.txt" 2>/dev/null > "all_trackers_comma.txt" || touch "all_trackers_comma.txt"
+        paste -sd ',' "$WORK_DIR/sorted.txt" > "all_trackers_comma.txt" 2>/dev/null || : > "all_trackers_comma.txt"
+        # Keep the legacy trackers.txt in sync (users may hotlink it)
+        cp all_trackers.txt trackers.txt
 
-        # Backup
-        cp "all_trackers.txt" "$BACKUP_DIR/all_trackers.txt.bak"
-
-        # JSON APIs
+        # ── JSON APIs (built with jq = always valid JSON) ──
         mkdir -p api
-
         UDP_COUNT=$(grep -c '^udp://' "$WORK_DIR/sorted.txt" 2>/dev/null || echo 0)
         HTTPS_COUNT=$(grep -c '^https://' "$WORK_DIR/sorted.txt" 2>/dev/null || echo 0)
         HTTP_COUNT=$(grep -c '^http://' "$WORK_DIR/sorted.txt" 2>/dev/null || echo 0)
         WS_COUNT=$(grep -cE '^wss?://' "$WORK_DIR/sorted.txt" 2>/dev/null || echo 0)
-        SUCCESS_RATE=$(awk "BEGIN {if ($TOTAL_SOURCES > 0) printf \"%.2f\", ($SUCCESS_COUNT*100)/$TOTAL_SOURCES; else print \"0.00\"}")
+        SUCCESS_RATE=$(awk -v ok="$OK_TOTAL" -v total="$TOTAL_SOURCES" 'BEGIN {if (total > 0) printf "%.2f", (ok*100)/total; else print "0.00"}')
 
-        cat > api/stats.json << EOF
-        {
-          "version": "1.0",
-          "updated_at": "$(date -Iseconds)",
-          "total": $FINAL_COUNT,
-          "sources": $TOTAL_SOURCES,
-          "success_rate": "${SUCCESS_RATE}%",
-          "protocols": {"udp": $UDP_COUNT, "https": $HTTPS_COUNT, "http": $HTTP_COUNT, "ws": $WS_COUNT}
-        }
-        EOF
+        jq -n \
+          --arg updated "$(date -Iseconds)" \
+          --arg rate "${SUCCESS_RATE}%" \
+          --argjson total "$FINAL_COUNT" \
+          --argjson sources "$TOTAL_SOURCES" \
+          --argjson blacklisted "$BL_REMOVED" \
+          --argjson udp "$UDP_COUNT" --argjson https "$HTTPS_COUNT" \
+          --argjson http "$HTTP_COUNT" --argjson ws "$WS_COUNT" \
+          '{version: "1.1", updated_at: $updated, total: $total, sources: $sources,
+            success_rate: $rate, blacklist_removed: $blacklisted,
+            protocols: {udp: $udp, https: $https, http: $http, ws: $ws}}' > api/stats.json
 
-        cat > api/badge.json << EOF
-        {"schemaVersion": 1, "label": "Trackers", "message": "$FINAL_COUNT", "color": "brightgreen"}
-        EOF
+        jq -n --arg msg "$FINAL_COUNT" \
+          '{schemaVersion: 1, label: "Trackers", message: $msg, color: "brightgreen"}' > api/badge.json
 
-        {
-          echo "{\"version\":\"1.0\",\"generated\":\"$(date -Iseconds)\",\"total\":$FINAL_COUNT,\"trackers\":["
-          sed 's/^/"/; s/$/"/' "$WORK_DIR/sorted.txt" | paste -sd ',' -
-          echo "]}"
-        } > api/trackers.json
+        jq -Rn --arg gen "$(date -Iseconds)" --argjson total "$FINAL_COUNT" \
+          '{version: "1.1", generated: $gen, total: $total, trackers: [inputs]}' \
+          < "$WORK_DIR/sorted.txt" > api/trackers.json
 
-        # Idempotency
-        NEW_HASH=$(sha256sum "all_trackers.txt" | cut -d' ' -f1)
+        # ── Regenerate SHA256SUMS.txt (GITHUB_TOKEN pushes do NOT trigger
+        #    checksum.yml, so we must keep checksums in sync right here) ──
+        mapfile -t txt_files < <(find . -maxdepth 1 -type f -name '*.txt' ! -name 'SHA256SUMS.txt' -printf '%P\n' | sort)
+        sha256sum "${txt_files[@]}" > SHA256SUMS.txt
+
+        # ── Idempotency (covers trackers AND blacklist changes) ──
+        NEW_HASH=$(sha256sum all_trackers.txt blacklist.txt | sha256sum | cut -d' ' -f1)
         OLD_HASH=$(cat .tracker_hash 2>/dev/null || echo "")
         echo "$NEW_HASH" > .tracker_hash
 
         if [ "$NEW_HASH" = "$OLD_HASH" ]; then
           echo "skip_commit=true" >> "$GITHUB_OUTPUT"
+          echo "ℹ No changes detected - commit will be skipped."
         else
           echo "skip_commit=false" >> "$GITHUB_OUTPUT"
         fi
+        echo "tracker_count=$FINAL_COUNT" >> "$GITHUB_OUTPUT"
+        echo "source_count=$TOTAL_SOURCES" >> "$GITHUB_OUTPUT"
 
+        # ── Report ──
         ELAPSED=$(($(date +%s) - START_TS))
-        
-        cat >> "$GITHUB_STEP_SUMMARY" << EOF
-        ## Aggregation Report
-        | Key | Value |
-        |-----|-------|
-        | Total Sources | $TOTAL_SOURCES |
-        | Successful | $SUCCESS_COUNT |
-        | Failed | $FAIL_COUNT |
-        | Success Rate | ${SUCCESS_RATE}% |
-        | Final Trackers | $FINAL_COUNT |
-        | UDP | $UDP_COUNT |
-        | HTTPS | $HTTPS_COUNT |
-        | HTTP | $HTTP_COUNT |
-        | WebSocket | $WS_COUNT |
-        | Time | ${ELAPSED}s |
-        EOF
-
-    - name: Configure Git
-      run: |
-        git config --local user.email "actions@github.com"
-        git config --local user.name "github-actions[bot]"
+        {
+          echo "## Aggregation Report"
+          echo "| Key | Value |"
+          echo "|-----|-------|"
+          echo "| Total Sources | $TOTAL_SOURCES |"
+          echo "| Successful (fresh) | $SUCCESS_COUNT |"
+          echo "| Cached fallback | $CACHED_COUNT |"
+          echo "| Failed | $FAIL_COUNT |"
+          echo "| Success Rate | ${SUCCESS_RATE}% |"
+          echo "| Blacklist entries | $BL_COUNT |"
+          echo "| Removed by blacklist | $BL_REMOVED |"
+          echo "| Final Trackers | $FINAL_COUNT |"
+          echo "| UDP / HTTPS / HTTP / WS | $UDP_COUNT / $HTTPS_COUNT / $HTTP_COUNT / $WS_COUNT |"
+          echo "| Time | ${ELAPSED}s |"
+          if [ -s "$FAILED_LOG" ]; then
+            echo ""
+            echo "<details><summary>Failed sources ($FAIL_COUNT)</summary>"
+            echo ""
+            sed 's/^/- /' "$FAILED_LOG"
+            echo ""
+            echo "</details>"
+          fi
+        } >> "$GITHUB_STEP_SUMMARY"
 
     - name: Commit & Push
       if: steps.build.outputs.skip_commit == 'false'
+      env:
+        TRACKER_COUNT: ${{ steps.build.outputs.tracker_count }}
+        SOURCE_COUNT: ${{ steps.build.outputs.source_count }}
       run: |
-        git add -A
-        git commit -m "Update: Trackers from 98 sources" --no-verify || true
-        git push origin main 2>&1 || true
+        set -euo pipefail
+        git config --local user.name "github-actions[bot]"
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+        # Explicit file list - never blindly `git add -A`
+        git add all_trackers.txt all_trackers_comma.txt trackers.txt \
+                udp.txt http.txt https.txt ws.txt \
+                blacklist.txt SHA256SUMS.txt .tracker_hash \
+                api/stats.json api/badge.json api/trackers.json
+
+        if git diff --staged --quiet; then
+          echo "ℹ Nothing staged - skipping commit."
+          exit 0
+        fi
+
+        git commit -m "🔄 Update: ${TRACKER_COUNT} trackers from ${SOURCE_COUNT} sources [skip ci]"
+
+        # Push with retry - errors are NEVER silently swallowed
+        for attempt in 1 2 3; do
+          if git push origin main; then
+            echo "✅ Pushed successfully."
+            exit 0
+          fi
+          echo "⚠ Push attempt $attempt failed - rebasing and retrying..."
+          git pull --rebase origin main
+          sleep 5
+        done
+        echo "::error::Failed to push after 3 attempts."
+        exit 1
 
     - name: Complete
       if: always()
