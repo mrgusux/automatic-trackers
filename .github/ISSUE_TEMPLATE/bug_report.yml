@@ -6,29 +6,113 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report! 
-        **Note:** If a specific tracker is just dead/offline, please do NOT open a bug report. This form is strictly for script or automation pipeline errors.
+        ## Thanks for taking the time to fill out this bug report!
+
+        **Note:** If a specific tracker is just dead/offline, please do **NOT** open a bug report.
+        Dead trackers are filtered automatically on the next scheduled run. This form is strictly
+        for **script or automation pipeline errors**.
+
+        - 🔍 Please search [existing issues](../issues?q=is%3Aissue+label%3Abug) before submitting.
+        - 💬 For questions or ideas, use [Discussions](../discussions) instead.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: ✅ Pre-submission checklist
+      description: Please confirm the following before submitting.
+      options:
+        - label: I have searched existing issues and this bug has not been reported before.
+          required: true
+        - label: This is a script/automation/output bug, NOT a report about a single dead tracker.
+          required: true
+
+  - type: dropdown
+    id: bug-area
+    attributes:
+      label: 🗂️ Affected area
+      description: Which part of the project is affected by this bug?
+      options:
+        - GitHub Actions workflow (update-trackers, lint, release, etc.)
+        - Output files (all_trackers.txt, udp.txt, http.txt, https.txt, ws.txt)
+        - API files (badge.json, stats.json, trackers.json)
+        - Checksums / Signing (SHA256SUMS.txt, sign-artifacts)
+        - Docker / docker-compose
+        - Tests (tracker_test.bats)
+        - Documentation
+        - Other / Not sure
+    validations:
+      required: true
+
   - type: textarea
     id: description
     attributes:
-      label: Describe the bug
+      label: 🐛 Describe the bug
       description: A clear and concise description of what the bug is.
       placeholder: e.g., The GitHub Actions workflow fails during the sanitization stage...
     validations:
       required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: 🔁 Steps to reproduce
+      description: Tell us how to reproduce this behavior, step by step.
+      placeholder: |
+        1. Go to '...'
+        2. Run '...'
+        3. See error
+    validations:
+      required: false
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: ✅ Expected behavior
+      description: What did you expect to happen instead?
+      placeholder: e.g., The workflow should complete and update all_trackers.txt without errors.
+    validations:
+      required: false
+
+  - type: input
+    id: workflow-run-url
+    attributes:
+      label: 🔗 Failing workflow run URL (if applicable)
+      description: Paste the link to the failed GitHub Actions run. This helps us debug much faster.
+      placeholder: e.g., https://github.com/OWNER/REPO/actions/runs/123456789
+    validations:
+      required: false
+
   - type: input
     id: torrent-client
     attributes:
-      label: Torrent Client & Version
+      label: 📥 Torrent Client & Version
       description: What torrent client are you using? (if applicable)
       placeholder: e.g., qBittorrent v4.6.0
     validations:
       required: false
+
+  - type: input
+    id: os-environment
+    attributes:
+      label: 💻 Operating System / Environment
+      description: Your OS or runtime environment (if relevant to the bug).
+      placeholder: e.g., Ubuntu 24.04, Windows 11, Docker
+    validations:
+      required: false
+
   - type: textarea
     id: logs
     attributes:
-      label: Relevant Logs or Error Messages
-      description: Please copy and paste any relevant log output from GitHub Actions here.
+      label: 📋 Relevant Logs or Error Messages
+      description: Please copy and paste any relevant log output from GitHub Actions here. This will be automatically formatted as code.
       render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 📝 Additional context
+      description: Add any other context or screenshots about the bug here.
     validations:
       required: false
