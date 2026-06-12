@@ -28,7 +28,9 @@
         "maintenance",
         "infra",
         "ideas",
-        "review"
+        "review",
+        "test",
+        "security"
       ]
     }
   ]
