@@ -55,7 +55,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         # Full history so `git pull --rebase` works safely on push races
         fetch-depth: 0
