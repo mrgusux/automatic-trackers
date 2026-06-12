@@ -1,11 +1,19 @@
 version: 2
 updates:
-  # Keep GitHub Actions up to date
+  # ── Keep GitHub Actions up to date ────────────────────────────────
+  # This protects all the workflows we hardened (checksum, release,
+  # sign-artifacts, scorecard, etc.) by keeping their pinned action
+  # versions fresh and security-patched.
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Etc/UTC"
     open-pull-requests-limit: 5
+    assignees:
+      - "mrgusux"
     labels:
       - "dependencies"
       - "github-actions"
@@ -13,19 +21,30 @@ updates:
       prefix: "chore"
       include: "scope"
     groups:
+      # One combined PR for all action bumps = less noise
       actions:
         patterns:
           - "*"
 
-  # Keep the Docker base image (alpine) up to date
+  # ── Keep the Docker base image (alpine) up to date ───────────────
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Etc/UTC"
     open-pull-requests-limit: 2
+    assignees:
+      - "mrgusux"
     labels:
       - "dependencies"
       - "docker"
     commit-message:
       prefix: "chore"
       include: "scope"
+    groups:
+      docker-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
