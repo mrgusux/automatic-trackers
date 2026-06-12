@@ -1,52 +1,80 @@
 # PR Labeler rules (actions/labeler v5 syntax)
 # Labels are applied automatically based on which files a PR touches.
+# Used by: .github/workflows/pr-labeler.yml
 
 documentation:
-  - any:
-    - changed-files:
-      - any-glob-to-any-file: '**/*.md'
-      - any-glob-to-any-file: 'CITATION.cff'
-      - any-glob-to-any-file: 'LICENSE'
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.md'
+          - 'docs/**'
+          - 'CITATION.cff'
+          - 'LICENSE'
 
 github-actions:
-  - any:
-    - changed-files:
-      - any-glob-to-any-file: '.github/workflows/**'
-      - any-glob-to-any-file: '.github/dependabot.yml'
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/workflows/**'
+          - '.github/dependabot.yml'
 
 tracker-sources:
-  - any:
-    - changed-files:
-      - any-glob-to-any-file: 'config/**'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'config/**'
+          - 'sources.txt'
+          - 'SOURCES.md'
+          - 'blacklist.txt'
 
 tracker-data:
-  - any:
-    - changed-files:
-      - any-glob-to-any-file: '*.txt'
-      - any-glob-to-any-file: 'api/**'
-      - any-glob-to-any-file: '.tracker_hash'
+  - changed-files:
+      - any-glob-to-any-file:
+          - '*.txt'
+          - 'api/**'
+          - '.tracker_hash'
 
 scripts:
-  - any:
-    - changed-files:
-      - any-glob-to-any-file: 'scripts/**'
-      - any-glob-to-any-file: 'Makefile'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'scripts/**'
+          - 'Makefile'
 
 tests:
-  - any:
-    - changed-files:
-      - any-glob-to-any-file: 'tests/**'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'tests/**'
 
 docker:
-  - any:
-    - changed-files:
-      - any-glob-to-any-file: 'Dockerfile'
-      - any-glob-to-any-file: 'docker-compose.yml'
-      - any-glob-to-any-file: '.dockerignore'
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'Dockerfile'
+          - 'docker-compose.yml'
+          - '.dockerignore'
+
+security:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'SECURITY.md'
+          - '.github/workflows/scorecard.yml'
+          - '.github/workflows/sign-artifacts.yml'
+          - '.github/workflows/checksum.yml'
+          - '.github/workflows/sbom.yml'
+          - '.github/CODEOWNERS'
+
+community:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/ISSUE_TEMPLATE/**'
+          - '.github/DISCUSSION_TEMPLATE/**'
+          - '.github/pull_request_template.md'
+          - '.github/FUNDING.yml'
+          - 'CODE_OF_CONDUCT.md'
+          - 'CONTRIBUTING.md'
+          - 'GOVERNANCE.md'
+          - 'SUPPORT.md'
+          - 'MAINTAINERS.md'
 
 infrastructure:
-  - any:
-    - changed-files:
-      - any-glob-to-any-file: '.editorconfig'
-      - any-glob-to-any-file: '.gitignore'
-      - any-glob-to-any-file: '.pre-commit-config.yaml'
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.editorconfig'
+          - '.gitignore'
+          - '.pre-commit-config.yaml'
