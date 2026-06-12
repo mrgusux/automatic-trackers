@@ -15,14 +15,11 @@ indent_size = 2
 # Makefiles REQUIRE real tabs for recipe lines.
 # Without this override, editors would insert spaces and `make` would
 # fail with the infamous "*** missing separator" error.
-[Makefile]
+[{Makefile,makefile,GNUmakefile,*.mk}]
 indent_style = tab
 
-[makefile]
-indent_style = tab
-
-# Shell scripts
-[*.sh]
+# Shell scripts & bats test files (shell-like syntax)
+[*.{sh,bash,bats}]
 indent_style = space
 indent_size = 2
 
@@ -31,8 +28,8 @@ indent_size = 2
 indent_style = space
 indent_size = 2
 
-# JSON (api outputs, configs)
-[*.json]
+# JSON (api outputs, configs) - also covers .all-contributorsrc
+[{*.json,.all-contributorsrc}]
 indent_style = space
 indent_size = 2
 
@@ -44,8 +41,3 @@ trim_trailing_whitespace = false
 [*.txt]
 trim_trailing_whitespace = false
 insert_final_newline = false
-
-# bats test files are shell-like
-[*.bats]
-indent_style = space
-indent_size = 2
