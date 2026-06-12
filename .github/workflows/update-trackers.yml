@@ -318,11 +318,15 @@ jobs:
         # ── Shared sanitizer used for trackers AND blacklist entries ──
         sanitize_stream() {
           sed '1s/^\xEF\xBB\xBF//' | \
-          tr -d '\r\0' | \
+          tr -d '\r\0"' | \
+          tr ',' '\n' | \
           LC_ALL=C sed 's/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]//g' | \
           sed 's/<[^>]*>//g' | \
           sed 's/^[[:space:]]*//; s/[[:space:]]*$//' | \
           grep -iE '^(udp|https?|wss?)://[^[:space:]]+$' | \
+          grep -vE '://.*://' | \
+          grep -viE '/announce\+' | \
+          sed -E 's|([^:/])//+|\1/|g' | \
           sed 's|/*$||' | \
           awk -F'://' '{
             scheme = tolower($1)
@@ -334,7 +338,7 @@ jobs:
           }' | \
           grep -viE '^[a-z]+://(localhost|127\.|0\.0\.0\.0|255\.255\.255\.255|\[?::1)' | \
           grep -viE '^[a-z]+://(10\.|192\.168\.|172\.1[6-9]\.|172\.2[0-9]\.|172\.3[0-1]\.|169\.254\.)' | \
-          grep -viE '(example\.(com|org|net)|\.local([:/]|$)|\.onion([:/]|$)|\.internal([:/]|$))' | \
+          grep -viE '(example\.(com|org|net)|\.local([:/]|$)|\.onion([:/]|$)|\.internal([:/]|$)|nonexistent)' | \
           sort -u
         }
 
