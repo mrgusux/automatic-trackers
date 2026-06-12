@@ -1,12 +1,37 @@
 # Code owners are automatically requested for review on matching PRs.
 # Later rules override earlier ones.
+# Docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
 
-# Default owner for everything
-*               @mrgusux
+# ── Default owner for everything ──────────────────────────────────
+*                       @mrgusux
 
-# Critical paths (explicit, for clarity)
-/.github/       @mrgusux
-/scripts/       @mrgusux
-/config/        @mrgusux
-/Dockerfile     @mrgusux
-/Makefile       @mrgusux
+# ── CI/CD & Automation (the heart of this project) ────────────────
+/.github/               @mrgusux
+/.github/workflows/     @mrgusux
+/.github/CODEOWNERS     @mrgusux
+
+# ── Scripts & Configuration ───────────────────────────────────────
+# NOTE: /scripts/ will be added in a later phase (update logic extraction)
+/scripts/               @mrgusux
+/config/                @mrgusux
+
+# ── Build & Deployment ────────────────────────────────────────────
+/Dockerfile             @mrgusux
+/docker-compose.yml     @mrgusux
+/Makefile               @mrgusux
+
+# ── Tests ─────────────────────────────────────────────────────────
+/tests/                 @mrgusux
+
+# ── Generated outputs & API (bot-managed, changes need owner eyes) ─
+/api/                   @mrgusux
+/all_trackers.txt       @mrgusux
+/blacklist.txt          @mrgusux
+/SHA256SUMS.txt         @mrgusux
+
+# ── Governance, Security & Legal (extra-sensitive docs) ───────────
+/SECURITY.md            @mrgusux
+/LICENSE                @mrgusux
+/GOVERNANCE.md          @mrgusux
+/MAINTAINERS.md         @mrgusux
+/CODE_OF_CONDUCT.md     @mrgusux
