@@ -4,29 +4,95 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing release tag to sign (e.g., v1.0.0)"
+        required: true
+        type: string
 
+# Never cancel a signing run halfway through
+concurrency:
+  group: sign-${{ github.event.release.tag_name || inputs.tag }}
+  cancel-in-progress: false
+
+# Default: read-only. Specific permissions are granted at the job level.
 permissions:
-  contents: write
-  id-token: write # Required for keyless signing with Sigstore
+  contents: read
 
 jobs:
   sign-assets:
+    name: Sign Release Assets (Sigstore Keyless)
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write  # Required to upload signatures back to the release
+      id-token: write  # Required for keyless signing with Sigstore
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
 
       - name: 🔐 Install Cosign
-        uses: sigstore/cosign-installer@v3.5.0
+        uses: sigstore/cosign-installer@v3
 
-      - name: ✍️ Sign the trackers
+      - name: 📦 Download the actual release assets
         run: |
-          # Create a signature for the main compiled tracker file
-          cosign sign-blob --yes --output-signature all_trackers.sig all_trackers.txt
-          echo "✅ Cryptographic signature generated successfully."
+          set -euo pipefail
+          # CRITICAL: We sign the files PUBLISHED in the release, not the
+          # files in the repository checkout - they could differ!
+          mkdir -p assets
+          gh release download "$TAG" --dir assets
+          echo "✅ Downloaded assets for release: $TAG"
+          ls -la assets/
 
-      - name: 💾 Upload Signature to Release
-        if: github.event_name == 'release'
-        uses: softprops/action-gh-release@v2
-        with:
-          files: all_trackers.sig
+      - name: ✍️ Sign every release asset
+        run: |
+          set -euo pipefail
+          cd assets
+
+          signed=0
+          for file in *; do
+            # Never re-sign signature/certificate files themselves
+            case "$file" in
+              *.sig|*.pem|*.bundle) continue ;;
+            esac
+
+            # Produce signature + certificate (both are REQUIRED to verify
+            # a keyless signature) and a modern all-in-one bundle.
+            cosign sign-blob --yes \
+              --output-signature "${file}.sig" \
+              --output-certificate "${file}.pem" \
+              --bundle "${file}.bundle" \
+              "$file"
+            signed=$((signed + 1))
+            echo "✅ Signed: $file"
+          done
+
+          if [ "$signed" -eq 0 ]; then
+            echo "::error::No assets found to sign in release $TAG."
+            exit 1
+          fi
+          echo "✅ Cryptographic signatures generated for $signed assets."
+
+      - name: 💾 Upload signatures to the Release
+        run: |
+          set -euo pipefail
+          # --clobber allows safe re-runs (overwrites old signatures)
+          gh release upload "$TAG" assets/*.sig assets/*.pem assets/*.bundle --clobber
+          echo "✅ All signatures attached to release: $TAG"
+
+      - name: 📖 How users verify (printed to the job summary)
+        run: |
+          {
+            echo "### 🔍 Verify a signed asset"
+            echo '```bash'
+            echo "cosign verify-blob \\"
+            echo "  --signature <FILE>.sig \\"
+            echo "  --certificate <FILE>.pem \\"
+            echo "  --certificate-identity-regexp 'https://github.com/${GITHUB_REPOSITORY}/' \\"
+            echo "  --certificate-oidc-issuer 'https://token.actions.githubusercontent.com' \\"
+            echo "  <FILE>"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
