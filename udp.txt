@@ -260,8 +260,6 @@ udp://91.218.230.81:6969/announce
 
 udp://93.104.214.40:6969/announce
 
-udp://93.158.213.92:1337//announce
-
 udp://93.158.213.92:1337/announce
 
 udp://93.158.213.92:6969/announce
@@ -399,8 +397,6 @@ udp://free.publictracker.xyz:6969/announce
 udp://freedom.1776.ga:6969/announce
 
 udp://freedomalternative.com:6969/announce
-
-udp://http://www.peckservers.com:9000/announce
 
 udp://htz3.noho.st:6969/announce
 
@@ -755,6 +751,8 @@ udp://tracker.opentorrent.top:6969/announce
 udp://tracker.opentrackr.org:1337/announce
 
 udp://tracker.orsvarn.com:6969/announce
+
+udp://tracker.peerfect.org:6969/announce
 
 udp://tracker.piratepublic.com:1337/announce
 

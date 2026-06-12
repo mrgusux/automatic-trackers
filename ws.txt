@@ -15,5 +15,3 @@ wss://tracker.magnetoo.io/announce
 wss://tracker.openwebtorrent.com/announce
 
 wss://tracker.openwebtorrent.com:443/announce
-
-wss://tracker.openwebtorrent.com:443/announcehttp://004430.xyz:80/announce
