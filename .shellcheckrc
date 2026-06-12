@@ -1,0 +1,13 @@
+# =============================================================================
+# .shellcheckrc - central ShellCheck configuration.
+# Picked up automatically by: shellcheck CLI (make lint), the
+# shellcheck pre-commit hook, and ludeeus/action-shellcheck in CI.
+# This guarantees local and CI linting follow IDENTICAL rules.
+# =============================================================================
+
+# Follow `source`d files instead of skipping them
+external-sources=true
+
+# Enable ALL optional checks (strictest mode):
+# quote-safe-variables, require-variable-braces, add-default-case, etc.
+enable=all
