@@ -18,9 +18,9 @@ help: ## Show this help message
         | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36mmake %-12s\033[0m %s\n", $$1, $$2}'
     @echo ""
 
-lint: ## Run ShellCheck on all shell scripts
+lint: ## Run ShellCheck on all shell scripts (rules come from .shellcheckrc)
     @echo "🧹 Running ShellCheck..."
-    shellcheck --severity=warning scripts/*.sh
+    shellcheck --severity=style scripts/*.sh
 
 test: ## Run the bats test suite
     @echo "✅ Running bats tests..."
@@ -28,7 +28,7 @@ test: ## Run the bats test suite
 
 run: ## Run the aggregator locally (no Docker)
     @echo "🚀 Running aggregator locally..."
-    bash scripts/update.sh
+    bash scripts/update_trackers.sh
 
 build: ## Build the Docker image
     @echo "📦 Building Docker image..."
@@ -44,7 +44,7 @@ docker-down: ## Stop and remove Docker Compose resources
 
 clean: ## Remove generated files (tracked files restorable via `git restore .`)
     @echo "🗑️  Removing generated files..."
-    rm -f all_trackers.txt all_trackers_comma.txt udp.txt http.txt https.txt ws.txt blacklist.txt .tracker_hash
+    rm -f all_trackers.txt all_trackers_comma.txt trackers.txt udp.txt http.txt https.txt ws.txt blacklist.txt .tracker_hash SHA256SUMS.txt
     rm -f api/stats.json api/badge.json api/trackers.json
     rm -rf output/ .cache/
 
