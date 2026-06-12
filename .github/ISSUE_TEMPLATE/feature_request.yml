@@ -6,26 +6,86 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for suggesting an improvement to the Ultimate Torrent Tracker Aggregator!
+        ## Thank you for suggesting an improvement to the Ultimate Torrent Tracker Aggregator!
+
+        - 🔍 Please search [existing issues](../issues?q=is%3Aissue+label%3Aenhancement) before submitting.
+        - 📖 Check the [ROADMAP.md](../blob/main/ROADMAP.md) — your suggestion might already be planned.
+        - 💬 For rough/early ideas, consider using [Discussions](../discussions) instead.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: ✅ Pre-submission checklist
+      description: Please confirm the following before submitting.
+      options:
+        - label: I have searched existing issues and this feature has not been requested before.
+          required: true
+        - label: I have checked the ROADMAP.md and this is not already planned.
+          required: true
+
+  - type: dropdown
+    id: request-type
+    attributes:
+      label: 🗂️ Request type
+      description: What kind of request is this?
+      options:
+        - New tracker source (a URL/list to aggregate from)
+        - New blacklist source (a list of bad trackers to filter out)
+        - New feature (script / automation / workflow)
+        - Enhancement to an existing feature
+        - API improvement (badge.json, stats.json, trackers.json)
+        - Documentation improvement
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: source-url
+    attributes:
+      label: 🔗 Source URL (if suggesting a tracker/blacklist source)
+      description: Provide the direct URL of the tracker list or blacklist source. Must be publicly accessible and regularly maintained.
+      placeholder: e.g., https://example.com/trackers_best.txt
+    validations:
+      required: false
+
   - type: textarea
     id: proposed-solution
     attributes:
-      label: Describe the feature or tracker source you'd like
+      label: 💡 Describe the feature or tracker source you'd like
       description: A clear and concise description of what you want to happen.
       placeholder: e.g., Add a new public tracker source from https://example.com/trackers.txt...
     validations:
       required: true
+
   - type: textarea
     id: use-case
     attributes:
-      label: Why is this feature needed?
+      label: 🎯 Why is this feature needed?
       description: Explain how this feature or new source will benefit the community.
     validations:
       required: true
+
   - type: textarea
     id: alternatives
     attributes:
-      label: Describe alternatives you've considered
+      label: 🔄 Describe alternatives you've considered
       description: Are there any other ways to achieve this right now?
     validations:
       required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 📝 Additional context
+      description: Add any other context, links, or screenshots about the feature request here.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: 🤝 Contribution
+      description: Would you be willing to help implement this feature?
+      options:
+        - label: I am willing to submit a Pull Request to implement this feature.
+          required: false
