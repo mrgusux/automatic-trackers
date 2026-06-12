@@ -1,0 +1,77 @@
+# =============================================================================
+# .dockerignore - keep the Docker build context tiny and clean.
+# The image only needs scripts/ and config/ (see Dockerfile COPY lines);
+# everything else is excluded so builds stay fast and reproducible.
+# =============================================================================
+
+# Git internals & GitHub metadata
+.git/
+.github/
+.gitignore
+
+# Generated tracker outputs (the container REGENERATES these itself)
+all_trackers.txt
+all_trackers_comma.txt
+trackers.txt
+udp.txt
+http.txt
+https.txt
+ws.txt
+blacklist.txt
+SHA256SUMS.txt
+.tracker_hash
+api/
+
+# Local working directories
+output/
+.cache/
+temp/
+tmp/
+build/
+dist/
+assets/
+
+# Documentation & community files (not needed inside the image)
+docs/
+*.md
+LICENSE
+CITATION.cff
+og-image.png
+all-contributors.json
+.all-contributorsrc
+
+# Tests & dev tooling
+tests/
+Makefile
+.pre-commit-config.yaml
+.editorconfig
+
+# Docker files themselves (never needed inside the build context output)
+Dockerfile
+docker-compose.yml
+docker-compose.override.yml
+.dockerignore
+
+# Release / signing / SBOM artifacts
+ultimate-trackers.zip
+RELEASE_SHA256SUMS.txt
+bom.cdx.json
+*.sig
+*.pem
+*.bundle
+
+# Secrets - extra safety net (should never exist anyway)
+.env
+.env.*
+*.key
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.tmp
+*.bak
+*.log
+.vscode/
+.idea/
