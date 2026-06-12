@@ -3,10 +3,6 @@
 # One-shot batch container: fetches, filters, and writes tracker lists,
 # then exits. Outputs land in $OUTPUT_DIR (mount it as a volume), e.g.:
 #   docker run --rm -v "$PWD/output:/app/output" automatic-trackers
-#
-# NOTE: This image runs scripts/update_trackers.sh - the standalone engine
-# script (planned extraction of the workflow pipeline; see CHANGELOG.md
-# "Unreleased"). Build this image after that script lands.
 # =============================================================================
 
 FROM alpine:3.21
@@ -42,6 +38,7 @@ RUN addgroup -g 1000 tracker && \
 
 ENV OUTPUT_DIR=/app/output \
     CACHE_DIR=/app/.cache/trackers \
+    CONFIG_DIR=/app/config \
     MIN_TRACKER_COUNT=150 \
     MAX_PARALLEL_JOBS=8
 
@@ -51,11 +48,9 @@ RUN mkdir -p "$OUTPUT_DIR" "$CACHE_DIR" && \
     chown -R tracker:tracker /app
 
 # Copy only what the aggregator needs (keeps the image lean;
-# .dockerignore should exclude everything else)
+# .dockerignore excludes everything else)
 COPY --chown=tracker:tracker scripts/ /app/scripts/
-
-# Re-enable when source lists move out of the script into config files:
-# COPY --chown=tracker:tracker sources.txt blacklist.txt /app/
+COPY --chown=tracker:tracker config/ /app/config/
 
 USER tracker
 
