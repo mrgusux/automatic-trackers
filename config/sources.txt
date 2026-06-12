@@ -1,0 +1,123 @@
+# =============================================================================
+# Tracker source URLs - one per line.
+# Lines starting with '#' and blank lines are ignored.
+# Validated automatically: no duplicates, http(s):// only.
+# Referenced by: scripts/update_trackers.sh, SOURCES.md
+# =============================================================================
+
+# ── ngosang/trackerslist ──
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_http.txt
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_udp.txt
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_ws.txt
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_https.txt
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best_ip.txt
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_udp.txt
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_http.txt
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_https.txt
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ws.txt
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_udp_ip.txt
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_http_ip.txt
+https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_https_ip.txt
+
+# ── newTrackon live API ──
+https://newtrackon.com/api/all
+https://newtrackon.com/api/stable
+https://newtrackon.com/api/live
+https://newtrackon.com/api/udp
+https://newtrackon.com/api/http
+https://newtrackon.com/api/75
+
+# ── XIU2/TrackersListCollection ──
+https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt
+https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/best.txt
+https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/http.txt
+https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/https.txt
+https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/udp.txt
+https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all_aria2.txt
+https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/best_aria2.txt
+https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/http_ip.txt
+https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/https_ip.txt
+https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/udp_ip.txt
+https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/all.txt.bak
+https://raw.githubusercontent.com/XIU2/TrackersListCollection/master/nohttp.txt
+
+# ── DeSireFire/animeTrackerList ──
+https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all.txt
+https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_best.txt
+https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_udp.txt
+https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_http.txt
+https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_https.txt
+https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_all_ws.txt
+https://raw.githubusercontent.com/DeSireFire/animeTrackerList/master/AT_https.txt
+
+# ── hezhijie0327/Trackerslist ──
+https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all.txt
+https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_best.txt
+https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_best_ip.txt
+https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_udp.txt
+https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_http.txt
+https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_https.txt
+https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_all_ip.txt
+https://raw.githubusercontent.com/hezhijie0327/Trackerslist/main/trackers_hot.txt
+
+# ── Naunter/BT_Trackers ──
+https://raw.githubusercontent.com/Naunter/BT_Trackers/master/Trackers/trackers_all.txt
+https://raw.githubusercontent.com/Naunter/BT_Trackers/master/Trackers/trackers_best.txt
+
+# ── Community lists ──
+https://raw.githubusercontent.com/duckbytes/trackerslist/master/trackers_all.txt
+https://raw.githubusercontent.com/duckbytes/trackerslist/master/trackers_best.txt
+https://raw.githubusercontent.com/slacky-1965/tracker_list/main/trackers_all.txt
+https://raw.githubusercontent.com/fei0316/trackerslist/master/trackers_all.txt
+https://raw.githubusercontent.com/CorralPeltzer/trackerslist/master/trackers_all.txt
+https://raw.githubusercontent.com/AndrewSwann93/trackers/main/trackers_all.txt
+https://raw.githubusercontent.com/Mysteriously/TrackersList/master/trackers_all.txt
+https://raw.githubusercontent.com/MrOtherGuy/Transmission-trackerslist/master/trackers.txt
+https://raw.githubusercontent.com/ZeroMemoryEX/tracker-list/master/trackers.txt
+https://raw.githubusercontent.com/LightDestory/trackerslist/master/trackers_all.txt
+https://raw.githubusercontent.com/GeoffreyCoulaud/Torrent-Trackers-List/main/trackers.txt
+https://raw.githubusercontent.com/1265578519/OpenTracker/master/tracker.txt
+https://raw.githubusercontent.com/gsrbr/torrentTracker/main/trackers.txt
+https://raw.githubusercontent.com/GuangYu-yu/Tracker-URL/main/all.txt
+https://raw.githubusercontent.com/opentracker/opentracker-trackers/master/trackers.txt
+https://raw.githubusercontent.com/kris3713/UltimateBTTrackersList/main/trackers_all.txt
+https://raw.githubusercontent.com/adysec/trackerslist/main/trackers_all.txt
+https://raw.githubusercontent.com/adysec/trackerslist/main/trackers_best.txt
+https://raw.githubusercontent.com/acgtracker/public-trackers/master/trackers.txt
+https://raw.githubusercontent.com/AnimeTrackerList/AnimeTrackerList/main/trackers_all.txt
+https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bt
+https://raw.githubusercontent.com/HDVinnie/open-tracker-list/master/open-tracker-list.txt
+https://raw.githubusercontent.com/anthonyfok/trackerslist-mirror/master/trackers_all.txt
+
+# ── trackerslist.com + Cloudflare mirror ──
+https://cf.trackerslist.com/all.txt
+https://cf.trackerslist.com/best.txt
+https://trackerslist.com/all.txt
+https://trackerslist.com/best.txt
+https://trackerslist.com/http.txt
+https://trackerslist.com/https.txt
+https://trackerslist.com/udp.txt
+
+# ── Other websites ──
+https://www.torrenttrackerlist.com/trackers.txt
+https://trackerlist.xyz/trackers_best.txt
+https://trackerlist.xyz/trackers_all.txt
+
+# ── CDN mirrors (jsDelivr / Fastly / Statically) ──
+https://cdn.jsdelivr.net/gh/DeSireFire/animeTrackerList/AT_all.txt
+https://cdn.jsdelivr.net/gh/XIU2/TrackersListCollection/all.txt
+https://fastly.jsdelivr.net/gh/XIU2/TrackersListCollection/all.txt
+https://cdn.jsdelivr.net/gh/ngosang/trackerslist@master/trackers_all.txt
+https://cdn.staticaly.com/gh/ngosang/trackerslist/master/trackers_all.txt
+https://cdn.jsdelivr.net/gh/ngosang/trackerslist@master/trackers_all_ip.txt
+https://cdn.jsdelivr.net/gh/XIU2/TrackersListCollection@master/all.txt
+
+# ── New high-quality sources (added in this upgrade) ──
+https://ngosang.github.io/trackerslist/trackers_all.txt
+https://ngosang.github.io/trackerslist/trackers_best.txt
+https://newtrackon.com/api/90
+https://cdn.jsdelivr.net/gh/XIU2/TrackersListCollection@master/best.txt
+https://cdn.jsdelivr.net/gh/ngosang/trackerslist@master/trackers_best.txt
