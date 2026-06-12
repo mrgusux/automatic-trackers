@@ -4,31 +4,46 @@ on:
   push:
     branches: [ "main" ]
   release:
-    types: [created]
+    types: [published, created]
+  workflow_dispatch:
 
+# Only the newest SBOM run per branch matters
+concurrency:
+  group: sbom-${{ github.ref }}
+  cancel-in-progress: true
+
+# Default: read-only. Write is granted only at the job level.
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   generate-sbom:
+    name: Generate CycloneDX SBOM
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      # Needed only to attach the SBOM file to GitHub Releases
+      contents: write
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
 
-      - name: 📦 Setup CycloneDX
-        run: |
-          wget https://github.com/CycloneDX/cyclonedx-cli/releases/latest/download/cyclonedx-linux-x64
-          chmod +x cyclonedx-linux-x64
-          sudo mv cyclonedx-linux-x64 /usr/local/bin/cyclonedx
-
-      - name: 🧾 Generate SBOM
-        run: |
-          # Since this is primarily a shell project, we generate a basic SBOM
-          cyclonedx analyze --output-format json --output-file bom.json .
-
-      - name: 💾 Upload SBOM as Artifact
-        uses: actions/upload-artifact@v4
+      - name: 🧾 Generate SBOM (Syft → CycloneDX JSON)
+        uses: anchore/sbom-action@v0
         with:
-          name: sbom-json
-          path: bom.json
+          path: .
+          format: cyclonedx-json
+          output-file: bom.cdx.json
+          artifact-name: sbom-json
+          # Automatically attach the SBOM to the release when this run
+          # was triggered by a release event
+          upload-release-assets: true
+          upload-artifact: true
+
+      - name: 🔎 Validate SBOM output
+        run: |
+          set -euo pipefail
+          # Basic sanity check: the file must exist and be valid JSON
+          test -s bom.cdx.json
+          jq -e '.bomFormat == "CycloneDX"' bom.cdx.json > /dev/null
+          echo "✅ SBOM generated and validated: $(jq -r '.specVersion' bom.cdx.json) (CycloneDX)"
