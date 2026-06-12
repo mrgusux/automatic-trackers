@@ -7,7 +7,8 @@ authors:
     family-names: "Munna"
     alias: "mrgusux"
 repository-code: "https://github.com/mrgusux/automatic-trackers"
-url: "https://github.com/mrgusux/automatic-trackers"
+url: "https://mrgusux.github.io/automatic-trackers"
+repository-artifact: "https://github.com/mrgusux/automatic-trackers/releases"
 abstract: >-
   Automatically fetches, sanitizes, deduplicates, and blacklist-filters
   public BitTorrent trackers from dozens of community-maintained sources
@@ -21,6 +22,8 @@ keywords:
   - blacklist-filtering
   - automation
   - github-actions
+  - aria2
+  - qbittorrent
 license: MIT
 version: "2.0.0"
-date-released: "2026-06-11"
+date-released: "2026-06-12"
