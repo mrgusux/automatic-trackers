@@ -1,8 +1,17 @@
 blank_issues_enabled: false
 contact_links:
-  - name: 💬 GitHub Discussions
+  - name: 💬 GitHub Discussions (Questions & Help)
     url: https://github.com/mrgusux/automatic-trackers/discussions
-    about: Please ask general questions, setup queries, or share ideas here instead of creating an issue.
+    about: Please ask general questions, setup queries, or troubleshooting help here instead of creating an issue.
+  - name: 💡 Share an Idea
+    url: https://github.com/mrgusux/automatic-trackers/discussions/new?category=ideas
+    about: Have a feature request or idea? Post it in the Ideas discussion category using our template.
   - name: 🔒 Security Vulnerabilities
     url: https://github.com/mrgusux/automatic-trackers/security/policy
-    about: Please report any security vulnerabilities privately.
+    about: Please report any security vulnerabilities privately. Do NOT open a public issue for security problems.
+  - name: 📖 Support Guide
+    url: https://github.com/mrgusux/automatic-trackers/blob/main/SUPPORT.md
+    about: Read the support guide for common questions and how to get help.
+  - name: 🤝 Contributing Guide
+    url: https://github.com/mrgusux/automatic-trackers/blob/main/CONTRIBUTING.md
+    about: Want to contribute? Read the contributing guidelines first.
