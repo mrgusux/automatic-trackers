@@ -4,16 +4,44 @@ on:
   pull_request_target:
     types: [opened, synchronize, reopened]
 
+# Cancel outdated labeling runs when the PR is updated again
+concurrency:
+  group: pr-labeler-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
   pull-requests: write
 
 jobs:
   triage:
+    name: Apply Path-Based Labels
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # SECURITY NOTE: We intentionally do NOT check out the PR code here.
+    # With pull_request_target, checking out untrusted fork code is dangerous.
+    # actions/labeler fetches its config (.github/labeler.yml) safely via the API.
     steps:
       - name: Apply PR Labels
         uses: actions/labeler@v5
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          configuration-path: .github/labeler.yml
           sync-labels: true
+
+  size-label:
+    name: Apply PR Size Label
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Label PR by size (XS / S / M / L / XL)
+        uses: pascalgn/size-label-action@v0.5.5
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          # Auto-generated output files should not count toward PR size -
+          # a routine tracker update touches thousands of lines.
+          IGNORED: |
+            *.txt
+            api/*.json
+            SHA256SUMS.txt
+            .tracker_hash
