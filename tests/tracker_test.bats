@@ -4,13 +4,15 @@
 # Run from the repository root with:  bats tests/   (or `make test`)
 #
 # The sanitize() and bl_filter() helpers below replicate the EXACT logic of
-# the pipeline in .github/workflows/update-trackers.yml. If you change the
-# pipeline, update these helpers to match (and vice versa).
+# scripts/update_trackers.sh. If you change the script, update these
+# helpers to match (and vice versa).
 # =============================================================================
 
-WORKFLOW=".github/workflows/update-trackers.yml"
+ENGINE="scripts/update_trackers.sh"
+SOURCES_CFG="config/sources.txt"
+BL_SOURCES_CFG="config/blacklist_sources.txt"
 
-# Mirror of sanitize_stream() from the workflow
+# Mirror of sanitize_stream() from scripts/update_trackers.sh
 sanitize() {
   sed '1s/^\xEF\xBB\xBF//' | \
   tr -d '\r\0"' | \
@@ -37,7 +39,7 @@ sanitize() {
   sort -u
 }
 
-# Mirror of the blacklist exclusion filter from the workflow
+# Mirror of the blacklist exclusion filter from scripts/update_trackers.sh
 bl_filter() {
   local bl="$1" in="$2"
   if [ -s "${bl}" ]; then
@@ -51,6 +53,11 @@ bl_filter() {
   else
     cat "${in}"
   fi
+}
+
+# Helper: read config files the same way the engine does
+read_cfg() {
+  grep -vE '^[[:space:]]*(#|$)' "$1" | sed 's/[[:space:]]*$//'
 }
 
 setup() {
@@ -215,16 +222,40 @@ teardown() {
 }
 
 # ---------------------------------------------------------------------------
-# Pipeline integrity
+# Pipeline & config integrity
 # ---------------------------------------------------------------------------
 
-@test "main workflow exists and declares both source arrays" {
-  [ -f "${WORKFLOW}" ]
-  grep -q 'SOURCES=(' "${WORKFLOW}"
-  grep -q 'BLACKLIST_SOURCES=(' "${WORKFLOW}"
+@test "engine script exists, is executable, and defines the pipeline" {
+  [ -f "${ENGINE}" ]
+  [ -x "${ENGINE}" ]
+  grep -q 'sanitize_stream()' "${ENGINE}"
+  grep -q 'BLACKLIST_SOURCES' "${ENGINE}"
 }
 
-@test "workflow source lists contain no duplicate URLs" {
-  dups=$(grep -oE '"(udp|https?|wss?)://[^"]+"' "${WORKFLOW}" | sort | uniq -d)
+@test "source config files exist and are not empty" {
+  [ -s "${SOURCES_CFG}" ]
+  [ -s "${BL_SOURCES_CFG}" ]
+  [ "$(read_cfg "${SOURCES_CFG}" | wc -l)" -gt 0 ]
+  [ "$(read_cfg "${BL_SOURCES_CFG}" | wc -l)" -gt 0 ]
+}
+
+@test "source config contains no duplicate URLs" {
+  dups=$(read_cfg "${SOURCES_CFG}" | sort | uniq -d)
   [ -z "${dups}" ]
+}
+
+@test "all configured source URLs are http(s)" {
+  run bash -c "read_cfg() { grep -vE '^[[:space:]]*(#|\$)' \"\$1\" | sed 's/[[:space:]]*\$//'; }; read_cfg '${SOURCES_CFG}'; read_cfg '${BL_SOURCES_CFG}'" 
+  [ "${status}" -eq 0 ]
+  bad=$(read_cfg "${SOURCES_CFG}" | grep -vE '^https?://' || true)
+  [ -z "${bad}" ]
+  bad=$(read_cfg "${BL_SOURCES_CFG}" | grep -vE '^https?://' || true)
+  [ -z "${bad}" ]
+}
+
+@test "no blacklist source has leaked into the valid sources list" {
+  overlap=$(comm -12 \
+    <(read_cfg "${SOURCES_CFG}" | sort) \
+    <(read_cfg "${BL_SOURCES_CFG}" | sort))
+  [ -z "${overlap}" ]
 }
