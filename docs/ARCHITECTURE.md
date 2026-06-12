@@ -4,38 +4,46 @@ Architectural overview of the **Ultimate Torrent Tracker Aggregator** — how th
 
 ## 🧩 Core Design Principle: Single Source of Truth
 
-All aggregation logic lives in **one script**: [`scripts/update.sh`](../scripts/update.sh).
-GitHub Actions, Docker, the Makefile, and the test suite all execute this same code — so what you test locally is exactly what runs in production.
+All aggregation logic currently lives in **one place**: the build step of
+[`.github/workflows/update-trackers.yml`](../.github/workflows/update-trackers.yml).
+The tracker source list (`SOURCES` array) and the blacklist source list
+(`BLACKLIST_SOURCES` array) are both defined there.
+
+> **Planned:** the engine will be extracted into `scripts/update_trackers.sh` with
+> sources moved to standalone config files, so GitHub Actions, Docker, the Makefile,
+> and the test suite all execute the exact same code. This document will be updated
+> when that lands.
 
 | Component | Responsibility |
 | --- | --- |
-| `scripts/update.sh` | The engine: fetch → sanitize → blacklist-filter → sort → publish |
-| `config/sources.txt` | List of good-tracker source URLs (config, not code) |
-| `config/blacklist_sources.txt` | Known-bad tracker sources used for exclusion |
-| `.github/workflows/update-trackers.yml` | Scheduler: runs the engine every 6 hours, commits results |
-| `tests/tracker_test.bats` | Verifies every filtering rule of the engine |
-| `Dockerfile` / `docker-compose.yml` | Self-hosted one-shot runs of the same engine |
+| `.github/workflows/update-trackers.yml` | The engine + scheduler: fetch → sanitize → blacklist-filter → sort → publish → commit (every 6 hours) |
+| `SOURCES` array (in the workflow) | List of good-tracker source URLs |
+| `BLACKLIST_SOURCES` array (in the workflow) | Known-bad tracker sources used for exclusion |
+| `blacklist.txt` | Generated, accumulative list of bad trackers (never shrinks) |
+| `tests/tracker_test.bats` | Verifies the filtering rules of the engine |
+| `Dockerfile` / `docker-compose.yml` | Self-hosted one-shot runs of the same pipeline |
 
 ## 🔄 The Pipeline Flow
 
 ```mermaid
 graph TD
-    CRON[Cron: every 6 hours] --> VAL[Validate source configs<br/>no duplicates, valid URLs]
-    VAL --> CACHE[Restore fetch cache<br/>actions/cache]
+    CRON[Cron: every 6 hours] --> VAL[Validate source config<br/>no duplicates, valid URLs]
+    VAL --> CACHE[Restore fetch fallback cache<br/>actions/cache]
 
-    CACHE --> BL[Fetch blacklist sources]
-    BL --> BLT[Sanitize -> blacklist.txt]
-
-    CACHE --> SRC[Fetch tracker sources<br/>parallel xargs -P, retries with backoff]
+    CACHE --> SRC[Fetch tracker sources<br/>parallel xargs -P, retries with backoff,<br/>cached copy used only as FALLBACK]
     SRC --> RAW[Raw text aggregation]
 
     RAW --> SAN{Sanitization}
-    SAN --> S1[Strip BOM / control chars / HTML]
-    SAN --> S2[Keep only udp / http / https / ws / wss]
-    SAN --> S3[Drop localhost & RFC-1918 private IPs]
-    SAN --> S4[Drop reserved domains, lowercase, dedupe]
+    SAN --> S1[Strip BOM / control chars / HTML / quotes]
+    SAN --> S2[Split comma-joined lines,<br/>drop double-scheme & glued URLs]
+    SAN --> S3[Keep only udp / http / https / ws / wss]
+    SAN --> S4[Drop localhost, RFC-1918 IPs,<br/>reserved domains; lowercase host; dedupe]
 
-    S1 & S2 & S3 & S4 --> FIL[Blacklist exclusion filter<br/>remove everything in blacklist.txt]
+    CACHE --> BL[Fetch blacklist sources]
+    BL --> BLT[Sanitize + merge with existing<br/>blacklist.txt - accumulative]
+
+    S1 & S2 & S3 & S4 --> FIL[Blacklist exclusion filter<br/>match by exact URL and host:port]
+    BLT --> FIL
 
     FIL --> SORT{Priority sort}
     SORT -->|1| UDP[udp.txt]
@@ -43,43 +51,10 @@ graph TD
     SORT -->|3| HTTP[http.txt]
     SORT -->|4| WS[ws.txt]
 
-    UDP & HTTPS & HTTP & WS --> OUT[all_trackers.txt + comma list<br/>+ JSON APIs via jq]
-
-    OUT --> GATE{Safety gate:<br/>count >= MIN_TRACKER_COUNT?}
+    UDP & HTTPS & HTTP & WS --> GATE{Safety gates:<br/>count >= MIN_TRACKER_COUNT?<br/>count >= 60% of previous run?}
     GATE -->|No| FAIL[Fail run - protect existing lists]
-    GATE -->|Yes| HASH{Idempotency check<br/>SHA256 vs .tracker_hash}
+    GATE -->|Yes| OUT[all_trackers.txt + trackers.txt mirror<br/>+ comma list + JSON APIs via jq<br/>+ SHA256SUMS.txt]
 
-    HASH -->|Changed| COMMIT[Commit & push outputs]
+    OUT --> HASH{Idempotency check<br/>SHA256 vs .tracker_hash}
+    HASH -->|Changed| COMMIT[Commit & push outputs<br/>with retry + rebase]
     HASH -->|Unchanged| SKIP[Skip commit - save resources]
-```
-
-## 🛡️ Safety Mechanisms
-
-1. **Validation first:** malformed or duplicate source URLs fail the run before any fetching starts.
-2. **Blacklist exclusion:** known-bad trackers (from `config/blacklist_sources.txt`) are published to `blacklist.txt` and can never appear in the final lists.
-3. **Minimum count gate:** if upstream sources collapse and the result is too small (`MIN_TRACKER_COUNT`), the run fails instead of overwriting good lists with a degraded one.
-4. **Idempotency:** a SHA256 hash comparison prevents empty "update" commits when nothing changed.
-5. **No silent failures:** fetch failures are logged per-source; commit/push errors fail the workflow loudly and trigger the Discord alert.
-
-## 📤 Published Outputs
-
-| File | Format | Use case |
-| --- | --- | --- |
-| `all_trackers.txt` | One tracker per line, blank-line separated | qBittorrent, Transmission, Deluge |
-| `all_trackers_comma.txt` | Comma-separated single line | Aria2 (`bt-tracker=`) |
-| `udp.txt` / `https.txt` / `http.txt` / `ws.txt` | Per-protocol lists | Protocol-restricted setups |
-| `blacklist.txt` | Known-bad trackers | Client-side exclusion |
-| `api/stats.json` | Run statistics | Dashboards, monitoring |
-| `api/badge.json` | Shields.io endpoint | README badge |
-| `api/trackers.json` | Full list as JSON array | Programmatic consumers |
-
-## ⚙️ Supporting Workflows
-
-| Workflow | Trigger | Purpose |
-| --- | --- | --- |
-| `update-trackers.yml` | Cron / manual | The main engine run |
-| `lint.yml` | Push / PR | ShellCheck + bats test suite |
-| `checksum.yml` | `.txt` pushes | Regenerates `SHA256SUMS.txt` |
-| `discord-alert.yml` | Engine failure | Failure notification |
-| `release.yml` + `sign-artifacts.yml` | Tags / releases | Zipped, Sigstore-signed release assets |
-| `sbom.yml` | Push / release | Software Bill of Materials |
