@@ -1,8 +1,8 @@
 # =============================================================================
 # NOTE: Generated tracker outputs (all_trackers.txt, udp.txt, http.txt,
-# https.txt, ws.txt, all_trackers_comma.txt, blacklist.txt, api/*.json,
-# .tracker_hash, SHA256SUMS.txt) are INTENTIONALLY COMMITTED by the CI bot.
-# They must NEVER be listed in this file.
+# https.txt, ws.txt, all_trackers_comma.txt, trackers.txt, blacklist.txt,
+# api/*.json, .tracker_hash, SHA256SUMS.txt) are INTENTIONALLY COMMITTED
+# by the CI bot. They must NEVER be listed in this file.
 # =============================================================================
 
 # OS junk
@@ -29,8 +29,29 @@ output/
 .idea/
 *.code-workspace
 
+# Secrets - NEVER commit environment files
+.env
+.env.*
+*.pem
+*.key
+
 # Docker (local-only override file; .dockerignore itself IS committed)
 docker-compose.override.yml
+
+# Local artifacts from running release/signing/SBOM steps manually
+ultimate-trackers.zip
+RELEASE_SHA256SUMS.txt
+bom.cdx.json
+*.sig
+*.bundle
+/assets/
+
+# Jekyll local site builds (docs/ is the Pages source)
+docs/_site/
+docs/.jekyll-cache/
+docs/.jekyll-metadata
+docs/vendor/
+Gemfile.lock
 
 # Node / Python (future-proofing)
 node_modules/
