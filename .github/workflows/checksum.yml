@@ -59,7 +59,7 @@ jobs:
           echo "✅ Verification passed."
 
       - name: 💾 Commit Checksums
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "🧮 Auto-update: SHA256SUMS.txt [skip ci]"
           file_pattern: "SHA256SUMS.txt"
