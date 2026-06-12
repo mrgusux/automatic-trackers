@@ -13,18 +13,37 @@ description: "A frequently updated, blacklist-filtered, and carefully curated li
 url: "https://mrgusux.github.io"
 baseurl: "/automatic-trackers"
 
+# Explicit repository reference - used by jekyll-seo-tag and the Cayman
+# theme to build correct "View on GitHub" / download links, and required
+# for correct metadata when building the site locally.
+repository: mrgusux/automatic-trackers
+
 lang: en
+timezone: Etc/UTC
 
 # Cayman theme option: show "Download .zip / .tar.gz" buttons in the header
 show_downloads: true
 
 # GitHub Pages whitelisted plugins
 plugins:
-  - jekyll-seo-tag      # generates meta/OpenGraph tags for search engines & link previews
-  - jekyll-sitemap      # generates sitemap.xml automatically
+  - jekyll-seo-tag            # meta/OpenGraph tags for search engines & link previews
+  - jekyll-sitemap            # generates sitemap.xml automatically
+  - jekyll-relative-links     # converts .md links (e.g., ARCHITECTURE.md) into .html links
+  - jekyll-optional-front-matter  # renders .md files without front matter as pages
 
 markdown: kramdown
+
+# Treat ARCHITECTURE.md (no front matter) as a real page
+optional_front_matter:
+  remove_originals: true
+
+relative_links:
+  enabled: true
+  collections: false
 
 # Never publish these as site pages
 exclude:
   - _config.yml
+  - vendor
+  - Gemfile
+  - Gemfile.lock
