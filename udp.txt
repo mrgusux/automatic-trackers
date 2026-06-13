@@ -72,6 +72,8 @@ udp://185.102.219.163:6969/announce
 
 udp://185.121.168.96:1337/announce
 
+udp://185.146.233.150:6969/announce
+
 udp://185.181.60.155:80/announce
 
 udp://185.181.60.67:80/announce
@@ -116,6 +118,8 @@ udp://1c.premierzal.ru:6969/announce
 
 udp://2.57.214.218:6969/announce
 
+udp://200.168.116.191:6969/announce
+
 udp://207.241.226.111:6969/announce
 
 udp://207.241.231.226:6969/announce
@@ -129,6 +133,8 @@ udp://209.141.59.25:6969/announce
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
+
+udp://211.75.210.221:6969/announce
 
 udp://211.75.29.254:6969/announce
 
@@ -166,6 +172,8 @@ udp://46.4.109.148:6969/announce
 
 udp://47.ip-51-68-199.eu:6969/announce
 
+udp://5.135.104.146:6969/announce
+
 udp://5.196.67.51:6969/announce
 
 udp://5.196.89.204:6969/announce
@@ -197,6 +205,8 @@ udp://52.58.128.163:6969/announce
 udp://6.pocketnet.app:6969/announce
 
 udp://60.172.236.18:6969/announce
+
+udp://60.249.37.20:80/announce
 
 udp://62.138.0.158:6969/announce
 
@@ -672,6 +682,8 @@ udp://tracker.dorcus.digital:1337/announce
 
 udp://tracker.draatman.uk:6969/announce
 
+udp://tracker.ducks.party:1984/announce
+
 udp://tracker.eddie4.nl:6969/announce
 
 udp://tracker.edkj.club:6969/announce
@@ -735,6 +747,8 @@ udp://tracker.opentorrent.top:6969/announce
 udp://tracker.opentrackr.org:1337/announce
 
 udp://tracker.orsvarn.com:6969/announce
+
+udp://tracker.peerfect.org:6969/announce
 
 udp://tracker.piratepublic.com:1337/announce
 
