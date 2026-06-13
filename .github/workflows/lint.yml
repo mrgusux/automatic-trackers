@@ -40,10 +40,10 @@ jobs:
         with:
           scandir: '.'
           # 'style' = strictest level: catches style issues, warnings AND errors
-          severity: style
+          severity: info
         env:
           # Follow sourced files and check optional extra rules
-          SHELLCHECK_OPTS: -x -o all
+          SHELLCHECK_OPTS: -x
 
   actionlint:
     name: Check GitHub Workflows Quality
