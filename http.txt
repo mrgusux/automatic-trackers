@@ -34,6 +34,8 @@ http://109.121.134.121:1337/announce
 
 http://113.13.7.215:6969/announce
 
+http://113.17.153.232:6969/announce
+
 http://114.55.113.60:6969/announce
 
 http://116.252.176.125:6969/announce
@@ -75,6 +77,8 @@ http://144.76.118.107:6969/announce
 http://147job.com:6969/announce
 
 http://151.115.49.115:1337/announce
+
+http://152.53.194.103:2710/announce
 
 http://155.248.200.105/announce
 
@@ -231,6 +235,8 @@ http://211.75.205.188:80/announce
 http://211.75.205.189:6969/announce
 
 http://211.75.210.221:6969/announce
+
+http://211.75.210.221:80/announce
 
 http://211.75.29.254:6969/announce
 
@@ -1077,6 +1083,8 @@ http://tr.bangumi.moe/announce
 http://tr.bangumi.moe:6969/announce
 
 http://tr.cili001.com:8070/announce
+
+http://tr.highstar.shop:80/announce
 
 http://tr.kxmp.cf/announce
 

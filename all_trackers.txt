@@ -134,7 +134,11 @@ udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
 
+udp://211.75.205.189:6969/announce
+
 udp://211.75.210.221:6969/announce
+
+udp://211.75.210.221:80/announce
 
 udp://211.75.29.254:6969/announce
 
@@ -151,6 +155,10 @@ udp://23.157.120.14:6969/announce
 udp://34.66.57.33:1337/announce
 
 udp://34.66.57.33:80/announce
+
+udp://37.120.182.83:15480/announce
+
+udp://37.120.182.83:1984/announce
 
 udp://37.187.111.136:6969/announce
 
@@ -526,6 +534,8 @@ udp://qtstm32fan.ru:6969/announce
 
 udp://r.l5.ca:6969/announce
 
+udp://rekcart.duckdns.org:15480/announce
+
 udp://rep-art.ynh.fr:6969/announce
 
 udp://retracker.hotplug.ru:2710/announce
@@ -553,6 +563,8 @@ udp://seedpeer.net:6969/announce
 udp://shadowshq.eddie4.nl:6969/announce
 
 udp://shadowshq.yi.org:6969/announce
+
+udp://shahidrazi.online:1984/announce
 
 udp://shizzle.hammetjus.nl:6969/announce
 
@@ -593,6 +605,8 @@ udp://torrent.bowed.net:8081/announce
 udp://torrent.gresille.org:80/announce
 
 udp://torrent.i.ng:6969/announce
+
+udp://torrentclub.online:1984/announce
 
 udp://torrentclub.online:54123/announce
 
@@ -1450,6 +1464,8 @@ http://109.121.134.121:1337/announce
 
 http://113.13.7.215:6969/announce
 
+http://113.17.153.232:6969/announce
+
 http://114.55.113.60:6969/announce
 
 http://116.252.176.125:6969/announce
@@ -1491,6 +1507,8 @@ http://144.76.118.107:6969/announce
 http://147job.com:6969/announce
 
 http://151.115.49.115:1337/announce
+
+http://152.53.194.103:2710/announce
 
 http://155.248.200.105/announce
 
@@ -1647,6 +1665,8 @@ http://211.75.205.188:80/announce
 http://211.75.205.189:6969/announce
 
 http://211.75.210.221:6969/announce
+
+http://211.75.210.221:80/announce
 
 http://211.75.29.254:6969/announce
 
@@ -2493,6 +2513,8 @@ http://tr.bangumi.moe/announce
 http://tr.bangumi.moe:6969/announce
 
 http://tr.cili001.com:8070/announce
+
+http://tr.highstar.shop:80/announce
 
 http://tr.kxmp.cf/announce
 
