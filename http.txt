@@ -76,6 +76,8 @@ http://147job.com:6969/announce
 
 http://151.115.49.115:1337/announce
 
+http://152.249.97.82:6969/announce
+
 http://152.53.194.103:2710/announce
 
 http://155.248.200.105/announce
@@ -254,7 +256,11 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
+http://34.66.57.33:1337/announce
+
 http://34.66.57.33:2701/announce
+
+http://34.66.57.33:2710/announce
 
 http://34.66.57.33:443/announce
 
@@ -375,6 +381,10 @@ http://60-fps.org/bt:80/announce.php
 http://60-fps.org:80/bt/announce.php
 
 http://60-fps.org:80/bt:80/announce.php
+
+http://60.249.37.20:6969/announce
+
+http://60.249.37.20:80/announce
 
 http://61.216.109.95:6969/announce
 
@@ -968,6 +978,8 @@ http://secure.pow7.com:80/announce
 
 http://seeders-paradise.org/announce
 
+http://seeders-paradise.org:80/announce
+
 http://servandroidkino.ru/announce
 
 http://share.camoe.cn:8080/announce
@@ -1041,6 +1053,8 @@ http://torrent.arjlover.net:2710/announce
 http://torrent.fedoraproject.org:6969/announce
 
 http://torrent.gresille.org/announce
+
+http://torrent.hificode.in:6969/announce
 
 http://torrent.mp3quran.net/announce.php
 
