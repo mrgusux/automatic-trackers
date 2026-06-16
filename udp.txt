@@ -30,6 +30,8 @@ udp://132.243.161.144:6969/announce
 
 udp://135.125.106.92:6969/announce
 
+udp://135.125.236.64:6969/announce
+
 udp://144.91.88.22:6969/announce
 
 udp://148.251.53.72:6969/announce
@@ -182,6 +184,8 @@ udp://5.196.67.51:6969/announce
 
 udp://5.196.89.204:6969/announce
 
+udp://5.255.124.190:6969/announce
+
 udp://5.79.249.77:6969/announce
 
 udp://5.79.83.193:6969/announce
@@ -206,9 +210,13 @@ udp://52.211.139.85:27022/announce
 
 udp://52.58.128.163:6969/announce
 
+udp://54.36.179.216:6969/announce
+
 udp://6.pocketnet.app:6969/announce
 
 udp://60.172.236.18:6969/announce
+
+udp://60.249.37.20:6969/announce
 
 udp://60.249.37.20:80/announce
 
@@ -787,6 +795,8 @@ udp://tracker.sktorrent.net:6969/announce
 udp://tracker.skyts.net:6969/announce
 
 udp://tracker.srv00.com:6969/announce
+
+udp://tracker.startwork.cv:1337/announce
 
 udp://tracker.swateam.org.uk:2710/announce
 
