@@ -150,8 +150,6 @@ http://178.33.73.26:2710/announce
 
 http://179.100.24.134:6969/announce
 
-http://180.139.151.58:6969/announce
-
 http://180.97.219.76:8070/announce
 
 http://182.176.139.129:6969/announce
@@ -226,10 +224,6 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
-http://211.75.205.188:6969/announce
-
-http://211.75.205.188:80/announce
-
 http://211.75.205.189:6969/announce
 
 http://211.75.210.221:6969/announce
@@ -264,8 +258,6 @@ http://34.66.57.33:443/announce
 
 http://34.66.57.33:6969/announce
 
-http://34.66.57.33:80/announce.php
-
 http://34.89.30.59/announce
 
 http://34.89.30.59:2710/announce
@@ -279,8 +271,6 @@ http://34.94.213.23:2710/announce
 http://35.227.12.84/announce
 
 http://35.227.12.84:2710/announce
-
-http://37.120.182.83:2710/announce
 
 http://37.120.182.83:80/announce
 
