@@ -794,8 +794,6 @@ udp://tracker.skyts.net:6969/announce
 
 udp://tracker.srv00.com:6969/announce
 
-udp://tracker.startwork.cv:1337/announce
-
 udp://tracker.swateam.org.uk:2710/announce
 
 udp://tracker.sylphix.com:6969/announce
@@ -2475,8 +2473,6 @@ http://torrent.arjlover.net:2710/announce
 http://torrent.fedoraproject.org:6969/announce
 
 http://torrent.gresille.org/announce
-
-http://torrent.hificode.in:6969/announce
 
 http://torrent.mp3quran.net/announce.php
 

@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-06-17T04:58:10+00:00",
-  "total": 1523,
+  "generated": "2026-06-17T15:55:37+00:00",
+  "total": 1521,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -401,7 +401,6 @@
     "udp://tracker.sktorrent.net:6969/announce",
     "udp://tracker.skyts.net:6969/announce",
     "udp://tracker.srv00.com:6969/announce",
-    "udp://tracker.startwork.cv:1337/announce",
     "udp://tracker.swateam.org.uk:2710/announce",
     "udp://tracker.sylphix.com:6969/announce",
     "udp://tracker.t-1.org:6969/announce",
@@ -1242,7 +1241,6 @@
     "http://torrent.arjlover.net:2710/announce",
     "http://torrent.fedoraproject.org:6969/announce",
     "http://torrent.gresille.org/announce",
-    "http://torrent.hificode.in:6969/announce",
     "http://torrent.mp3quran.net/announce.php",
     "http://torrent.mp3quran.net:80/announce.php",
     "http://torrent.nwps.ws/announce",
