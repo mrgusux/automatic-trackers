@@ -78,8 +78,6 @@ udp://185.102.219.163:6969/announce
 
 udp://185.121.168.96:1337/announce
 
-udp://185.146.233.150:6969/announce
-
 udp://185.181.60.155:80/announce
 
 udp://185.181.60.67:80/announce
@@ -142,8 +140,6 @@ udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
 
-udp://211.75.205.189:80/announce
-
 udp://211.75.29.254:6969/announce
 
 udp://212.42.38.197:6969/announce
@@ -189,8 +185,6 @@ udp://5.135.104.146:6969/announce
 udp://5.196.67.51:6969/announce
 
 udp://5.196.89.204:6969/announce
-
-udp://5.255.124.190:6969/announce
 
 udp://5.79.249.77:6969/announce
 
@@ -263,8 +257,6 @@ udp://9.rarbg.me:2780/announce
 udp://9.rarbg.to:2730/announce
 
 udp://91.211.5.21:6969/announce
-
-udp://91.216.110.53:451/announce
 
 udp://91.218.230.81:6969/announce
 
