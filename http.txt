@@ -226,6 +226,8 @@ http://211.22.29.93/announce
 
 http://211.75.205.187:6969/announce
 
+http://211.75.205.187:80/announce
+
 http://211.75.205.188:6969/announce
 
 http://211.75.205.188:80/announce
@@ -251,6 +253,8 @@ http://217.30.10.77:6969/announce
 http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
+
+http://222.216.139.71:6969/announce
 
 http://222.84.23.36:6969/announce
 
