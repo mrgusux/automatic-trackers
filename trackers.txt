@@ -526,8 +526,6 @@ udp://qtstm32fan.ru:6969/announce
 
 udp://r.l5.ca:6969/announce
 
-udp://rekcart.duckdns.org:15480/announce
-
 udp://rep-art.ynh.fr:6969/announce
 
 udp://retracker.hotplug.ru:2710/announce
@@ -687,8 +685,6 @@ udp://tracker.dler.org:6969/announce
 udp://tracker.dorcus.digital:1337/announce
 
 udp://tracker.draatman.uk:6969/announce
-
-udp://tracker.ducks.party:1984/announce
 
 udp://tracker.eddie4.nl:6969/announce
 
@@ -2384,8 +2380,6 @@ http://secure.pow7.com:80/announce
 
 http://seeders-paradise.org/announce
 
-http://seeders-paradise.org:80/announce
-
 http://servandroidkino.ru/announce
 
 http://share.camoe.cn:8080/announce
@@ -2460,8 +2454,6 @@ http://torrent.fedoraproject.org:6969/announce
 
 http://torrent.gresille.org/announce
 
-http://torrent.hificode.in:6969/announce
-
 http://torrent.mp3quran.net/announce.php
 
 http://torrent.mp3quran.net:80/announce.php
@@ -2499,8 +2491,6 @@ http://tr.bangumi.moe/announce
 http://tr.bangumi.moe:6969/announce
 
 http://tr.cili001.com:8070/announce
-
-http://tr.highstar.shop:80/announce
 
 http://tr.kxmp.cf/announce
 
