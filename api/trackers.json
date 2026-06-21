@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-06-21T10:00:53+00:00",
-  "total": 1516,
+  "generated": "2026-06-21T19:55:25+00:00",
+  "total": 1517,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -495,6 +495,7 @@
     "https://evening-badlands-6215.herokuapp.com/announce",
     "https://grifon.info:80/announce",
     "https://hcbt.pp.ua/announce",
+    "https://ht.therarbg.to:443/announce",
     "https://http1.torrust-tracker-demo.com:443/announce",
     "https://inferno.demonoid.is/announce",
     "https://k.avc.cx/announce.php",

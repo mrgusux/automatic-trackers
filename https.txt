@@ -72,6 +72,8 @@ https://grifon.info:80/announce
 
 https://hcbt.pp.ua/announce
 
+https://ht.therarbg.to:443/announce
+
 https://http1.torrust-tracker-demo.com:443/announce
 
 https://inferno.demonoid.is/announce
