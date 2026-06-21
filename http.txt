@@ -224,6 +224,8 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
+http://211.75.205.187:80/announce
+
 http://211.75.205.188:6969/announce
 
 http://211.75.205.188:80/announce
@@ -248,7 +250,13 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
+http://34.66.57.33:11450/announce
+
+http://34.66.57.33:1337/announce
+
 http://34.66.57.33:2701/announce
+
+http://34.66.57.33:2710/announce
 
 http://34.66.57.33:443/announce
 
@@ -1077,8 +1085,6 @@ http://tr.bangumi.moe/announce
 http://tr.bangumi.moe:6969/announce
 
 http://tr.cili001.com:8070/announce
-
-http://tr.highstar.shop:80/announce
 
 http://tr.kxmp.cf/announce
 

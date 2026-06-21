@@ -74,6 +74,8 @@ udp://185.102.219.163:6969/announce
 
 udp://185.121.168.96:1337/announce
 
+udp://185.146.233.150:6969/announce
+
 udp://185.181.60.155:80/announce
 
 udp://185.181.60.67:80/announce
@@ -128,6 +130,8 @@ udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
 
+udp://211.75.205.187:80/announce
+
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
@@ -163,6 +167,8 @@ udp://37.59.48.81:6969/announce
 udp://43.250.54.126:6969/announce
 
 udp://44.30.4.4:6969/announce
+
+udp://45.134.88.121:6969/announce
 
 udp://45.9.60.30:6969/announce
 
@@ -526,8 +532,6 @@ udp://qtstm32fan.ru:6969/announce
 
 udp://r.l5.ca:6969/announce
 
-udp://rekcart.duckdns.org:15480/announce
-
 udp://rep-art.ynh.fr:6969/announce
 
 udp://retracker.hotplug.ru:2710/announce
@@ -687,8 +691,6 @@ udp://tracker.dler.org:6969/announce
 udp://tracker.dorcus.digital:1337/announce
 
 udp://tracker.draatman.uk:6969/announce
-
-udp://tracker.ducks.party:1984/announce
 
 udp://tracker.eddie4.nl:6969/announce
 
