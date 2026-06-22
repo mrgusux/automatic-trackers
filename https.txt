@@ -112,8 +112,6 @@ https://pybittrack.retiolus.net:443/announce
 
 https://seeders-paradise.org/announce
 
-https://shahidrazi.online:443/announce
-
 https://t.213891.xyz:443/announce
 
 https://t.btcland.xyz/announce
