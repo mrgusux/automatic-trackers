@@ -4,6 +4,8 @@ http://00.xxtor.com:443/announce
 
 http://004430.xyz:80/announce
 
+http://0205.uptm.ch:6969/announce
+
 http://0d.kebhana.mx:443/announce
 
 http://104.143.10.186:8000/announce
@@ -146,6 +148,8 @@ http://178.33.73.26:2710/announce
 
 http://179.100.24.134:6969/announce
 
+http://180.139.151.58:6969/announce
+
 http://180.97.219.76:8070/announce
 
 http://182.176.139.129:6969/announce
@@ -222,6 +226,10 @@ http://211.22.29.93/announce
 
 http://211.75.205.187:80/announce
 
+http://211.75.205.188:6969/announce
+
+http://211.75.205.188:80/announce
+
 http://211.75.210.221:6969/announce
 
 http://211.75.29.254:6969/announce
@@ -246,6 +254,12 @@ http://34.66.57.33:11450/announce
 
 http://34.66.57.33:2701/announce
 
+http://34.66.57.33:443/announce
+
+http://34.66.57.33:6969/announce
+
+http://34.66.57.33:80/announce.php
+
 http://34.89.30.59/announce
 
 http://34.89.30.59:2710/announce
@@ -259,6 +273,10 @@ http://34.94.213.23:2710/announce
 http://35.227.12.84/announce
 
 http://35.227.12.84:2710/announce
+
+http://37.120.182.83:2710/announce
+
+http://37.120.182.83:80/announce
 
 http://37.19.5.139:6969/announce
 
@@ -479,6 +497,8 @@ http://99.192.12.191:6969/announce
 http://[2a04:ac00:1:3dd8::1:2710]:2710/announce
 
 http://aaa.army:8866/announce
+
+http://aboutbeautifulgallopinghorsesinthegreenpasture.online:80/announce
 
 http://all4nothin.net/announce.php
 
@@ -846,6 +866,8 @@ http://openbittorrent.com/announce
 
 http://openbittorrent.com:80/announce
 
+http://opentracker.91kf.top:16969/announce
+
 http://opentracker.acgnx.com:6869/announce
 
 http://opentracker.acgnx.se/announce
@@ -1109,6 +1131,8 @@ http://tracker.breizh.pm:6969/announce
 http://tracker.bt-chat.com/announce
 
 http://tracker.bt-hash.com/announce
+
+http://tracker.bt-hash.com:80/announce
 
 http://tracker.bt4g.com:2095/announce
 
