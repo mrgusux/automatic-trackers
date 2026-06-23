@@ -252,8 +252,6 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
-http://34.66.57.33:11450/announce
-
 http://34.66.57.33:2701/announce
 
 http://34.66.57.33:443/announce
