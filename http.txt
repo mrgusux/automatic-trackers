@@ -224,6 +224,8 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
+http://211.75.205.187:6969/announce
+
 http://211.75.205.187:80/announce
 
 http://211.75.205.188:6969/announce
@@ -373,6 +375,8 @@ http://60-fps.org/bt:80/announce.php
 http://60-fps.org:80/bt/announce.php
 
 http://60-fps.org:80/bt:80/announce.php
+
+http://60.249.37.20:6969/announce
 
 http://61.216.109.95:6969/announce
 
@@ -1080,6 +1084,8 @@ http://tr.bangumi.moe:6969/announce
 
 http://tr.cili001.com:8070/announce
 
+http://tr.highstar.shop:80/announce
+
 http://tr.kxmp.cf/announce
 
 http://tr.kxmp.cf:80/announce
@@ -1149,6 +1155,8 @@ http://tracker.bz/announce
 http://tracker.bz:80/announce
 
 http://tracker.calculate.ru:6969/announce
+
+http://tracker.cbase.cc:6969/announce
 
 http://tracker.ccc.de/announce
 

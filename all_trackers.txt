@@ -74,6 +74,8 @@ udp://185.102.219.163:6969/announce
 
 udp://185.121.168.96:1337/announce
 
+udp://185.146.233.150:6969/announce
+
 udp://185.181.60.155:80/announce
 
 udp://185.181.60.67:80/announce
@@ -152,6 +154,10 @@ udp://34.66.57.33:1337/announce
 
 udp://34.66.57.33:80/announce
 
+udp://37.120.182.83:15480/announce
+
+udp://37.120.182.83:1984/announce
+
 udp://37.187.111.136:6969/announce
 
 udp://37.187.95.112:6969/announce
@@ -205,6 +211,8 @@ udp://52.58.128.163:6969/announce
 udp://6.pocketnet.app:6969/announce
 
 udp://60.172.236.18:6969/announce
+
+udp://60.249.37.20:6969/announce
 
 udp://62.138.0.158:6969/announce
 
@@ -526,6 +534,8 @@ udp://qtstm32fan.ru:6969/announce
 
 udp://r.l5.ca:6969/announce
 
+udp://rekcart.duckdns.org:15480/announce
+
 udp://rep-art.ynh.fr:6969/announce
 
 udp://retracker.hotplug.ru:2710/announce
@@ -685,6 +695,8 @@ udp://tracker.dler.org:6969/announce
 udp://tracker.dorcus.digital:1337/announce
 
 udp://tracker.draatman.uk:6969/announce
+
+udp://tracker.ducks.party:1984/announce
 
 udp://tracker.eddie4.nl:6969/announce
 
@@ -1644,6 +1656,8 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
+http://211.75.205.187:6969/announce
+
 http://211.75.205.187:80/announce
 
 http://211.75.205.188:6969/announce
@@ -1793,6 +1807,8 @@ http://60-fps.org/bt:80/announce.php
 http://60-fps.org:80/bt/announce.php
 
 http://60-fps.org:80/bt:80/announce.php
+
+http://60.249.37.20:6969/announce
 
 http://61.216.109.95:6969/announce
 
@@ -2500,6 +2516,8 @@ http://tr.bangumi.moe:6969/announce
 
 http://tr.cili001.com:8070/announce
 
+http://tr.highstar.shop:80/announce
+
 http://tr.kxmp.cf/announce
 
 http://tr.kxmp.cf:80/announce
@@ -2569,6 +2587,8 @@ http://tracker.bz/announce
 http://tracker.bz:80/announce
 
 http://tracker.calculate.ru:6969/announce
+
+http://tracker.cbase.cc:6969/announce
 
 http://tracker.ccc.de/announce
 
