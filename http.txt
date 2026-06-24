@@ -74,8 +74,6 @@ http://147job.com:6969/announce
 
 http://151.115.49.115:1337/announce
 
-http://152.249.97.82:6969/announce
-
 http://152.53.194.103:2710/announce
 
 http://155.248.200.105/announce
@@ -377,8 +375,6 @@ http://60-fps.org/bt:80/announce.php
 http://60-fps.org:80/bt/announce.php
 
 http://60-fps.org:80/bt:80/announce.php
-
-http://60.249.37.20:6969/announce
 
 http://61.216.109.95:6969/announce
 

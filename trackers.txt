@@ -38,8 +38,6 @@ udp://149.106.106.25:443/announce
 
 udp://151.80.120.114:2710/announce
 
-udp://152.249.97.82:6969/announce
-
 udp://152.53.194.103:54123/announce
 
 udp://156.234.201.18:80/announce
@@ -180,8 +178,6 @@ udp://46.4.109.148:6969/announce
 
 udp://47.ip-51-68-199.eu:6969/announce
 
-udp://5.135.104.146:6969/announce
-
 udp://5.196.67.51:6969/announce
 
 udp://5.196.89.204:6969/announce
@@ -215,8 +211,6 @@ udp://52.58.128.163:6969/announce
 udp://6.pocketnet.app:6969/announce
 
 udp://60.172.236.18:6969/announce
-
-udp://60.249.37.20:6969/announce
 
 udp://62.138.0.158:6969/announce
 
@@ -1516,8 +1510,6 @@ http://147job.com:6969/announce
 
 http://151.115.49.115:1337/announce
 
-http://152.249.97.82:6969/announce
-
 http://152.53.194.103:2710/announce
 
 http://155.248.200.105/announce
@@ -1819,8 +1811,6 @@ http://60-fps.org/bt:80/announce.php
 http://60-fps.org:80/bt/announce.php
 
 http://60-fps.org:80/bt:80/announce.php
-
-http://60.249.37.20:6969/announce
 
 http://61.216.109.95:6969/announce
 
