@@ -94,6 +94,8 @@ udp://185.86.149.205:1337/announce
 
 udp://188.165.253.109:1337/announce
 
+udp://189.79.13.198:6969/announce
+
 udp://191.101.229.236:1337/announce
 
 udp://192.3.130.53:1337/announce
@@ -135,6 +137,8 @@ udp://211.75.205.187:80/announce
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
+
+udp://211.75.210.221:6969/announce
 
 udp://211.75.29.254:6969/announce
 
@@ -202,6 +206,8 @@ udp://51.68.174.87:6969/announce
 
 udp://51.81.222.188:6969/announce
 
+udp://51.83.160.93:6969/announce
+
 udp://52.211.139.85:27022/announce
 
 udp://52.58.128.163:6969/announce
@@ -215,6 +221,8 @@ udp://60.249.37.20:6969/announce
 udp://62.138.0.158:6969/announce
 
 udp://62.212.85.66:2710/announce
+
+udp://67.222.238.222:2010/announce
 
 udp://6ahddutb1ucc3cp.ru:6969/announce
 
@@ -253,6 +261,8 @@ udp://9.rarbg.me:2780/announce
 udp://9.rarbg.to:2730/announce
 
 udp://91.211.5.21:6969/announce
+
+udp://91.216.110.53:451/announce
 
 udp://91.218.230.81:6969/announce
 
@@ -1616,6 +1626,8 @@ http://189.0.196.51:6969/announce
 
 http://189.110.233.96:6969/announce
 
+http://189.79.13.198:6969/announce
+
 http://192.3.165.191:6969/announce
 
 http://192.9.228.30:6699/announce
@@ -1689,6 +1701,8 @@ http://34.66.57.33:2701/announce
 http://34.66.57.33:443/announce
 
 http://34.66.57.33:6969/announce
+
+http://34.66.57.33:80/announce
 
 http://34.66.57.33:80/announce.php
 
