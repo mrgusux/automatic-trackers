@@ -96,6 +96,8 @@ udp://189.79.13.198:6969/announce
 
 udp://191.101.229.236:1337/announce
 
+udp://191.23.62.139:6969/announce
+
 udp://192.3.130.53:1337/announce
 
 udp://192.95.46.115:6969/announce
