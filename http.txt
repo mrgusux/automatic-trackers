@@ -224,6 +224,8 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
+http://211.75.205.187:6969/announce
+
 http://211.75.205.187:80/announce
 
 http://211.75.205.188:6969/announce
@@ -231,6 +233,8 @@ http://211.75.205.188:6969/announce
 http://211.75.205.188:80/announce
 
 http://211.75.210.221:6969/announce
+
+http://211.75.210.221:80/announce
 
 http://211.75.29.254:6969/announce
 
@@ -255,6 +259,8 @@ http://34.66.57.33:11450/announce
 http://34.66.57.33:1337/announce
 
 http://34.66.57.33:2701/announce
+
+http://34.66.57.33:2710/announce
 
 http://34.66.57.33:443/announce
 
@@ -1043,6 +1049,8 @@ http://torrent.arjlover.net:2710/announce
 http://torrent.fedoraproject.org:6969/announce
 
 http://torrent.gresille.org/announce
+
+http://torrent.hificode.in:6969/announce
 
 http://torrent.mp3quran.net/announce.php
 

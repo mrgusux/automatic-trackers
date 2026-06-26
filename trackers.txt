@@ -36,6 +36,8 @@ udp://148.251.53.72:6969/announce
 
 udp://149.106.106.25:443/announce
 
+udp://151.242.104.187:80/announce
+
 udp://151.80.120.114:2710/announce
 
 udp://152.53.194.103:54123/announce
@@ -136,6 +138,10 @@ udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
 
+udp://211.75.210.221:6969/announce
+
+udp://211.75.210.221:80/announce
+
 udp://211.75.29.254:6969/announce
 
 udp://212.42.38.197:6969/announce
@@ -167,6 +173,8 @@ udp://37.59.48.81:6969/announce
 udp://43.250.54.126:6969/announce
 
 udp://44.30.4.4:6969/announce
+
+udp://45.137.199.107:6969/announce
 
 udp://45.9.60.30:6969/announce
 
@@ -1658,6 +1666,8 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
+http://211.75.205.187:6969/announce
+
 http://211.75.205.187:80/announce
 
 http://211.75.205.188:6969/announce
@@ -1665,6 +1675,8 @@ http://211.75.205.188:6969/announce
 http://211.75.205.188:80/announce
 
 http://211.75.210.221:6969/announce
+
+http://211.75.210.221:80/announce
 
 http://211.75.29.254:6969/announce
 
@@ -1689,6 +1701,8 @@ http://34.66.57.33:11450/announce
 http://34.66.57.33:1337/announce
 
 http://34.66.57.33:2701/announce
+
+http://34.66.57.33:2710/announce
 
 http://34.66.57.33:443/announce
 
@@ -2477,6 +2491,8 @@ http://torrent.arjlover.net:2710/announce
 http://torrent.fedoraproject.org:6969/announce
 
 http://torrent.gresille.org/announce
+
+http://torrent.hificode.in:6969/announce
 
 http://torrent.mp3quran.net/announce.php
 
