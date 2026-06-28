@@ -128,6 +128,8 @@ udp://207.241.231.226:6969/announce
 
 udp://208.67.16.113:8000/announce
 
+udp://208.83.20.20:6969/announce
+
 udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
@@ -155,6 +157,8 @@ udp://23.157.120.14:6969/announce
 udp://34.66.57.33:1337/announce
 
 udp://34.66.57.33:80/announce
+
+udp://37.120.182.83:15480/announce
 
 udp://37.120.182.83:1984/announce
 
@@ -211,6 +215,8 @@ udp://52.58.128.163:6969/announce
 udp://6.pocketnet.app:6969/announce
 
 udp://60.172.236.18:6969/announce
+
+udp://60.249.37.20:80/announce
 
 udp://62.138.0.158:6969/announce
 
@@ -1660,6 +1666,8 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
+http://211.75.205.187:6969/announce
+
 http://211.75.205.187:80/announce
 
 http://211.75.205.188:6969/announce
@@ -1697,6 +1705,8 @@ http://34.66.57.33:2710/announce
 http://34.66.57.33:443/announce
 
 http://34.66.57.33:6969/announce
+
+http://34.66.57.33:80/announce
 
 http://34.66.57.33:80/announce.php
 
@@ -1813,6 +1823,8 @@ http://60-fps.org/bt:80/announce.php
 http://60-fps.org:80/bt/announce.php
 
 http://60-fps.org:80/bt:80/announce.php
+
+http://60.249.37.20:80/announce
 
 http://61.216.109.95:6969/announce
 
