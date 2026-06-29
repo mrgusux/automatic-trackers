@@ -23,7 +23,7 @@ jobs:
     # actions/labeler fetches its config (.github/labeler.yml) safely via the API.
     steps:
       - name: Apply PR Labels
-        uses: actions/labeler@v5
+        uses: actions/labeler@v6
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           configuration-path: .github/labeler.yml
@@ -35,7 +35,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Label PR by size (XS / S / M / L / XL)
-        uses: pascalgn/size-label-action@v0.5.5
+        uses: pascalgn/size-label-action@v0.5.7
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           # Auto-generated output files should not count toward PR size -
