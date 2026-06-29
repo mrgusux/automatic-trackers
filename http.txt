@@ -224,8 +224,6 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
-http://211.75.205.187:6969/announce
-
 http://211.75.205.188:6969/announce
 
 http://211.75.205.188:80/announce
@@ -250,8 +248,6 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
-http://34.66.57.33:11450/announce
-
 http://34.66.57.33:1337/announce
 
 http://34.66.57.33:2701/announce
@@ -261,8 +257,6 @@ http://34.66.57.33:2710/announce
 http://34.66.57.33:443/announce
 
 http://34.66.57.33:6969/announce
-
-http://34.66.57.33:80/announce
 
 http://34.66.57.33:80/announce.php
 
@@ -379,8 +373,6 @@ http://60-fps.org/bt:80/announce.php
 http://60-fps.org:80/bt/announce.php
 
 http://60-fps.org:80/bt:80/announce.php
-
-http://60.249.37.20:80/announce
 
 http://61.216.109.95:6969/announce
 

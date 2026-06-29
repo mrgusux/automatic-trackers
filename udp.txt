@@ -216,8 +216,6 @@ udp://6.pocketnet.app:6969/announce
 
 udp://60.172.236.18:6969/announce
 
-udp://60.249.37.20:80/announce
-
 udp://62.138.0.158:6969/announce
 
 udp://62.212.85.66:2710/announce
