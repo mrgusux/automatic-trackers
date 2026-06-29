@@ -252,6 +252,8 @@ http://220.130.15.30:6969/announce
 
 http://34.66.57.33:11450/announce
 
+http://34.66.57.33:1337/announce
+
 http://34.66.57.33:2701/announce
 
 http://34.66.57.33:2710/announce
@@ -1175,6 +1177,8 @@ http://tracker.coppersurfer.site:2710/announce
 http://tracker.corpscorp.online/announce
 
 http://tracker.corpscorp.online:80/announce
+
+http://tracker.cubonegro.org:80/announce
 
 http://tracker.ddunlimited.net:6969/announce
 
