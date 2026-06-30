@@ -142,8 +142,6 @@ udp://211.75.205.188:80/announce
 
 udp://211.75.205.189:6969/announce
 
-udp://211.75.210.221:6969/announce
-
 udp://211.75.29.254:6969/announce
 
 udp://212.42.38.197:6969/announce
@@ -1234,6 +1232,8 @@ https://tracker.iriseden.fr/announce
 
 https://tracker.iriseden.fr:443/announce
 
+https://tracker.isbigdick.cc.cd:443/announce
+
 https://tracker.jdx3.org:443/announce
 
 https://tracker.jiesen.life:8443/announce
@@ -1692,11 +1692,7 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
-http://34.66.57.33:1337/announce
-
 http://34.66.57.33:2701/announce
-
-http://34.66.57.33:2710/announce
 
 http://34.66.57.33:443/announce
 
