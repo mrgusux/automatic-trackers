@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-07-02T09:27:00+00:00",
-  "total": 1527,
+  "generated": "2026-07-02T14:21:34+00:00",
+  "total": 1530,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -462,6 +462,9 @@
     "udp://yann5.hexanyn.fr:6969/announce",
     "udp://yuki.bt.bontal.net:6969/announce",
     "udp://yuptracker-eu.gaijinent.com:27022/announce",
+    "udp://yuptracker-sa.gaijinent.com:27022/announce",
+    "udp://yuptracker-us.gaijinent.com:27022/announce",
+    "udp://yuptracker.gaijinent.com:27022/announce",
     "udp://z.mercax.com:53/announce",
     "udp://zecircle.xyz:6969/announce",
     "udp://zer0day.ch:1337/announce",
