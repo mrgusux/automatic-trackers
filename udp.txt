@@ -136,6 +136,8 @@ udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
 
+udp://211.75.205.187:80/announce
+
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
@@ -185,6 +187,8 @@ udp://47.ip-51-68-199.eu:6969/announce
 udp://5.196.67.51:6969/announce
 
 udp://5.196.89.204:6969/announce
+
+udp://5.255.124.190:6969/announce
 
 udp://5.79.249.77:6969/announce
 
