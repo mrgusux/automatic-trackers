@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-07-04T13:50:46+00:00",
-  "total": 1534,
+  "generated": "2026-07-04T19:25:39+00:00",
+  "total": 1535,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -524,6 +524,7 @@
     "https://opentracker.xyz/announce",
     "https://opentracker.xyz:443/announce",
     "https://orgtgju.org:443/announce",
+    "https://php-bobcat.wasmer.app:443/announce",
     "https://pybittrack.retiolus.net:443/announce",
     "https://seeders-paradise.org/announce",
     "https://shahidrazi.online:443/announce",
