@@ -184,8 +184,6 @@ http://189.0.196.51:6969/announce
 
 http://189.110.233.96:6969/announce
 
-http://191.23.62.139:6969/announce
-
 http://192.3.165.191:6969/announce
 
 http://192.9.228.30:6699/announce
@@ -233,8 +231,6 @@ http://211.75.205.187:80/announce
 http://211.75.205.188:6969/announce
 
 http://211.75.205.188:80/announce
-
-http://211.75.205.189:6969/announce
 
 http://211.75.210.221:6969/announce
 
@@ -383,8 +379,6 @@ http://60-fps.org/bt:80/announce.php
 http://60-fps.org:80/bt/announce.php
 
 http://60-fps.org:80/bt:80/announce.php
-
-http://60.249.37.20:80/announce
 
 http://61.216.109.95:6969/announce
 
