@@ -124,6 +124,8 @@ udp://1c.premierzal.ru:6969/announce
 
 udp://2.57.214.218:6969/announce
 
+udp://200.111.84.93:1337/announce
+
 udp://207.241.226.111:6969/announce
 
 udp://207.241.231.226:6969/announce
@@ -139,6 +141,8 @@ udp://209.141.59.25:6969/announce
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
+
+udp://211.75.205.189:6969/announce
 
 udp://211.75.210.221:6969/announce
 
@@ -219,6 +223,8 @@ udp://62.138.0.158:6969/announce
 udp://62.212.85.66:2710/announce
 
 udp://65.109.28.17:6969/announce
+
+udp://67.222.238.222:2010/announce
 
 udp://6ahddutb1ucc3cp.ru:6969/announce
 
@@ -1504,6 +1510,8 @@ http://129.146.193.240:6699/announce
 
 http://13.115.115.32:6969/announce
 
+http://132.243.161.144:6969/announce
+
 http://1337.abcvg.info/announce
 
 http://1337.abcvg.info:80/announce
@@ -1674,11 +1682,17 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
+http://211.75.205.187:6969/announce
+
 http://211.75.205.188:6969/announce
 
 http://211.75.205.188:80/announce
 
+http://211.75.205.189:6969/announce
+
 http://211.75.210.221:6969/announce
+
+http://211.75.210.221:80/announce
 
 http://211.75.29.254:6969/announce
 
@@ -1698,7 +1712,11 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
+http://34.66.57.33:11450/announce
+
 http://34.66.57.33:2701/announce
+
+http://34.66.57.33:2710/announce
 
 http://34.66.57.33:443/announce
 
@@ -1939,6 +1957,8 @@ http://97.117.78.100:9000/announce
 http://97.117.85.73:9000/announce
 
 http://99.192.12.191:6969/announce
+
+http://[2605:6400:30:fad6::dead:c0d3]:1337/announce
 
 http://[2a04:ac00:1:3dd8::1:2710]:2710/announce
 
@@ -2238,6 +2258,8 @@ http://masters-tb.com/announce.php
 
 http://masters-tb.com:80/announce.php
 
+http://maxsrv.xyz:9000/announce
+
 http://mediaclub.tv/announce
 
 http://mediaclub.tv/announce.php
@@ -2301,6 +2323,8 @@ http://open.touki.ru/announce
 http://open.touki.ru/announce.php
 
 http://open.touki.ru:80/announce.php
+
+http://open.tracker.cl:1337/announce
 
 http://open.tracker.ink:6969/announce
 
@@ -2411,6 +2435,8 @@ http://secure.pow7.com/announce
 http://secure.pow7.com:80/announce
 
 http://seeders-paradise.org/announce
+
+http://seeders-paradise.org:80/announce
 
 http://servandroidkino.ru/announce
 
@@ -2760,6 +2786,8 @@ http://tracker.openbittorrrent.com/announce
 
 http://tracker.openbittorrrent.com:80/announce
 
+http://tracker.opentorrent.top:6969/announce
+
 http://tracker.opentrackr.org:1337/announce
 
 http://tracker.openzim.org/announce
@@ -2827,6 +2855,8 @@ http://tracker.tfile.co:80/announce
 http://tracker.tfile.me/announce
 
 http://tracker.tfile.me:80/announce
+
+http://tracker.therarbg.to:6969/announce
 
 http://tracker.tiny-vps.com:6969/announce
 
