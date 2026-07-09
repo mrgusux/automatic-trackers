@@ -970,8 +970,6 @@ http://secure.pow7.com:80/announce
 
 http://seeders-paradise.org/announce
 
-http://seeders-paradise.org:80/announce
-
 http://servandroidkino.ru/announce
 
 http://share.camoe.cn:8080/announce
@@ -1045,8 +1043,6 @@ http://torrent.arjlover.net:2710/announce
 http://torrent.fedoraproject.org:6969/announce
 
 http://torrent.gresille.org/announce
-
-http://torrent.hificode.in:6969/announce
 
 http://torrent.mp3quran.net/announce.php
 

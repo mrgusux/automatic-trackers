@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-07-09T15:27:36+00:00",
-  "total": 1531,
+  "generated": "2026-07-09T19:57:09+00:00",
+  "total": 1529,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -1209,7 +1209,6 @@
     "http://secure.pow7.com/announce",
     "http://secure.pow7.com:80/announce",
     "http://seeders-paradise.org/announce",
-    "http://seeders-paradise.org:80/announce",
     "http://servandroidkino.ru/announce",
     "http://share.camoe.cn:8080/announce",
     "http://share.hkg-fansub.info/announce.php",
@@ -1247,7 +1246,6 @@
     "http://torrent.arjlover.net:2710/announce",
     "http://torrent.fedoraproject.org:6969/announce",
     "http://torrent.gresille.org/announce",
-    "http://torrent.hificode.in:6969/announce",
     "http://torrent.mp3quran.net/announce.php",
     "http://torrent.mp3quran.net:80/announce.php",
     "http://torrent.nwps.ws/announce",
