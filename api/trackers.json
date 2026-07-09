@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-07-09T03:59:49+00:00",
-  "total": 1530,
+  "generated": "2026-07-09T15:27:36+00:00",
+  "total": 1531,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -185,6 +185,7 @@
     "udp://devops.gay:6969/announce",
     "udp://dht.bt251.com:6969/announce",
     "udp://download.nerocloud.me:6969/announce",
+    "udp://ds32244.seedhost.eu:6969/announce",
     "udp://ec2-18-191-163-220.us-east-2.compute.amazonaws.com:6969/announce",
     "udp://eddie4.nl:6969/announce",
     "udp://elementsbrowser.com:6969/announce",
