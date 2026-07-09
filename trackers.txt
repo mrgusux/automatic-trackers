@@ -78,8 +78,6 @@ udp://185.121.168.96:1337/announce
 
 udp://185.121.168.96:6969/announce
 
-udp://185.146.233.150:6969/announce
-
 udp://185.181.60.155:80/announce
 
 udp://185.181.60.67:80/announce
@@ -124,21 +122,15 @@ udp://1c.premierzal.ru:6969/announce
 
 udp://2.57.214.218:6969/announce
 
-udp://200.111.84.93:1337/announce
-
 udp://207.241.226.111:6969/announce
 
 udp://207.241.231.226:6969/announce
 
 udp://208.67.16.113:8000/announce
 
-udp://208.83.20.20:6969/announce
-
 udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
-
-udp://211.75.205.187:6969/announce
 
 udp://211.75.205.188:6969/announce
 
@@ -218,8 +210,6 @@ udp://62.212.85.66:2710/announce
 
 udp://65.109.28.17:6969/announce
 
-udp://67.222.238.222:2010/announce
-
 udp://6ahddutb1ucc3cp.ru:6969/announce
 
 udp://74.119.149.136:6969/announce
@@ -244,6 +234,8 @@ udp://88.99.2.212:6969/announce
 
 udp://89.117.57.95:1337/announce
 
+udp://89.127.235.120:6969/announce
+
 udp://89.234.156.205:451/announce
 
 udp://89.234.156.205:80/announce
@@ -257,8 +249,6 @@ udp://9.rarbg.me:2780/announce
 udp://9.rarbg.to:2730/announce
 
 udp://91.211.5.21:6969/announce
-
-udp://91.216.110.53:451/announce
 
 udp://91.218.230.81:6969/announce
 
@@ -1646,8 +1636,6 @@ http://195.123.209.37:1337/announce
 
 http://198.251.84.144/announce
 
-http://200.111.84.93:1337/announce
-
 http://200.232.254.1:6969/announce
 
 http://201.42.214.55:6969/announce
@@ -1676,8 +1664,6 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
-http://211.75.205.187:6969/announce
-
 http://211.75.205.188:6969/announce
 
 http://211.75.205.188:80/announce
@@ -1702,17 +1688,11 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
-http://34.66.57.33:11450/announce
-
 http://34.66.57.33:2701/announce
-
-http://34.66.57.33:2710/announce
 
 http://34.66.57.33:443/announce
 
 http://34.66.57.33:6969/announce
-
-http://34.66.57.33:80/announce
 
 http://34.66.57.33:80/announce.php
 
@@ -1829,8 +1809,6 @@ http://60-fps.org/bt:80/announce.php
 http://60-fps.org:80/bt/announce.php
 
 http://60-fps.org:80/bt:80/announce.php
-
-http://60.249.37.20:6969/announce
 
 http://61.216.109.95:6969/announce
 
