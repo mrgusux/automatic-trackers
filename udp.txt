@@ -30,6 +30,8 @@ udp://132.243.161.144:6969/announce
 
 udp://135.125.106.92:6969/announce
 
+udp://135.125.236.64:6969/announce
+
 udp://144.91.88.22:6969/announce
 
 udp://148.251.53.72:6969/announce
@@ -78,6 +80,8 @@ udp://185.121.168.96:1337/announce
 
 udp://185.121.168.96:6969/announce
 
+udp://185.146.233.150:6969/announce
+
 udp://185.181.60.155:80/announce
 
 udp://185.181.60.67:80/announce
@@ -93,6 +97,8 @@ udp://185.44.82.25:1337/announce
 udp://185.5.97.139:8089/announce
 
 udp://185.86.149.205:1337/announce
+
+udp://185.87.45.163:6969/announce
 
 udp://188.165.253.109:1337/announce
 
@@ -128,6 +134,8 @@ udp://207.241.231.226:6969/announce
 
 udp://208.67.16.113:8000/announce
 
+udp://208.83.20.20:6969/announce
+
 udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
@@ -151,6 +159,10 @@ udp://23.157.120.14:6969/announce
 udp://34.66.57.33:1337/announce
 
 udp://34.66.57.33:80/announce
+
+udp://37.120.182.83:15480/announce
+
+udp://37.120.182.83:1984/announce
 
 udp://37.187.111.136:6969/announce
 
@@ -204,11 +216,17 @@ udp://6.pocketnet.app:6969/announce
 
 udp://60.172.236.18:6969/announce
 
+udp://60.249.37.20:6969/announce
+
+udp://60.249.37.20:80/announce
+
 udp://62.138.0.158:6969/announce
 
 udp://62.212.85.66:2710/announce
 
 udp://65.109.28.17:6969/announce
+
+udp://67.222.238.222:2010/announce
 
 udp://6ahddutb1ucc3cp.ru:6969/announce
 
@@ -233,8 +251,6 @@ udp://88.80.28.7:6969/announce
 udp://88.99.2.212:6969/announce
 
 udp://89.117.57.95:1337/announce
-
-udp://89.127.235.120:6969/announce
 
 udp://89.234.156.205:451/announce
 
@@ -528,6 +544,8 @@ udp://qtstm32fan.ru:6969/announce
 
 udp://r.l5.ca:6969/announce
 
+udp://rekcart.duckdns.org:15480/announce
+
 udp://rep-art.ynh.fr:6969/announce
 
 udp://retracker.hotplug.ru:2710/announce
@@ -688,6 +706,8 @@ udp://tracker.dorcus.digital:1337/announce
 
 udp://tracker.draatman.uk:6969/announce
 
+udp://tracker.ducks.party:1984/announce
+
 udp://tracker.eddie4.nl:6969/announce
 
 udp://tracker.edkj.club:6969/announce
@@ -781,6 +801,8 @@ udp://tracker.sharebro.in:6969/announce
 udp://tracker.silksa.co.za:6969/announce
 
 udp://tracker.sktorrent.net:6969/announce
+
+udp://tracker.skynetcloud.site:6969/announce
 
 udp://tracker.skyts.net:6969/announce
 
