@@ -1252,8 +1252,6 @@ https://tracker.iriseden.fr/announce
 
 https://tracker.iriseden.fr:443/announce
 
-https://tracker.isbigdick.cc.cd:443/announce
-
 https://tracker.jdx3.org:443/announce
 
 https://tracker.jiesen.life:8443/announce
@@ -2463,6 +2461,8 @@ http://smurfsoft.com:6969/announce
 http://speedtest.iperson.xyz:6969/announce
 
 http://sukebei.tracker.wf:8888/announce
+
+http://supertracker.cc.cd:80/announce
 
 http://t.acg.rip:6699/announce
 

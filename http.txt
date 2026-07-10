@@ -1002,6 +1002,8 @@ http://speedtest.iperson.xyz:6969/announce
 
 http://sukebei.tracker.wf:8888/announce
 
+http://supertracker.cc.cd:80/announce
+
 http://t.acg.rip:6699/announce
 
 http://t.al.uy:80/announce
