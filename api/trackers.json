@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-07-12T13:44:10+00:00",
-  "total": 1546,
+  "generated": "2026-07-12T19:16:07+00:00",
+  "total": 1547,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -585,6 +585,7 @@
     "https://tracker.4.babico.name.tr/announce",
     "https://tracker.7471.top:443/announce",
     "https://tracker.aburaya.live:443/announce",
+    "https://tracker.adgk.net:443/announce",
     "https://tracker.alaskantf.com:443/announce",
     "https://tracker.anibt.net:443/announce",
     "https://tracker.baka.ink/announce",
