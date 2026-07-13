@@ -134,13 +134,19 @@ udp://207.241.231.226:6969/announce
 
 udp://208.67.16.113:8000/announce
 
+udp://208.83.20.20:6969/announce
+
 udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
 
+udp://211.75.205.187:80/announce
+
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
+
+udp://211.75.205.189:6969/announce
 
 udp://211.75.205.189:80/announce
 
@@ -190,6 +196,8 @@ udp://5.196.67.51:6969/announce
 
 udp://5.196.89.204:6969/announce
 
+udp://5.255.124.190:6969/announce
+
 udp://5.79.249.77:6969/announce
 
 udp://5.79.83.193:6969/announce
@@ -225,6 +233,8 @@ udp://62.138.0.158:6969/announce
 udp://62.212.85.66:2710/announce
 
 udp://65.109.28.17:6969/announce
+
+udp://67.222.238.222:2010/announce
 
 udp://6ahddutb1ucc3cp.ru:6969/announce
 
@@ -263,6 +273,8 @@ udp://9.rarbg.me:2780/announce
 udp://9.rarbg.to:2730/announce
 
 udp://91.211.5.21:6969/announce
+
+udp://91.216.110.53:451/announce
 
 udp://91.218.230.81:6969/announce
 
@@ -1688,9 +1700,15 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
+http://211.75.205.187:6969/announce
+
+http://211.75.205.187:80/announce
+
 http://211.75.205.188:6969/announce
 
 http://211.75.205.188:80/announce
+
+http://211.75.205.189:6969/announce
 
 http://211.75.205.189:80/announce
 
