@@ -142,6 +142,8 @@ http://171.104.226.87:6969/announce
 
 http://173.254.204.71:1096/announce
 
+http://177.139.44.203:6969/announce
+
 http://178.175.143.27/announce
 
 http://178.33.73.26:2710/announce
@@ -226,10 +228,6 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
-http://211.75.205.187:6969/announce
-
-http://211.75.205.187:80/announce
-
 http://211.75.205.188:6969/announce
 
 http://211.75.205.188:80/announce
@@ -237,6 +235,8 @@ http://211.75.205.188:80/announce
 http://211.75.205.189:6969/announce
 
 http://211.75.210.221:6969/announce
+
+http://211.75.210.221:80/announce
 
 http://211.75.29.254:6969/announce
 
@@ -257,6 +257,8 @@ http://220.130.15.27:6969/announce
 http://220.130.15.30:6969/announce
 
 http://34.66.57.33:2701/announce
+
+http://34.66.57.33:2710/announce
 
 http://34.66.57.33:443/announce
 
@@ -976,6 +978,8 @@ http://secure.pow7.com:80/announce
 
 http://seeders-paradise.org/announce
 
+http://seeders-paradise.org:80/announce
+
 http://servandroidkino.ru/announce
 
 http://share.camoe.cn:8080/announce
@@ -1051,6 +1055,8 @@ http://torrent.arjlover.net:2710/announce
 http://torrent.fedoraproject.org:6969/announce
 
 http://torrent.gresille.org/announce
+
+http://torrent.hificode.in:6969/announce
 
 http://torrent.mp3quran.net/announce.php
 
