@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-07-15T03:15:29+00:00",
-  "total": 1541,
+  "generated": "2026-07-15T13:59:22+00:00",
+  "total": 1538,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -270,7 +270,6 @@
     "udp://public.tracker.vraphim.com:6969/announce",
     "udp://qtstm32fan.ru:6969/announce",
     "udp://r.l5.ca:6969/announce",
-    "udp://rekcart.duckdns.org:15480/announce",
     "udp://rep-art.ynh.fr:6969/announce",
     "udp://retracker.hotplug.ru:2710/announce",
     "udp://retracker.lanta-net.ru:2710/announce",
@@ -351,7 +350,6 @@
     "udp://tracker.dler.org:6969/announce",
     "udp://tracker.dorcus.digital:1337/announce",
     "udp://tracker.draatman.uk:6969/announce",
-    "udp://tracker.ducks.party:1984/announce",
     "udp://tracker.eddie4.nl:6969/announce",
     "udp://tracker.edkj.club:6969/announce",
     "udp://tracker.ex.ua:80/announce",
@@ -1277,7 +1275,6 @@
     "http://tr.bangumi.moe/announce",
     "http://tr.bangumi.moe:6969/announce",
     "http://tr.cili001.com:8070/announce",
-    "http://tr.highstar.shop:80/announce",
     "http://tr.kxmp.cf/announce",
     "http://tr.kxmp.cf:80/announce",
     "http://tr.nyacat.pw/announce",
