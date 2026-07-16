@@ -30,6 +30,8 @@ udp://132.243.161.144:6969/announce
 
 udp://135.125.106.92:6969/announce
 
+udp://135.125.236.64:6969/announce
+
 udp://144.91.88.22:6969/announce
 
 udp://148.251.53.72:6969/announce
@@ -75,6 +77,8 @@ udp://182.176.139.129:6969/announce
 udp://185.102.219.163:6969/announce
 
 udp://185.121.168.96:1337/announce
+
+udp://185.121.168.96:6969/announce
 
 udp://185.146.233.150:6969/announce
 
@@ -130,9 +134,13 @@ udp://207.241.231.226:6969/announce
 
 udp://208.67.16.113:8000/announce
 
+udp://208.83.20.20:6969/announce
+
 udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
+
+udp://211.75.205.187:6969/announce
 
 udp://211.75.205.188:6969/announce
 
@@ -158,6 +166,10 @@ udp://34.66.57.33:1337/announce
 
 udp://34.66.57.33:80/announce
 
+udp://37.120.182.83:15480/announce
+
+udp://37.120.182.83:1984/announce
+
 udp://37.187.111.136:6969/announce
 
 udp://37.187.95.112:6969/announce
@@ -169,6 +181,8 @@ udp://37.59.48.81:6969/announce
 udp://43.250.54.126:6969/announce
 
 udp://44.30.4.4:6969/announce
+
+udp://45.137.199.107:6969/announce
 
 udp://45.9.60.30:6969/announce
 
@@ -209,6 +223,8 @@ udp://52.58.128.163:6969/announce
 udp://6.pocketnet.app:6969/announce
 
 udp://60.172.236.18:6969/announce
+
+udp://60.249.37.20:80/announce
 
 udp://62.138.0.158:6969/announce
 
@@ -532,6 +548,8 @@ udp://qtstm32fan.ru:6969/announce
 
 udp://r.l5.ca:6969/announce
 
+udp://rekcart.duckdns.org:15480/announce
+
 udp://rep-art.ynh.fr:6969/announce
 
 udp://retracker.hotplug.ru:2710/announce
@@ -691,6 +709,8 @@ udp://tracker.dler.org:6969/announce
 udp://tracker.dorcus.digital:1337/announce
 
 udp://tracker.draatman.uk:6969/announce
+
+udp://tracker.ducks.party:1984/announce
 
 udp://tracker.eddie4.nl:6969/announce
 
@@ -1674,6 +1694,8 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
+http://211.75.205.187:6969/announce
+
 http://211.75.205.188:6969/announce
 
 http://211.75.205.188:80/announce
@@ -1702,6 +1724,8 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
+http://34.66.57.33:11450/announce
+
 http://34.66.57.33:2701/announce
 
 http://34.66.57.33:2710/announce
@@ -1709,6 +1733,8 @@ http://34.66.57.33:2710/announce
 http://34.66.57.33:443/announce
 
 http://34.66.57.33:6969/announce
+
+http://34.66.57.33:80/announce
 
 http://34.66.57.33:80/announce.php
 
@@ -1825,6 +1851,8 @@ http://60-fps.org/bt:80/announce.php
 http://60-fps.org:80/bt/announce.php
 
 http://60-fps.org:80/bt:80/announce.php
+
+http://60.249.37.20:80/announce
 
 http://61.216.109.95:6969/announce
 
@@ -2541,6 +2569,8 @@ http://tr.bangumi.moe/announce
 http://tr.bangumi.moe:6969/announce
 
 http://tr.cili001.com:8070/announce
+
+http://tr.highstar.shop:80/announce
 
 http://tr.kxmp.cf/announce
 
