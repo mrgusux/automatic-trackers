@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-07-16T08:25:50+00:00",
-  "total": 1549,
+  "generated": "2026-07-17T03:25:03+00:00",
+  "total": 1548,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -1137,7 +1137,6 @@
     "http://mail.lakameraobscura.com:6969/announce",
     "http://masters-tb.com/announce.php",
     "http://masters-tb.com:80/announce.php",
-    "http://maxsrv.xyz:9000/announce",
     "http://mediaclub.tv/announce",
     "http://mediaclub.tv/announce.php",
     "http://mediaclub.tv:80/announce",
