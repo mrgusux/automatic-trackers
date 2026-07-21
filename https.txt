@@ -66,6 +66,8 @@ https://dev.tracker.cf-identity-wallet.metadata.dev.cf-deployments.org:443/annou
 
 https://docker-tracker-production.up.railway.app/announce
 
+https://edgev.duckdns.org:443/announce
+
 https://evening-badlands-6215.herokuapp.com/announce
 
 https://grifon.info:80/announce

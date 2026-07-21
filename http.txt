@@ -142,6 +142,8 @@ http://171.104.226.87:6969/announce
 
 http://173.254.204.71:1096/announce
 
+http://177.172.61.26:6969/announce
+
 http://178.175.143.27/announce
 
 http://178.33.73.26:2710/announce
@@ -228,9 +230,15 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
+http://211.75.205.187:6969/announce
+
+http://211.75.205.187:80/announce
+
 http://211.75.205.188:6969/announce
 
 http://211.75.205.188:80/announce
+
+http://211.75.205.189:6969/announce
 
 http://211.75.210.221:6969/announce
 
@@ -283,6 +291,8 @@ http://37.19.5.139:6969/announce
 http://37.19.5.155:6881/announce
 
 http://37.235.174.46:2710/announce
+
+http://37.60.249.217:6969/announce
 
 http://38.145.197.79:6961/announce
 
@@ -463,6 +473,8 @@ http://93.158.213.92:1337/announce
 http://93.88.129.16/announce
 
 http://93.92.64.5/announce
+
+http://94.23.207.177:6969/announce
 
 http://95.107.48.115/announce
 
@@ -1297,6 +1309,8 @@ http://tracker.mywaifu.best:6969/announce
 http://tracker.nartlof.com.br:6969/announce
 
 http://tracker.netmap.top:6969/announce
+
+http://tracker.nexusstream.eu:6969/announce
 
 http://tracker.noobsubs.net/announce
 

@@ -1,3 +1,5 @@
+wss://open.ftorrent.com:443
+
 wss://qot.abiir.top:443/announce
 
 wss://spacetradersapi-chatbox.herokuapp.com:443/announce
@@ -14,4 +16,8 @@ wss://tracker.magnetoo.io/announce
 
 wss://tracker.openwebtorrent.com/announce
 
+wss://tracker.openwebtorrent.com:443
+
 wss://tracker.openwebtorrent.com:443/announce
+
+wss://tracker.webtorrent.dev:443

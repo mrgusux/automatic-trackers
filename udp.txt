@@ -36,15 +36,21 @@ udp://148.251.53.72:6969/announce
 
 udp://149.106.106.25:443/announce
 
+udp://15.235.207.99:8081/announce
+
 udp://151.242.104.187:80/announce
 
 udp://151.80.120.114:2710/announce
+
+udp://152.53.194.103:1984/announce
 
 udp://152.53.194.103:54123/announce
 
 udp://156.234.201.18:80/announce
 
 udp://158.101.161.60:3131/announce
+
+udp://159.146.99.45:6969/announce
 
 udp://161.97.67.210:6969/announce
 
@@ -142,9 +148,13 @@ udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
 
+udp://211.75.205.187:80/announce
+
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
+
+udp://211.75.205.189:6969/announce
 
 udp://211.75.210.221:6969/announce
 
@@ -155,6 +165,8 @@ udp://212.42.38.197:6969/announce
 udp://213.163.67.56:1337/announce
 
 udp://217.30.10.77:6969/announce
+
+udp://221.153.216.56:8081/announce
 
 udp://23.137.251.45:6969/announce
 
@@ -175,6 +187,8 @@ udp://37.187.95.112:6969/announce
 udp://37.19.5.155:2710/announce
 
 udp://37.59.48.81:6969/announce
+
+udp://37.60.249.217:6969/announce
 
 udp://43.250.54.126:6969/announce
 
@@ -212,9 +226,17 @@ udp://51.68.174.87:6969/announce
 
 udp://51.81.222.188:6969/announce
 
+udp://51.83.160.93:6969/announce
+
 udp://52.211.139.85:27022/announce
 
 udp://52.58.128.163:6969/announce
+
+udp://54.36.179.216:6969/announce
+
+udp://57.129.129.129:6969/announce
+
+udp://57.129.129.187:6969/announce
 
 udp://6.pocketnet.app:6969/announce
 
@@ -244,6 +266,8 @@ udp://87.106.210.134:6969/announce
 
 udp://88.80.22.67:2710/announce
 
+udp://88.80.22.75:2710/announce
+
 udp://88.80.28.7:6969/announce
 
 udp://88.99.2.212:6969/announce
@@ -261,6 +285,8 @@ udp://9.rarbg.com:2710/announce
 udp://9.rarbg.me:2780/announce
 
 udp://9.rarbg.to:2730/announce
+
+udp://91.177.126.188:6969/announce
 
 udp://91.211.5.21:6969/announce
 
@@ -381,6 +407,8 @@ udp://ds32244.seedhost.eu:6969/announce
 udp://ec2-18-191-163-220.us-east-2.compute.amazonaws.com:6969/announce
 
 udp://eddie4.nl:6969/announce
+
+udp://edgev.duckdns.org:6969/announce
 
 udp://elementsbrowser.com:6969/announce
 
