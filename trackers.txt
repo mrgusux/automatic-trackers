@@ -3060,6 +3060,8 @@ http://xtremewrestlingtorrents.net/announce.php
 
 http://xtremewrestlingtorrents.net:80/announce.php
 
+http://ydlkccp.dscloud.me:6969/announce
+
 wss://qot.abiir.top:443/announce
 
 wss://spacetradersapi-chatbox.herokuapp.com:443/announce

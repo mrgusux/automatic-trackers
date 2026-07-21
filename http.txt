@@ -1599,3 +1599,5 @@ http://www.zone-torrent.net:80/announce.php
 http://xtremewrestlingtorrents.net/announce.php
 
 http://xtremewrestlingtorrents.net:80/announce.php
+
+http://ydlkccp.dscloud.me:6969/announce
