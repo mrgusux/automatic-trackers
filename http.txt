@@ -230,15 +230,11 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
-http://211.75.205.187:6969/announce
-
 http://211.75.205.187:80/announce
 
 http://211.75.205.188:6969/announce
 
 http://211.75.205.188:80/announce
-
-http://211.75.205.189:6969/announce
 
 http://211.75.210.221:6969/announce
 
@@ -981,6 +977,8 @@ http://secure.pow7.com/announce
 http://secure.pow7.com:80/announce
 
 http://seeders-paradise.org/announce
+
+http://seeders-paradise.org:80/announce
 
 http://servandroidkino.ru/announce
 

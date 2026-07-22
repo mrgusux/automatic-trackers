@@ -50,8 +50,6 @@ udp://156.234.201.18:80/announce
 
 udp://158.101.161.60:3131/announce
 
-udp://159.146.99.45:6969/announce
-
 udp://161.97.67.210:6969/announce
 
 udp://163.172.29.130:80/announce
@@ -86,8 +84,6 @@ udp://185.121.168.96:1337/announce
 
 udp://185.121.168.96:6969/announce
 
-udp://185.146.233.150:6969/announce
-
 udp://185.181.60.155:80/announce
 
 udp://185.181.60.67:80/announce
@@ -103,8 +99,6 @@ udp://185.44.82.25:1337/announce
 udp://185.5.97.139:8089/announce
 
 udp://185.86.149.205:1337/announce
-
-udp://185.87.45.163:6969/announce
 
 udp://188.165.253.109:1337/announce
 
@@ -134,29 +128,19 @@ udp://1c.premierzal.ru:6969/announce
 
 udp://2.57.214.218:6969/announce
 
-udp://200.111.84.93:1337/announce
-
 udp://207.241.226.111:6969/announce
 
 udp://207.241.231.226:6969/announce
 
 udp://208.67.16.113:8000/announce
 
-udp://208.83.20.20:6969/announce
-
 udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
 
-udp://211.75.205.187:80/announce
-
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
-
-udp://211.75.205.189:6969/announce
-
-udp://211.75.210.221:6969/announce
 
 udp://211.75.29.254:6969/announce
 
@@ -232,8 +216,6 @@ udp://52.211.139.85:27022/announce
 
 udp://52.58.128.163:6969/announce
 
-udp://54.36.179.216:6969/announce
-
 udp://57.129.129.129:6969/announce
 
 udp://57.129.129.187:6969/announce
@@ -241,6 +223,8 @@ udp://57.129.129.187:6969/announce
 udp://6.pocketnet.app:6969/announce
 
 udp://60.172.236.18:6969/announce
+
+udp://60.249.37.20:80/announce
 
 udp://62.138.0.158:6969/announce
 
@@ -827,8 +811,6 @@ udp://tracker.sharebro.in:6969/announce
 udp://tracker.silksa.co.za:6969/announce
 
 udp://tracker.sktorrent.net:6969/announce
-
-udp://tracker.skynetcloud.site:6969/announce
 
 udp://tracker.skyts.net:6969/announce
 
