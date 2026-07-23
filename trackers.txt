@@ -142,6 +142,8 @@ udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
 
+udp://211.75.210.221:80/announce
+
 udp://211.75.29.254:6969/announce
 
 udp://212.42.38.197:6969/announce
@@ -224,6 +226,8 @@ udp://6.pocketnet.app:6969/announce
 
 udp://60.172.236.18:6969/announce
 
+udp://60.249.37.20:6969/announce
+
 udp://60.249.37.20:80/announce
 
 udp://62.138.0.158:6969/announce
@@ -231,6 +235,8 @@ udp://62.138.0.158:6969/announce
 udp://62.212.85.66:2710/announce
 
 udp://65.109.28.17:6969/announce
+
+udp://65.109.28.33:6969/announce
 
 udp://6ahddutb1ucc3cp.ru:6969/announce
 
@@ -293,6 +299,10 @@ udp://94.23.207.177:6969/announce
 udp://94.243.222.100:6969/announce
 
 udp://95.216.74.39:6969/announce
+
+udp://95.217.80.20:6969/announce
+
+udp://95.217.80.22:6969/announce
 
 udp://95.31.11.224:6969/announce
 
@@ -391,8 +401,6 @@ udp://ds32244.seedhost.eu:6969/announce
 udp://ec2-18-191-163-220.us-east-2.compute.amazonaws.com:6969/announce
 
 udp://eddie4.nl:6969/announce
-
-udp://edgev.duckdns.org:6969/announce
 
 udp://elementsbrowser.com:6969/announce
 
@@ -1708,7 +1716,11 @@ http://211.75.205.188:6969/announce
 
 http://211.75.205.188:80/announce
 
+http://211.75.205.189:6969/announce
+
 http://211.75.210.221:6969/announce
+
+http://211.75.210.221:80/announce
 
 http://211.75.29.254:6969/announce
 
@@ -1728,11 +1740,17 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
+http://34.66.57.33:11450/announce
+
 http://34.66.57.33:2701/announce
+
+http://34.66.57.33:2710/announce
 
 http://34.66.57.33:443/announce
 
 http://34.66.57.33:6969/announce
+
+http://34.66.57.33:80/announce
 
 http://34.66.57.33:80/announce.php
 
@@ -1851,6 +1869,8 @@ http://60-fps.org/bt:80/announce.php
 http://60-fps.org:80/bt/announce.php
 
 http://60-fps.org:80/bt:80/announce.php
+
+http://60.249.37.20:6969/announce
 
 http://61.216.109.95:6969/announce
 
@@ -2527,6 +2547,8 @@ http://torrent.arjlover.net:2710/announce
 http://torrent.fedoraproject.org:6969/announce
 
 http://torrent.gresille.org/announce
+
+http://torrent.hificode.in:6969/announce
 
 http://torrent.mp3quran.net/announce.php
 
