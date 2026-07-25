@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-07-25T03:26:17+00:00",
-  "total": 1556,
+  "generated": "2026-07-25T13:51:35+00:00",
+  "total": 1554,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -1173,7 +1173,6 @@
     "http://open.touki.ru/announce",
     "http://open.touki.ru/announce.php",
     "http://open.touki.ru:80/announce.php",
-    "http://open.tracker.cl:1337/announce",
     "http://open.tracker.ink:6969/announce",
     "http://open.trackerlist.xyz/announce",
     "http://open.trackerlist.xyz:80/announce",
@@ -1267,7 +1266,6 @@
     "http://torrent.arjlover.net:2710/announce",
     "http://torrent.fedoraproject.org:6969/announce",
     "http://torrent.gresille.org/announce",
-    "http://torrent.hificode.in:6969/announce",
     "http://torrent.mp3quran.net/announce.php",
     "http://torrent.mp3quran.net:80/announce.php",
     "http://torrent.nwps.ws/announce",

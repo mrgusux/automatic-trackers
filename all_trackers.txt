@@ -2338,8 +2338,6 @@ http://open.touki.ru/announce.php
 
 http://open.touki.ru:80/announce.php
 
-http://open.tracker.cl:1337/announce
-
 http://open.tracker.ink:6969/announce
 
 http://open.trackerlist.xyz/announce
@@ -2525,8 +2523,6 @@ http://torrent.arjlover.net:2710/announce
 http://torrent.fedoraproject.org:6969/announce
 
 http://torrent.gresille.org/announce
-
-http://torrent.hificode.in:6969/announce
 
 http://torrent.mp3quran.net/announce.php
 
