@@ -228,6 +228,8 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
+http://211.75.205.187:6969/announce
+
 http://211.75.205.188:6969/announce
 
 http://211.75.205.188:80/announce
@@ -254,11 +256,17 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
+http://34.66.57.33:11450/announce
+
 http://34.66.57.33:2701/announce
+
+http://34.66.57.33:2710/announce
 
 http://34.66.57.33:443/announce
 
 http://34.66.57.33:6969/announce
+
+http://34.66.57.33:80/announce
 
 http://34.66.57.33:80/announce.php
 
@@ -866,6 +874,8 @@ http://open.touki.ru/announce.php
 
 http://open.touki.ru:80/announce.php
 
+http://open.tracker.cl:1337/announce
+
 http://open.tracker.ink:6969/announce
 
 http://open.trackerlist.xyz/announce
@@ -1051,6 +1061,8 @@ http://torrent.arjlover.net:2710/announce
 http://torrent.fedoraproject.org:6969/announce
 
 http://torrent.gresille.org/announce
+
+http://torrent.hificode.in:6969/announce
 
 http://torrent.mp3quran.net/announce.php
 
