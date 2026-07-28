@@ -68,6 +68,8 @@ udp://173.249.201.201:6969/announce
 
 udp://176.31.250.174:6969/announce
 
+udp://177.172.61.26:6969/announce
+
 udp://178.170.48.154:1337/announce
 
 udp://178.33.73.26:2710/announce
@@ -143,6 +145,8 @@ udp://211.75.205.188:6969/announce
 udp://211.75.205.188:80/announce
 
 udp://211.75.205.189:6969/announce
+
+udp://211.75.205.189:80/announce
 
 udp://211.75.210.221:80/announce
 
@@ -771,6 +775,8 @@ udp://tracker.mg64.net:6969/announce
 udp://tracker.monitorit4.me:6969/announce
 
 udp://tracker.nexusstream.eu:6969/announce
+
+udp://tracker.nyaa.net:6969/announce
 
 udp://tracker.nyaa.vc:6969/announce
 
