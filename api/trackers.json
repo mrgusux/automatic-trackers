@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-07-29T03:22:08+00:00",
-  "total": 1553,
+  "generated": "2026-07-29T19:34:39+00:00",
+  "total": 1552,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -1171,7 +1171,6 @@
     "http://open.touki.ru/announce",
     "http://open.touki.ru/announce.php",
     "http://open.touki.ru:80/announce.php",
-    "http://open.tracker.cl:1337/announce",
     "http://open.tracker.ink:6969/announce",
     "http://open.trackerlist.xyz/announce",
     "http://open.trackerlist.xyz:80/announce",
