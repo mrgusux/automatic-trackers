@@ -46,8 +46,6 @@ http://116.9.207.226:6969/announce
 
 http://119.28.71.45:8080/announce
 
-http://123.245.62.74:6969/announce
-
 http://125.227.35.196:6969/announce
 
 http://128.199.70.66:5944/announce
@@ -230,6 +228,8 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
+http://211.75.205.187:80/announce
+
 http://211.75.205.188:6969/announce
 
 http://211.75.205.188:80/announce
@@ -253,10 +253,6 @@ http://217.30.10.77:6969/announce
 http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
-
-http://34.66.57.33:11450/announce
-
-http://34.66.57.33:1337/announce
 
 http://34.66.57.33:2701/announce
 
@@ -867,6 +863,8 @@ http://open.touki.ru/announce
 http://open.touki.ru/announce.php
 
 http://open.touki.ru:80/announce.php
+
+http://open.tracker.cl:1337/announce
 
 http://open.tracker.ink:6969/announce
 
