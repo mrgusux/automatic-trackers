@@ -700,6 +700,8 @@ udp://tracker.ccc.de:80/announce
 
 udp://tracker.ccp.ovh:6969/announce
 
+udp://tracker.cn.nyaa.net:6969/announce
+
 udp://tracker.coppersurfer.tk:6969/announce
 
 udp://tracker.corpscorp.online:80/announce
