@@ -2358,8 +2358,6 @@ http://open.touki.ru/announce.php
 
 http://open.touki.ru:80/announce.php
 
-http://open.tracker.cl:1337/announce
-
 http://open.tracker.ink:6969/announce
 
 http://open.trackerlist.xyz/announce
