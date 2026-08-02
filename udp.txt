@@ -102,6 +102,8 @@ udp://185.5.97.139:8089/announce
 
 udp://185.86.149.205:1337/announce
 
+udp://185.87.45.163:6969/announce
+
 udp://188.165.253.109:1337/announce
 
 udp://191.101.229.236:1337/announce
@@ -142,13 +144,11 @@ udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
 
-udp://211.75.205.187:6969/announce
+udp://211.75.205.187:80/announce
 
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
-
-udp://211.75.210.221:80/announce
 
 udp://211.75.29.254:6969/announce
 
@@ -823,6 +823,8 @@ udp://tracker.sharebro.in:6969/announce
 udp://tracker.silksa.co.za:6969/announce
 
 udp://tracker.sktorrent.net:6969/announce
+
+udp://tracker.skynetcloud.site:6969/announce
 
 udp://tracker.skyts.net:6969/announce
 
