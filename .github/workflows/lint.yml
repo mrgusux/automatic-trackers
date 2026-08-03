@@ -33,7 +33,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@2.0.0
@@ -51,7 +51,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Run actionlint
         uses: raven-actions/actionlint@v2
