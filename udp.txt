@@ -112,6 +112,8 @@ udp://192.3.130.53:1337/announce
 
 udp://192.95.46.115:6969/announce
 
+udp://192.99.100.68:6969/announce
+
 udp://193.148.251.143:6969/announce
 
 udp://193.187.90.12:6969/announce
@@ -149,6 +151,8 @@ udp://211.75.205.187:80/announce
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
+
+udp://211.75.210.221:6969/announce
 
 udp://211.75.29.254:6969/announce
 
@@ -223,6 +227,8 @@ udp://51.81.222.188:6969/announce
 udp://52.211.139.85:27022/announce
 
 udp://52.58.128.163:6969/announce
+
+udp://54.36.179.216:6969/announce
 
 udp://6.pocketnet.app:6969/announce
 
