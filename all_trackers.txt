@@ -50,6 +50,8 @@ udp://156.234.201.18:80/announce
 
 udp://158.101.161.60:3131/announce
 
+udp://159.146.99.45:6969/announce
+
 udp://161.97.67.210:6969/announce
 
 udp://163.172.29.130:80/announce
@@ -68,9 +70,13 @@ udp://173.249.201.201:6969/announce
 
 udp://176.31.250.174:6969/announce
 
+udp://177.112.215.160:6969/announce
+
 udp://178.170.48.154:1337/announce
 
 udp://178.33.73.26:2710/announce
+
+udp://180.131.145.175:6969/announce
 
 udp://182.176.139.129:6969/announce
 
@@ -221,6 +227,8 @@ udp://51.81.222.188:6969/announce
 udp://52.211.139.85:27022/announce
 
 udp://52.58.128.163:6969/announce
+
+udp://54.36.179.216:6969/announce
 
 udp://6.pocketnet.app:6969/announce
 
@@ -397,6 +405,8 @@ udp://ds32244.seedhost.eu:6969/announce
 udp://ec2-18-191-163-220.us-east-2.compute.amazonaws.com:6969/announce
 
 udp://eddie4.nl:6969/announce
+
+udp://edgev.duckdns.org:6969/announce
 
 udp://elementsbrowser.com:6969/announce
 
@@ -763,6 +773,8 @@ udp://tracker.iperson.xyz:6969/announce
 udp://tracker.istole.it:80/announce
 
 udp://tracker.ixuexi.click:6969/announce
+
+udp://tracker.k.vu:6969/announce
 
 udp://tracker.kicks-ass.net:80/announce
 
