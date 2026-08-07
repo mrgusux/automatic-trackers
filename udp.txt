@@ -30,6 +30,8 @@ udp://132.243.161.144:6969/announce
 
 udp://135.125.106.92:6969/announce
 
+udp://143.246.43.3:6969/announce
+
 udp://144.91.88.22:6969/announce
 
 udp://148.251.53.72:6969/announce
@@ -90,6 +92,8 @@ udp://185.181.60.155:80/announce
 
 udp://185.181.60.67:80/announce
 
+udp://185.189.13.39:6969/announce
+
 udp://185.216.179.62:25/announce
 
 udp://185.230.4.150:1337/announce
@@ -101,6 +105,8 @@ udp://185.44.82.25:1337/announce
 udp://185.5.97.139:8089/announce
 
 udp://185.86.149.205:1337/announce
+
+udp://187.11.73.135:6969/announce
 
 udp://188.165.253.109:1337/announce
 
@@ -145,6 +151,8 @@ udp://209.141.59.25:6969/announce
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
+
+udp://211.75.210.221:80/announce
 
 udp://211.75.29.254:6969/announce
 
@@ -234,6 +242,8 @@ udp://65.109.28.17:6969/announce
 
 udp://65.109.28.33:6969/announce
 
+udp://67.222.238.222:2010/announce
+
 udp://6ahddutb1ucc3cp.ru:6969/announce
 
 udp://74.119.149.136:6969/announce
@@ -297,6 +307,8 @@ udp://94.243.222.100:6969/announce
 udp://95.216.74.39:6969/announce
 
 udp://95.217.80.20:6969/announce
+
+udp://95.217.80.22:6969/announce
 
 udp://95.31.11.224:6969/announce
 
@@ -433,6 +445,8 @@ udp://ipv4.tracker.harry.lu/announce
 udp://ipv4.tracker.harry.lu:80/announce
 
 udp://ipv4announce.sktorrent.eu:6969/announce
+
+udp://ipv6.govt.hu:6969/announce
 
 udp://ipv6.tracker.harry.lu/announce
 
@@ -773,6 +787,8 @@ udp://tracker.kuroy.me:5944/announce
 udp://tracker.leechers-paradise.org:6969/announce
 
 udp://tracker.lelux.fi:6969/announce
+
+udp://tracker.linvk.com:6969/announce
 
 udp://tracker.mg64.net:2710/announce
 
