@@ -142,8 +142,6 @@ http://171.104.226.87:6969/announce
 
 http://173.254.204.71:1096/announce
 
-http://177.112.215.160:6969/announce
-
 http://178.175.143.27/announce
 
 http://178.33.73.26:2710/announce
