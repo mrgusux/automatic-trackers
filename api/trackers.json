@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-08-08T13:03:27+00:00",
-  "total": 1565,
+  "generated": "2026-08-08T18:49:39+00:00",
+  "total": 1566,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -418,6 +418,7 @@
     "udp://tracker.sharebro.in:6969/announce",
     "udp://tracker.silksa.co.za:6969/announce",
     "udp://tracker.sktorrent.net:6969/announce",
+    "udp://tracker.skynetcloud.site:6969/announce",
     "udp://tracker.skyts.net:6969/announce",
     "udp://tracker.srv00.com:6969/announce",
     "udp://tracker.swateam.org.uk:2710/announce",

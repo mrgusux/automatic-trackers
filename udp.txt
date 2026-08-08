@@ -828,6 +828,8 @@ udp://tracker.silksa.co.za:6969/announce
 
 udp://tracker.sktorrent.net:6969/announce
 
+udp://tracker.skynetcloud.site:6969/announce
+
 udp://tracker.skyts.net:6969/announce
 
 udp://tracker.srv00.com:6969/announce
