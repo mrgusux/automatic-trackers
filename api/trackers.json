@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-08-09T07:06:51+00:00",
-  "total": 1570,
+  "generated": "2026-08-09T13:05:44+00:00",
+  "total": 1569,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -1282,7 +1282,6 @@
     "http://torrent.arjlover.net:2710/announce",
     "http://torrent.fedoraproject.org:6969/announce",
     "http://torrent.gresille.org/announce",
-    "http://torrent.hificode.in:6969/announce",
     "http://torrent.mp3quran.net/announce.php",
     "http://torrent.mp3quran.net:80/announce.php",
     "http://torrent.nwps.ws/announce",
