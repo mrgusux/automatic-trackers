@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-08-11T07:18:56+00:00",
-  "total": 1569,
+  "generated": "2026-08-11T19:12:16+00:00",
+  "total": 1566,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -204,7 +204,6 @@
     "udp://ds32244.seedhost.eu:6969/announce",
     "udp://ec2-18-191-163-220.us-east-2.compute.amazonaws.com:6969/announce",
     "udp://eddie4.nl:6969/announce",
-    "udp://edgev.duckdns.org:6969/announce",
     "udp://elementsbrowser.com:6969/announce",
     "udp://epider.me:6969/announce",
     "udp://evan.im:6969/announce",
@@ -395,7 +394,6 @@
     "udp://tracker.kuroy.me:5944/announce",
     "udp://tracker.leechers-paradise.org:6969/announce",
     "udp://tracker.lelux.fi:6969/announce",
-    "udp://tracker.linvk.com:6969/announce",
     "udp://tracker.mg64.net:2710/announce",
     "udp://tracker.mg64.net:6969/announce",
     "udp://tracker.monitorit4.me:6969/announce",
@@ -1242,7 +1240,6 @@
     "http://secure.pow7.com/announce",
     "http://secure.pow7.com:80/announce",
     "http://seeders-paradise.org/announce",
-    "http://seeders-paradise.org:80/announce",
     "http://servandroidkino.ru/announce",
     "http://share.camoe.cn:8080/announce",
     "http://share.hkg-fansub.info/announce.php",
