@@ -920,6 +920,8 @@ udp://ttk2.nbaonlineservice.com:6969/announce
 
 udp://uabits.today:6990/announce
 
+udp://udp.tracker.linvk.com:6969/announce
+
 udp://udp.tracker.projectk.org:23333/announce
 
 udp://udp1.torrust-tracker-demo.com:6969/announce
