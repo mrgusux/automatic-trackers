@@ -144,8 +144,6 @@ http://173.254.204.71:1096/announce
 
 http://177.172.67.233:6969/announce
 
-http://177.215.67.242:6969/announce
-
 http://178.175.143.27/announce
 
 http://178.33.73.26:2710/announce
@@ -233,8 +231,6 @@ http://211.20.122.47:6969/announce
 http://211.22.29.93/announce
 
 http://211.75.205.187:6969/announce
-
-http://211.75.205.187:80/announce
 
 http://211.75.205.188:6969/announce
 
