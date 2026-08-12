@@ -68,6 +68,8 @@ udp://173.249.201.201:6969/announce
 
 udp://176.31.250.174:6969/announce
 
+udp://177.172.67.233:6969/announce
+
 udp://177.215.67.242:6969/announce
 
 udp://178.170.48.154:1337/announce
@@ -145,6 +147,8 @@ udp://208.83.20.20:6969/announce
 udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
+
+udp://211.75.205.187:6969/announce
 
 udp://211.75.205.187:80/announce
 
@@ -238,6 +242,8 @@ udp://65.109.28.17:6969/announce
 
 udp://65.109.28.33:6969/announce
 
+udp://67.222.238.222:2010/announce
+
 udp://6ahddutb1ucc3cp.ru:6969/announce
 
 udp://74.119.149.136:6969/announce
@@ -277,6 +283,8 @@ udp://9.rarbg.to:2730/announce
 udp://91.177.126.188:6969/announce
 
 udp://91.211.5.21:6969/announce
+
+udp://91.216.110.53:451/announce
 
 udp://91.218.230.81:6969/announce
 
@@ -1636,6 +1644,8 @@ http://171.104.226.87:6969/announce
 
 http://173.254.204.71:1096/announce
 
+http://177.172.67.233:6969/announce
+
 http://177.215.67.242:6969/announce
 
 http://178.175.143.27/announce
@@ -1724,6 +1734,8 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
+http://211.75.205.187:6969/announce
+
 http://211.75.205.187:80/announce
 
 http://211.75.205.188:6969/announce
@@ -1750,13 +1762,19 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
+http://34.66.57.33:11450/announce
+
 http://34.66.57.33:1337/announce
 
 http://34.66.57.33:2701/announce
 
+http://34.66.57.33:2710/announce
+
 http://34.66.57.33:443/announce
 
 http://34.66.57.33:6969/announce
+
+http://34.66.57.33:80/announce
 
 http://34.66.57.33:80/announce.php
 
@@ -2471,6 +2489,8 @@ http://secure.pow7.com/announce
 http://secure.pow7.com:80/announce
 
 http://seeders-paradise.org/announce
+
+http://seeders-paradise.org:80/announce
 
 http://servandroidkino.ru/announce
 

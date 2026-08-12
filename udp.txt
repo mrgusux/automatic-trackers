@@ -68,6 +68,8 @@ udp://173.249.201.201:6969/announce
 
 udp://176.31.250.174:6969/announce
 
+udp://177.172.67.233:6969/announce
+
 udp://177.215.67.242:6969/announce
 
 udp://178.170.48.154:1337/announce
@@ -145,6 +147,8 @@ udp://208.83.20.20:6969/announce
 udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
+
+udp://211.75.205.187:6969/announce
 
 udp://211.75.205.187:80/announce
 
@@ -238,6 +242,8 @@ udp://65.109.28.17:6969/announce
 
 udp://65.109.28.33:6969/announce
 
+udp://67.222.238.222:2010/announce
+
 udp://6ahddutb1ucc3cp.ru:6969/announce
 
 udp://74.119.149.136:6969/announce
@@ -277,6 +283,8 @@ udp://9.rarbg.to:2730/announce
 udp://91.177.126.188:6969/announce
 
 udp://91.211.5.21:6969/announce
+
+udp://91.216.110.53:451/announce
 
 udp://91.218.230.81:6969/announce
 
