@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-08-13T02:32:17+00:00",
-  "total": 1575,
+  "generated": "2026-08-13T07:45:01+00:00",
+  "total": 1571,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -884,13 +884,9 @@
     "http://217.30.10.77:6969/announce",
     "http://220.130.15.27:6969/announce",
     "http://220.130.15.30:6969/announce",
-    "http://34.66.57.33:11450/announce",
-    "http://34.66.57.33:1337/announce",
     "http://34.66.57.33:2701/announce",
-    "http://34.66.57.33:2710/announce",
     "http://34.66.57.33:443/announce",
     "http://34.66.57.33:6969/announce",
-    "http://34.66.57.33:80/announce",
     "http://34.66.57.33:80/announce.php",
     "http://34.89.30.59/announce",
     "http://34.89.30.59:2710/announce",
