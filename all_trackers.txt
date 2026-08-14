@@ -50,6 +50,8 @@ udp://156.234.201.18:80/announce
 
 udp://158.101.161.60:3131/announce
 
+udp://159.146.99.45:6969/announce
+
 udp://161.97.67.210:6969/announce
 
 udp://163.172.29.130:80/announce
@@ -69,6 +71,8 @@ udp://173.249.201.201:6969/announce
 udp://176.31.250.174:6969/announce
 
 udp://177.172.67.233:6969/announce
+
+udp://177.215.66.183:6969/announce
 
 udp://178.170.48.154:1337/announce
 
@@ -203,6 +207,8 @@ udp://47.ip-51-68-199.eu:6969/announce
 udp://5.196.67.51:6969/announce
 
 udp://5.196.89.204:6969/announce
+
+udp://5.255.124.190:6969/announce
 
 udp://5.79.249.77:6969/announce
 
@@ -405,6 +411,8 @@ udp://ds32244.seedhost.eu:6969/announce
 udp://ec2-18-191-163-220.us-east-2.compute.amazonaws.com:6969/announce
 
 udp://eddie4.nl:6969/announce
+
+udp://edgev.duckdns.org:6969/announce
 
 udp://elementsbrowser.com:6969/announce
 
@@ -1646,6 +1654,8 @@ http://173.254.204.71:1096/announce
 
 http://177.172.67.233:6969/announce
 
+http://177.215.66.183:6969/announce
+
 http://178.175.143.27/announce
 
 http://178.33.73.26:2710/announce
@@ -1760,11 +1770,19 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
+http://34.66.57.33:11450/announce
+
+http://34.66.57.33:1337/announce
+
 http://34.66.57.33:2701/announce
+
+http://34.66.57.33:2710/announce
 
 http://34.66.57.33:443/announce
 
 http://34.66.57.33:6969/announce
+
+http://34.66.57.33:80/announce
 
 http://34.66.57.33:80/announce.php
 
@@ -2480,6 +2498,8 @@ http://secure.pow7.com:80/announce
 
 http://seeders-paradise.org/announce
 
+http://seeders-paradise.org:80/announce
+
 http://servandroidkino.ru/announce
 
 http://share.camoe.cn:8080/announce
@@ -2555,6 +2575,8 @@ http://torrent.arjlover.net:2710/announce
 http://torrent.fedoraproject.org:6969/announce
 
 http://torrent.gresille.org/announce
+
+http://torrent.hificode.in:6969/announce
 
 http://torrent.mp3quran.net/announce.php
 

@@ -50,6 +50,8 @@ udp://156.234.201.18:80/announce
 
 udp://158.101.161.60:3131/announce
 
+udp://159.146.99.45:6969/announce
+
 udp://161.97.67.210:6969/announce
 
 udp://163.172.29.130:80/announce
@@ -69,6 +71,8 @@ udp://173.249.201.201:6969/announce
 udp://176.31.250.174:6969/announce
 
 udp://177.172.67.233:6969/announce
+
+udp://177.215.66.183:6969/announce
 
 udp://178.170.48.154:1337/announce
 
@@ -203,6 +207,8 @@ udp://47.ip-51-68-199.eu:6969/announce
 udp://5.196.67.51:6969/announce
 
 udp://5.196.89.204:6969/announce
+
+udp://5.255.124.190:6969/announce
 
 udp://5.79.249.77:6969/announce
 
@@ -405,6 +411,8 @@ udp://ds32244.seedhost.eu:6969/announce
 udp://ec2-18-191-163-220.us-east-2.compute.amazonaws.com:6969/announce
 
 udp://eddie4.nl:6969/announce
+
+udp://edgev.duckdns.org:6969/announce
 
 udp://elementsbrowser.com:6969/announce
 
