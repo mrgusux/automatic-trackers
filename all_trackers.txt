@@ -76,6 +76,8 @@ udp://178.170.48.154:1337/announce
 
 udp://178.33.73.26:2710/announce
 
+udp://180.131.145.175:6969/announce
+
 udp://182.176.139.129:6969/announce
 
 udp://185.102.219.163:6969/announce
@@ -140,11 +142,15 @@ udp://207.241.231.226:6969/announce
 
 udp://208.67.16.113:8000/announce
 
+udp://208.83.20.20:6969/announce
+
 udp://209.126.11.233:6969/announce
 
 udp://209.141.59.16:6969/announce
 
 udp://209.141.59.25:6969/announce
+
+udp://211.75.205.187:6969/announce
 
 udp://211.75.205.187:80/announce
 
@@ -237,6 +243,8 @@ udp://62.212.85.66:2710/announce
 udp://65.109.28.17:6969/announce
 
 udp://65.109.28.33:6969/announce
+
+udp://67.222.238.222:2010/announce
 
 udp://6ahddutb1ucc3cp.ru:6969/announce
 
@@ -1758,11 +1766,15 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
+http://34.66.57.33:1337/announce
+
 http://34.66.57.33:2701/announce
 
 http://34.66.57.33:443/announce
 
 http://34.66.57.33:6969/announce
+
+http://34.66.57.33:80/announce
 
 http://34.66.57.33:80/announce.php
 
@@ -2478,6 +2490,8 @@ http://secure.pow7.com:80/announce
 
 http://seeders-paradise.org/announce
 
+http://seeders-paradise.org:80/announce
+
 http://servandroidkino.ru/announce
 
 http://share.camoe.cn:8080/announce
@@ -2553,6 +2567,8 @@ http://torrent.arjlover.net:2710/announce
 http://torrent.fedoraproject.org:6969/announce
 
 http://torrent.gresille.org/announce
+
+http://torrent.hificode.in:6969/announce
 
 http://torrent.mp3quran.net/announce.php
 
