@@ -206,8 +206,6 @@ http://201.42.214.55:6969/announce
 
 http://201.43.209.254:6969/announce
 
-http://207.211.184.229:6969/announce
-
 http://207.241.226.111:6969/announce
 
 http://207.241.231.226:6969/announce
@@ -229,10 +227,6 @@ http://210.244.71.26:6969/announce
 http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
-
-http://211.75.205.187:6969/announce
-
-http://211.75.205.187:80/announce
 
 http://211.75.205.188:6969/announce
 
@@ -260,8 +254,6 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
-http://34.66.57.33:1337/announce
-
 http://34.66.57.33:2701/announce
 
 http://34.66.57.33:2710/announce
@@ -269,8 +261,6 @@ http://34.66.57.33:2710/announce
 http://34.66.57.33:443/announce
 
 http://34.66.57.33:6969/announce
-
-http://34.66.57.33:80/announce
 
 http://34.66.57.33:80/announce.php
 
