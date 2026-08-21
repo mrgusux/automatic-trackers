@@ -24,8 +24,6 @@ https://api.ipv4online.uk:443/announce
 
 https://banananetwork.qzz.io:443/announce
 
-https://bdremux.club:443/announce
-
 https://bittorrent.gongt.net/announce
 
 https://bittorrent.gongt.net:443/announce
