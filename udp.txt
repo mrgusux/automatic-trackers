@@ -52,8 +52,6 @@ udp://156.234.201.18:80/announce
 
 udp://158.101.161.60:3131/announce
 
-udp://159.146.99.45:6969/announce
-
 udp://161.97.67.210:6969/announce
 
 udp://163.172.29.130:80/announce
@@ -151,8 +149,6 @@ udp://211.75.205.188:6969/announce
 udp://211.75.205.188:80/announce
 
 udp://211.75.210.221:6969/announce
-
-udp://211.75.210.221:80/announce
 
 udp://211.75.29.254:6969/announce
 
