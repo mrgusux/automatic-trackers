@@ -180,6 +180,8 @@ http://185.5.97.139:8089/announce
 
 http://185.70.187.79:6969/announce
 
+http://187.57.131.55:6969/announce
+
 http://187.57.14.62:6969/announce
 
 http://188.165.253.109:1337/announce
@@ -227,6 +229,8 @@ http://210.244.71.26:6969/announce
 http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
+
+http://211.75.205.187:80/announce
 
 http://211.75.205.188:6969/announce
 
