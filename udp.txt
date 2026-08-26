@@ -774,8 +774,6 @@ udp://tracker.k.vu:6969/announce
 
 udp://tracker.kicks-ass.net:80/announce
 
-udp://tracker.kmzs123.cn:17272/announce
-
 udp://tracker.kuroy.me:5944/announce
 
 udp://tracker.leechers-paradise.org:6969/announce
