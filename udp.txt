@@ -30,8 +30,6 @@ udp://132.243.161.144:6969/announce
 
 udp://135.125.106.92:6969/announce
 
-udp://135.125.236.64:6969/announce
-
 udp://144.91.88.22:6969/announce
 
 udp://148.251.53.72:6969/announce
@@ -145,8 +143,6 @@ udp://209.126.11.233:6969/announce
 udp://209.141.59.16:6969/announce
 
 udp://209.141.59.25:6969/announce
-
-udp://211.75.205.187:80/announce
 
 udp://211.75.205.188:6969/announce
 
@@ -777,6 +773,8 @@ udp://tracker.ixuexi.click:6969/announce
 udp://tracker.k.vu:6969/announce
 
 udp://tracker.kicks-ass.net:80/announce
+
+udp://tracker.kmzs123.cn:17272/announce
 
 udp://tracker.kuroy.me:5944/announce
 
