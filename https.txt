@@ -394,6 +394,8 @@ https://tracker.novy.vip:443/announce
 
 https://tracker.nyaa.tk/announce
 
+https://tracker.onetracker.net:443/announce
+
 https://tracker.opentracker.se/announce
 
 https://tracker.opentracker.se:443/announce
