@@ -62,6 +62,10 @@ http://1337.abcvg.info/announce
 
 http://1337.abcvg.info:80/announce
 
+http://135.125.198.235:2710/announce
+
+http://135.125.198.235:80/announce
+
 http://140.235.237.23:6969/announce
 
 http://140.82.21.192:8080/announce
@@ -77,6 +81,8 @@ http://144.76.118.107:6969/announce
 http://147job.com:6969/announce
 
 http://151.115.49.115:1337/announce
+
+http://152.243.213.247:6969/announce
 
 http://152.53.194.103:2710/announce
 
@@ -230,6 +236,8 @@ http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
 
+http://211.75.205.187:6969/announce
+
 http://211.75.205.187:80/announce
 
 http://211.75.205.188:6969/announce
@@ -256,11 +264,19 @@ http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
 
+http://34.66.57.33:11450/announce
+
+http://34.66.57.33:1337/announce
+
 http://34.66.57.33:2701/announce
+
+http://34.66.57.33:2710/announce
 
 http://34.66.57.33:443/announce
 
 http://34.66.57.33:6969/announce
+
+http://34.66.57.33:80/announce
 
 http://34.66.57.33:80/announce.php
 
@@ -976,6 +992,8 @@ http://secure.pow7.com:80/announce
 
 http://seeders-paradise.org/announce
 
+http://seeders-paradise.org:80/announce
+
 http://servandroidkino.ru/announce
 
 http://share.camoe.cn:8080/announce
@@ -1051,6 +1069,8 @@ http://torrent.arjlover.net:2710/announce
 http://torrent.fedoraproject.org:6969/announce
 
 http://torrent.gresille.org/announce
+
+http://torrent.hificode.in:6969/announce
 
 http://torrent.mp3quran.net/announce.php
 
