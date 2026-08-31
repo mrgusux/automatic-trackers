@@ -46,8 +46,6 @@ http://116.9.207.226:6969/announce
 
 http://119.28.71.45:8080/announce
 
-http://123.245.62.74:6969/announce
-
 http://125.227.35.196:6969/announce
 
 http://128.199.70.66:5944/announce
@@ -83,8 +81,6 @@ http://147job.com:6969/announce
 http://151.115.49.115:1337/announce
 
 http://152.243.213.247:6969/announce
-
-http://152.53.194.103:2710/announce
 
 http://155.248.200.105/announce
 
@@ -185,8 +181,6 @@ http://185.232.169.109/announce
 http://185.5.97.139:8089/announce
 
 http://185.70.187.79:6969/announce
-
-http://187.57.131.55:6969/announce
 
 http://187.57.14.62:6969/announce
 
