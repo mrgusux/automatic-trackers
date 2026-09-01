@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-08-31T13:24:42+00:00",
-  "total": 1571,
+  "generated": "2026-09-01T04:45:52+00:00",
+  "total": 1572,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -463,6 +463,7 @@
     "udp://tsundere.pw:6969/announce",
     "udp://ttk2.nbaonlineservice.com:6969/announce",
     "udp://uabits.today:6990/announce",
+    "udp://udp-tracker.adgk.net:6969/announce",
     "udp://udp.tracker.linvk.com:6969/announce",
     "udp://udp.tracker.projectk.org:23333/announce",
     "udp://udp1.torrust-tracker-demo.com:6969/announce",
