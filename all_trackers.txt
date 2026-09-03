@@ -142,8 +142,6 @@ udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
 
-udp://211.75.205.187:80/announce
-
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
@@ -1552,8 +1550,6 @@ http://1337.abcvg.info:80/announce
 
 http://135.125.198.235:2710/announce
 
-http://135.125.198.235:80/announce
-
 http://140.235.237.23:6969/announce
 
 http://140.82.21.192:8080/announce
@@ -1719,8 +1715,6 @@ http://210.244.71.26:6969/announce
 http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
-
-http://211.75.205.187:6969/announce
 
 http://211.75.205.187:80/announce
 
