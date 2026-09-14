@@ -54,8 +54,6 @@ http://129.146.193.240:6699/announce
 
 http://13.115.115.32:6969/announce
 
-http://132.243.161.144:6969/announce
-
 http://1337.abcvg.info/announce
 
 http://1337.abcvg.info:80/announce
@@ -234,8 +232,6 @@ http://211.75.205.188:80/announce
 
 http://211.75.210.221:6969/announce
 
-http://211.75.210.221:80/announce
-
 http://211.75.29.254:6969/announce
 
 http://212.6.3.67/announce
@@ -253,10 +249,6 @@ http://217.30.10.77:6969/announce
 http://220.130.15.27:6969/announce
 
 http://220.130.15.30:6969/announce
-
-http://34.66.57.33:11450/announce
-
-http://34.66.57.33:1337/announce
 
 http://34.66.57.33:2701/announce
 
