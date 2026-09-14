@@ -5,7 +5,7 @@
 #   docker run --rm -v "$PWD/output:/app/output" automatic-trackers
 # =============================================================================
 
-FROM alpine:3.21
+FROM alpine:3.24
 
 # OCI standard labels (machine-readable image metadata)
 LABEL org.opencontainers.image.title="automatic-trackers" \
