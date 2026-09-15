@@ -70,6 +70,8 @@ udp://176.31.250.174:6969/announce
 
 udp://178.170.48.154:1337/announce
 
+udp://178.239.19.29:80/announce
+
 udp://178.33.73.26:2710/announce
 
 udp://180.131.145.175:6969/announce
@@ -130,6 +132,8 @@ udp://1c.premierzal.ru:6969/announce
 
 udp://2.57.214.218:6969/announce
 
+udp://200.168.117.238:6969/announce
+
 udp://207.241.226.111:6969/announce
 
 udp://207.241.231.226:6969/announce
@@ -149,6 +153,10 @@ udp://211.75.205.187:80/announce
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
+
+udp://211.75.210.221:6969/announce
+
+udp://211.75.210.221:80/announce
 
 udp://211.75.29.254:6969/announce
 
@@ -191,6 +199,8 @@ udp://38.180.157.12:2715/announce
 udp://43.250.54.126:6969/announce
 
 udp://44.30.4.4:6969/announce
+
+udp://45.137.199.107:6969/announce
 
 udp://45.38.170.167:6969/announce
 
@@ -287,6 +297,8 @@ udp://90.226.147.124:6969/announce
 udp://91.177.126.188:6969/announce
 
 udp://91.211.5.21:6969/announce
+
+udp://91.216.110.53:451/announce
 
 udp://91.218.230.81:6969/announce
 
@@ -867,6 +879,8 @@ udp://tracker.tnl.one:8000/announce
 udp://tracker.torrent.eu.org:451/announce
 
 udp://tracker.torrentclaw.com:1337/announce
+
+udp://tracker.torrents.observer:80/announce
 
 udp://tracker.torrust-demo.com:6969/announce
 
@@ -1706,6 +1720,8 @@ http://195.123.209.37:1337/announce
 
 http://198.251.84.144/announce
 
+http://200.168.117.238:6969/announce
+
 http://200.232.254.1:6969/announce
 
 http://201.42.214.55:6969/announce
@@ -1743,6 +1759,8 @@ http://211.75.205.188:6969/announce
 http://211.75.205.188:80/announce
 
 http://211.75.210.221:6969/announce
+
+http://211.75.210.221:80/announce
 
 http://211.75.29.254:6969/announce
 
