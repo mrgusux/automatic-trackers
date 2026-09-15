@@ -58,8 +58,6 @@ http://1337.abcvg.info/announce
 
 http://1337.abcvg.info:80/announce
 
-http://135.125.198.235:2710/announce
-
 http://140.235.237.23:6969/announce
 
 http://140.82.21.192:8080/announce
@@ -184,8 +182,6 @@ http://189.0.196.51:6969/announce
 
 http://189.110.233.96:6969/announce
 
-http://189.18.97.61:6969/announce
-
 http://192.3.165.191:6969/announce
 
 http://192.9.228.30:6699/announce
@@ -229,8 +225,6 @@ http://211.20.122.47:6969/announce
 http://211.22.29.93/announce
 
 http://211.75.205.187:6969/announce
-
-http://211.75.205.187:80/announce
 
 http://211.75.205.188:6969/announce
 
@@ -1051,8 +1045,6 @@ http://torrent.arjlover.net:2710/announce
 http://torrent.fedoraproject.org:6969/announce
 
 http://torrent.gresille.org/announce
-
-http://torrent.hificode.in:6969/announce
 
 http://torrent.mp3quran.net/announce.php
 
