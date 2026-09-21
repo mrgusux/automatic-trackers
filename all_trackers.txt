@@ -144,6 +144,8 @@ udp://209.141.59.25:6969/announce
 
 udp://211.75.205.187:6969/announce
 
+udp://211.75.205.187:80/announce
+
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
@@ -157,6 +159,8 @@ udp://213.163.67.56:1337/announce
 udp://217.30.10.77:6969/announce
 
 udp://221.153.216.56:8081/announce
+
+udp://223.165.69.105:3392/announce
 
 udp://23.137.251.45:6969/announce
 
@@ -283,8 +287,6 @@ udp://9.rarbg.to:2730/announce
 udp://91.177.126.188:6969/announce
 
 udp://91.211.5.21:6969/announce
-
-udp://91.216.110.53:451/announce
 
 udp://91.218.230.81:6969/announce
 
@@ -1740,6 +1742,8 @@ http://211.22.29.93/announce
 
 http://211.75.205.187:6969/announce
 
+http://211.75.205.187:80/announce
+
 http://211.75.205.188:6969/announce
 
 http://211.75.205.188:80/announce
@@ -2293,8 +2297,6 @@ http://kinorun.com/announce.php
 http://kinorun.com:80/announce.php
 
 http://kiryuu-test.mywaifu.best:6969/announce
-
-http://kolanopentracker.airdns.org:3392/announce
 
 http://li1406-230.members.linode.com:6969/announce
 
