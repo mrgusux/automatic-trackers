@@ -317,7 +317,7 @@ This project aggregates data from 95+ open-source tracker repositories and live 
 - [newTrackon](https://newtrackon.com/) live API
 - All community contributors — full credits in [SOURCES.md](SOURCES.md)
 
----
+-----
 <div align="center">
   <b>Crafted with ❤️ by the Open Source Community</b><br/>
   <sub>Updated automatically every 6 hours via GitHub Actions • If this saves you time, a ⭐ keeps it alive!</sub>
