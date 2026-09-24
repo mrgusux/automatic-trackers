@@ -138,6 +138,8 @@ http://171.104.226.87:6969/announce
 
 http://173.254.204.71:1096/announce
 
+http://177.188.141.75:6969/announce
+
 http://178.175.143.27/announce
 
 http://178.33.73.26:2710/announce
@@ -193,8 +195,6 @@ http://194.106.216.222/announce
 http://195.123.209.37:1337/announce
 
 http://198.251.84.144/announce
-
-http://200.168.117.238:6969/announce
 
 http://200.232.254.1:6969/announce
 
