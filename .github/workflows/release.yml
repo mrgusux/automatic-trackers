@@ -23,7 +23,7 @@ jobs:
       contents: write
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: 📦 Zip Tracker Files
         run: |
@@ -55,7 +55,7 @@ jobs:
           echo "✅ Release checksums generated and verified."
 
       - name: 🚀 Create Release and Upload Assets
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           generate_release_notes: true
           make_latest: true
