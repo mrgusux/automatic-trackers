@@ -146,6 +146,8 @@ udp://211.75.205.188:80/announce
 
 udp://211.75.210.221:6969/announce
 
+udp://211.75.210.221:80/announce
+
 udp://211.75.29.254:6969/announce
 
 udp://212.42.38.197:6969/announce
@@ -277,6 +279,8 @@ udp://9.rarbg.com:2710/announce
 udp://9.rarbg.me:2780/announce
 
 udp://9.rarbg.to:2730/announce
+
+udp://90.226.147.124:6969/announce
 
 udp://91.177.126.188:6969/announce
 
@@ -449,6 +453,8 @@ udp://jutone.com:6969/announce
 udp://keke.re:6969/announce
 
 udp://kokodayo.site:6969/announce
+
+udp://kolankoalastree.newtrackon.co.nz:1337/announce
 
 udp://kolanopentracker.airdns.org:3392/announce
 
