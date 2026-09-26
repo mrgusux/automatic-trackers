@@ -360,6 +360,8 @@ https://tracker.manager.v6.navy:443/announce
 
 https://tracker.maya.no.eu.org:443/announce
 
+https://tracker.midnightprogrammer.net:443/announce
+
 https://tracker.mlsub.net/announce
 
 https://tracker.mlsub.net:443/announce
