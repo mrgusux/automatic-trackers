@@ -58,6 +58,8 @@ http://1337.abcvg.info/announce
 
 http://1337.abcvg.info:80/announce
 
+http://138.186.10.167:1337/announce
+
 http://140.235.237.23:6969/announce
 
 http://140.82.21.192:8080/announce
@@ -223,8 +225,6 @@ http://210.244.71.26:6969/announce
 http://211.20.122.47:6969/announce
 
 http://211.22.29.93/announce
-
-http://211.75.205.187:6969/announce
 
 http://211.75.205.187:80/announce
 
@@ -859,6 +859,8 @@ http://open.touki.ru/announce
 http://open.touki.ru/announce.php
 
 http://open.touki.ru:80/announce.php
+
+http://open.tracker.cl:1337/announce
 
 http://open.tracker.ink:6969/announce
 
