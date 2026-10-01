@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-10-01T05:28:24+00:00",
-  "total": 1572,
+  "generated": "2026-10-01T12:57:08+00:00",
+  "total": 1571,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -290,7 +290,6 @@
     "udp://public.tracker.vraphim.com:6969/announce",
     "udp://qtstm32fan.ru:6969/announce",
     "udp://r.l5.ca:6969/announce",
-    "udp://rekcart.duckdns.org:15480/announce",
     "udp://rep-art.ynh.fr:6969/announce",
     "udp://retracker.hotplug.ru:2710/announce",
     "udp://retracker.lanta-net.ru:2710/announce",
