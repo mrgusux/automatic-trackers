@@ -52,6 +52,8 @@ udp://156.234.201.18:80/announce
 
 udp://158.101.161.60:3131/announce
 
+udp://159.146.99.45:6969/announce
+
 udp://160.30.240.158:1337/announce
 
 udp://161.97.67.210:6969/announce
@@ -131,6 +133,8 @@ udp://198.100.149.66:6969/announce
 udp://1c.premierzal.ru:6969/announce
 
 udp://2.57.214.218:6969/announce
+
+udp://200.161.254.249:6969/announce
 
 udp://207.241.226.111:6969/announce
 
@@ -339,6 +343,8 @@ udp://astrr.ru:6969/announce
 udp://bananas.space:6969/announce
 
 udp://bandito.byterunner.io:6969/announce
+
+udp://banzaitracker.com:2710/announce
 
 udp://bedro.cloud:6969/announce
 
@@ -805,6 +811,8 @@ udp://tracker.nexusstream.eu:6969/announce
 udp://tracker.nyaa.net:6969/announce
 
 udp://tracker.nyaa.vc:6969/announce
+
+udp://tracker.okade.pro:1337/announce
 
 udp://tracker.ololosh.space:6969/announce
 
