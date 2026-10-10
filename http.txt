@@ -76,8 +76,6 @@ http://147job.com:6969/announce
 
 http://151.115.49.115:1337/announce
 
-http://152.249.214.196:6969/announce
-
 http://155.248.200.105/announce
 
 http://156.234.201.18/announce
