@@ -240,8 +240,6 @@ udp://6ahddutb1ucc3cp.ru:6969/announce
 
 udp://74.119.149.136:6969/announce
 
-udp://74.81.245.60:2010/announce
-
 udp://74.82.52.209:6969/announce
 
 udp://81.230.84.201:6969/announce
