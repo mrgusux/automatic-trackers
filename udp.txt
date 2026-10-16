@@ -240,6 +240,8 @@ udp://6ahddutb1ucc3cp.ru:6969/announce
 
 udp://74.119.149.136:6969/announce
 
+udp://74.81.245.60:2010/announce
+
 udp://74.82.52.209:6969/announce
 
 udp://81.230.84.201:6969/announce
@@ -399,8 +401,6 @@ udp://ds32244.seedhost.eu:6969/announce
 udp://ec2-18-191-163-220.us-east-2.compute.amazonaws.com:6969/announce
 
 udp://eddie4.nl:6969/announce
-
-udp://edgev.duckdns.org:6969/announce
 
 udp://elementsbrowser.com:6969/announce
 
