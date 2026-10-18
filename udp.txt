@@ -50,8 +50,6 @@ udp://156.234.201.18:80/announce
 
 udp://158.101.161.60:3131/announce
 
-udp://159.146.99.45:6969/announce
-
 udp://160.30.240.158:1337/announce
 
 udp://161.97.67.210:6969/announce
@@ -71,6 +69,8 @@ udp://172.105.235.127:6969/announce
 udp://173.249.201.201:6969/announce
 
 udp://176.31.250.174:6969/announce
+
+udp://177.172.67.177:6969/announce
 
 udp://178.170.48.154:1337/announce
 
@@ -142,13 +142,11 @@ udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
 
-udp://211.75.205.187:6969/announce
-
-udp://211.75.205.187:80/announce
-
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
+
+udp://211.75.210.221:80/announce
 
 udp://211.75.29.254:6969/announce
 
@@ -163,8 +161,6 @@ udp://23.137.251.45:6969/announce
 udp://23.157.120.14:6969/announce
 
 udp://23.94.174.203:1337/announce
-
-udp://31.56.179.159:6969/announce
 
 udp://31.59.141.120:6969/announce
 
@@ -185,6 +181,8 @@ udp://38.180.157.12:2715/announce
 udp://43.250.54.126:6969/announce
 
 udp://44.30.4.4:6969/announce
+
+udp://45.137.199.107:6969/announce
 
 udp://45.38.170.167:6969/announce
 
@@ -241,8 +239,6 @@ udp://65.109.28.33:6969/announce
 udp://6ahddutb1ucc3cp.ru:6969/announce
 
 udp://74.119.149.136:6969/announce
-
-udp://74.81.245.60:2010/announce
 
 udp://74.82.52.209:6969/announce
 
