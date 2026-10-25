@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-10-24T10:43:56+00:00",
-  "total": 1573,
+  "generated": "2026-10-25T04:18:58+00:00",
+  "total": 1576,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://104.131.98.232:6969/announce",
@@ -20,6 +20,7 @@
     "udp://132.243.161.144:6969/announce",
     "udp://135.125.106.92:6969/announce",
     "udp://135.125.198.235:1984/announce",
+    "udp://138.186.10.167:1337/announce",
     "udp://144.91.88.22:6969/announce",
     "udp://148.251.53.72:6969/announce",
     "udp://149.106.106.25:443/announce",
@@ -97,6 +98,7 @@
     "udp://43.250.54.126:6969/announce",
     "udp://44.30.4.4:6969/announce",
     "udp://45.137.199.107:6969/announce",
+    "udp://45.38.170.167:6969/announce",
     "udp://45.9.60.30:6969/announce",
     "udp://46.138.242.240:6969/announce",
     "udp://46.4.109.148:6969/announce",
@@ -422,6 +424,7 @@
     "udp://tracker.publictracker.xyz:6969/announce",
     "udp://tracker.qu.ax:6969/announce",
     "udp://tracker.riverarmy.xyz:6969/announce",
+    "udp://tracker.sela.st:6969/announce",
     "udp://tracker.sharebro.in:6969/announce",
     "udp://tracker.silksa.co.za:6969/announce",
     "udp://tracker.sktorrent.net:6969/announce",
