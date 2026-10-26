@@ -146,8 +146,6 @@ udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
 
-udp://211.75.205.187:80/announce
-
 udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
@@ -245,8 +243,6 @@ udp://65.109.28.33:6969/announce
 udp://6ahddutb1ucc3cp.ru:6969/announce
 
 udp://74.119.149.136:6969/announce
-
-udp://74.81.245.60:2010/announce
 
 udp://74.82.52.209:6969/announce
 
@@ -1664,8 +1660,6 @@ http://173.254.204.71:1096/announce
 
 http://177.16.198.108:6969/announce
 
-http://177.172.67.177:6969/announce
-
 http://178.175.143.27/announce
 
 http://178.33.73.26:2710/announce
@@ -1751,8 +1745,6 @@ http://211.20.122.47:6969/announce
 http://211.22.29.93/announce
 
 http://211.75.205.187:6969/announce
-
-http://211.75.205.187:80/announce
 
 http://211.75.205.188:6969/announce
 
