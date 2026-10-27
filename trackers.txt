@@ -54,6 +54,8 @@ udp://156.234.201.18:80/announce
 
 udp://158.101.161.60:3131/announce
 
+udp://159.146.99.45:6969/announce
+
 udp://160.30.240.158:1337/announce
 
 udp://161.97.67.210:6969/announce
@@ -142,9 +144,13 @@ udp://207.241.231.226:6969/announce
 
 udp://208.67.16.113:8000/announce
 
+udp://208.83.20.20:6969/announce
+
 udp://209.126.11.233:6969/announce
 
 udp://209.141.59.25:6969/announce
+
+udp://211.75.205.187:80/announce
 
 udp://211.75.205.188:6969/announce
 
@@ -243,6 +249,8 @@ udp://65.109.28.33:6969/announce
 udp://6ahddutb1ucc3cp.ru:6969/announce
 
 udp://74.119.149.136:6969/announce
+
+udp://74.81.245.60:2010/announce
 
 udp://74.82.52.209:6969/announce
 
@@ -403,6 +411,8 @@ udp://ds32244.seedhost.eu:6969/announce
 udp://ec2-18-191-163-220.us-east-2.compute.amazonaws.com:6969/announce
 
 udp://eddie4.nl:6969/announce
+
+udp://edgev.duckdns.org:6969/announce
 
 udp://elementsbrowser.com:6969/announce
 
@@ -1745,6 +1755,8 @@ http://211.20.122.47:6969/announce
 http://211.22.29.93/announce
 
 http://211.75.205.187:6969/announce
+
+http://211.75.205.187:80/announce
 
 http://211.75.205.188:6969/announce
 
