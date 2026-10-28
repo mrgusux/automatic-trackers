@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-10-28T12:35:44+00:00",
-  "total": 1580,
+  "generated": "2026-10-28T22:27:39+00:00",
+  "total": 1581,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://103.27.158.117:1914/announce",
@@ -546,6 +546,7 @@
     "https://docker-tracker-production.up.railway.app/announce",
     "https://edgev.duckdns.org:443/announce",
     "https://evening-badlands-6215.herokuapp.com/announce",
+    "https://gargoyleperch.de:443/announce",
     "https://grifon.info:80/announce",
     "https://hcbt.pp.ua/announce",
     "https://ht.therarbg.to:443/announce",
