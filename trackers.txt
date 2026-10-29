@@ -38,6 +38,8 @@ udp://135.125.236.64:6969/announce
 
 udp://138.186.10.167:1337/announce
 
+udp://143.20.154.228:42069/announce
+
 udp://144.91.88.22:6969/announce
 
 udp://148.251.53.72:6969/announce
@@ -146,6 +148,8 @@ udp://207.241.231.226:6969/announce
 
 udp://208.67.16.113:8000/announce
 
+udp://208.83.20.20:6969/announce
+
 udp://209.126.11.233:6969/announce
 
 udp://209.141.59.16:6969/announce
@@ -158,6 +162,8 @@ udp://211.75.205.188:6969/announce
 
 udp://211.75.205.188:80/announce
 
+udp://211.75.210.221:80/announce
+
 udp://211.75.29.254:6969/announce
 
 udp://212.42.38.197:6969/announce
@@ -165,6 +171,8 @@ udp://212.42.38.197:6969/announce
 udp://213.163.67.56:1337/announce
 
 udp://217.30.10.77:6969/announce
+
+udp://221.153.216.56:8081/announce
 
 udp://23.137.251.45:6969/announce
 
@@ -1472,6 +1480,8 @@ https://tracker.yemekyedim.com:443/announce
 
 https://tracker.yggleak.top:443/announce
 
+https://tracker.yume-hatsuyuki.moe:443/announce
+
 https://tracker.zhuqiy.com:443/announce
 
 https://tracker1.520.jp/announce
@@ -1769,6 +1779,8 @@ http://211.75.205.188:6969/announce
 http://211.75.205.188:80/announce
 
 http://211.75.210.221:6969/announce
+
+http://211.75.210.221:80/announce
 
 http://211.75.29.254:6969/announce
 
