@@ -228,6 +228,8 @@ https://tracker.alaskantf.com:443/announce
 
 https://tracker.anibt.net:443/announce
 
+https://tracker.augrains.com:443/announce
+
 https://tracker.baka.ink/announce
 
 https://tracker.baka.ink:443/announce
