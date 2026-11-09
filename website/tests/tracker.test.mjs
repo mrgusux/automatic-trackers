@@ -147,7 +147,7 @@ describe("Dynamic SVG Badge Sanitization", () => {
   }
 
   function sanitizeColor(raw) {
-    if (!raw) return "#10b981";
+    if (!raw) return "#9e9eff";
     const trimmed = raw.trim();
     if (/^#?[0-9a-fA-F]{3,8}$/.test(trimmed)) {
       return trimmed.startsWith("#") ? trimmed : `#${trimmed}`;
@@ -155,7 +155,7 @@ describe("Dynamic SVG Badge Sanitization", () => {
     if (/^[a-zA-Z]{3,20}$/.test(trimmed)) {
       return trimmed;
     }
-    return "#10b981";
+    return "#9e9eff";
   }
 
   test("safely escapes XML special characters", () => {
@@ -167,8 +167,8 @@ describe("Dynamic SVG Badge Sanitization", () => {
     assert.strictEqual(sanitizeColor("10b981"), "#10b981");
     assert.strictEqual(sanitizeColor("#8b5cf6"), "#8b5cf6");
     assert.strictEqual(sanitizeColor("red"), "red");
-    assert.strictEqual(sanitizeColor('"><script>alert(1)</script>'), "#10b981");
-    assert.strictEqual(sanitizeColor("blue; injection"), "#10b981");
-    assert.strictEqual(sanitizeColor(null), "#10b981");
+    assert.strictEqual(sanitizeColor('"><script>alert(1)</script>'), "#9e9eff");
+    assert.strictEqual(sanitizeColor("blue; injection"), "#9e9eff");
+    assert.strictEqual(sanitizeColor(null), "#9e9eff");
   });
 });

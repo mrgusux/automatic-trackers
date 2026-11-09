@@ -23,7 +23,7 @@ function escapeXml(unsafe: string): string {
 }
 
 function sanitizeColor(raw: string | null): string {
-  if (!raw) return "#10b981";
+  if (!raw) return "#9e9eff";
   const trimmed = raw.trim();
   if (/^#?[0-9a-fA-F]{3,8}$/.test(trimmed)) {
     return trimmed.startsWith("#") ? trimmed : `#${trimmed}`;
@@ -31,7 +31,7 @@ function sanitizeColor(raw: string | null): string {
   if (/^[a-zA-Z]{3,20}$/.test(trimmed)) {
     return trimmed;
   }
-  return "#10b981";
+  return "#9e9eff";
 }
 
 export async function GET(request: NextRequest) {
@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
     <rect width="${totalWidth}" height="20" rx="4" fill="#fff"/>
   </clipPath>
   <g clip-path="url(#r)">
-    <rect width="${labelWidth}" height="20" fill="#1e293b"/>
+    <rect width="${labelWidth}" height="20" fill="#070e17"/>
     <rect x="${labelWidth}" width="${valueWidth}" height="20" fill="${color}"/>
     <rect width="${totalWidth}" height="20" fill="url(#s)"/>
   </g>

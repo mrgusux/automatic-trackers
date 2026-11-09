@@ -10,16 +10,23 @@
   --color-ink-muted: #84878C;
   --color-accent: #9E9EFF;
   --color-border-system: #C5CEE0;
+
+  --font-display: "Russo One", system-ui, -apple-system, sans-serif;
+  --font-sans: "Mona Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 @layer base {
   body {
     background-color: #090E19;
     color: #FFFFFF;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display), "Russo One", sans-serif;
   }
 }
 

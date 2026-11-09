@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import { ChecksumItem } from "@/lib/types";
-import { ShieldCheck, FileCheck, CheckCircle2, XCircle, Copy, Hash, Upload, FileUp } from "lucide-react";
+import { ShieldCheck, FileCheck, CheckCircle2, XCircle, Hash, Upload } from "lucide-react";
 import { CopyButton } from "./CopyButton";
 
 interface ChecksumVerifierProps {

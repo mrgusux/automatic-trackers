@@ -7,16 +7,9 @@ import {
   Download,
   Check,
   Radio,
-  Sparkles,
-  Layers,
-  Terminal,
-  ExternalLink,
-  Filter,
   FileText,
-  Cpu,
-  ShieldCheck,
 } from "lucide-react";
-import { TrackerItem, TrackerStats, TrackerProtocol } from "@/lib/types";
+import { TrackerItem, TrackerStats } from "@/lib/types";
 import { CopyButton } from "./CopyButton";
 
 interface TrackerStudioProps {
