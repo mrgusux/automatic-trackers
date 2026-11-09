@@ -59,3 +59,7 @@ __pycache__/
 *.pyc
 venv/
 .venv/
+
+# Internal design guidelines (not tracked in public repo)
+DESIGN.md
+
