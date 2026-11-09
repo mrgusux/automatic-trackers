@@ -53,15 +53,16 @@ export function CopyButton({ text, label, className = "", onCopied }: CopyButton
     <button
       onClick={handleCopy}
       type="button"
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${
+      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium transition-all ${
         copied
-          ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"
-          : "bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700/60"
+          ? "bg-[#9E9EFF]/20 text-[#9E9EFF] border border-[#9E9EFF]/40"
+          : "bg-[#070E17] hover:bg-[#111A2C] text-[#898F9D] hover:text-white border border-[#C5CEE0]/20"
       } ${className}`}
       title={copied ? "Copied!" : "Click to copy"}
     >
-      {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+      {copied ? <Check className="w-3.5 h-3.5 text-[#9E9EFF]" /> : <Copy className="w-3.5 h-3.5" />}
       {label && <span>{copied ? "Copied!" : label}</span>}
     </button>
   );
 }
+

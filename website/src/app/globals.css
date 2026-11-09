@@ -1,9 +1,21 @@
 @import "tailwindcss";
 
+@theme {
+  --color-canvas: #090E19;
+  --color-canvas-deep: #070E17;
+  --color-surface: #0B0F16;
+  --color-surface-elevated: #000000;
+  --color-ink-primary: #FFFFFF;
+  --color-ink-secondary: #898F9D;
+  --color-ink-muted: #84878C;
+  --color-accent: #9E9EFF;
+  --color-border-system: #C5CEE0;
+}
+
 @layer base {
   body {
-    background-color: #090c15;
-    color: #e2e8f0;
+    background-color: #090E19;
+    color: #FFFFFF;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -11,39 +23,53 @@
   }
 }
 
-.glass-panel {
-  background: rgba(15, 23, 42, 0.7);
+/* Atmospheric Space & Perspective Grid Floor */
+.grid-floor {
+  background-image: 
+    linear-gradient(to right, rgba(197, 206, 224, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(197, 206, 224, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse at 50% 0%, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 0%, black 30%, transparent 75%);
+}
+
+/* Glassmorphism Surface Container (from DESIGN.md) */
+.glass-surface {
+  background: linear-gradient(180deg, rgba(197, 206, 224, 0.12) 0%, rgba(197, 206, 224, 0.04) 100%);
+  border: 1px solid rgba(197, 206, 224, 0.15);
+  box-shadow: inset 0 1px 0 0 rgba(197, 206, 224, 0.2), 0 20px 40px -15px rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-card {
-  background: rgba(15, 23, 42, 0.5);
+  background: linear-gradient(180deg, rgba(197, 206, 224, 0.08) 0%, rgba(197, 206, 224, 0.02) 100%);
+  border: 1px solid rgba(197, 206, 224, 0.12);
+  box-shadow: inset 0 1px 0 0 rgba(197, 206, 224, 0.15), 0 10px 25px -5px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
-  background: rgba(30, 41, 59, 0.65);
-  border-color: rgba(139, 92, 246, 0.35);
-  transform: translateY(-1px);
+  background: linear-gradient(180deg, rgba(197, 206, 224, 0.14) 0%, rgba(197, 206, 224, 0.04) 100%);
+  border-color: rgba(158, 158, 255, 0.35);
+  box-shadow: inset 0 1px 0 0 rgba(158, 158, 255, 0.25), 0 14px 35px -5px rgba(0, 0, 0, 0.7);
 }
 
-/* Custom scrollbars */
+/* Custom Cybersecurity Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+  background: #070E17;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(100, 116, 139, 0.4);
+  background: rgba(197, 206, 224, 0.25);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.6);
+  background: #9E9EFF;
 }
+

@@ -117,25 +117,25 @@ export function ChecksumVerifier({ checksums }: ChecksumVerifierProps) {
   };
 
   return (
-    <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
+    <div className="glass-surface p-6 sm:p-8 rounded-[24px] space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#C5CEE0]/15">
         <div>
-          <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-xs font-semibold text-[#9E9EFF] uppercase tracking-wider mb-1">
             <ShieldCheck className="w-4 h-4" />
             <span>Cryptographic Integrity Verification</span>
           </div>
           <h2 className="text-2xl font-bold text-white tracking-tight">SHA-256 Checksum Verifier</h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[#898F9D] mt-1">
             Verify downloaded tracker files against signed SHA-256 digests. Prevents MITM tampering and corrupted downloads.
           </p>
         </div>
       </div>
 
       {/* Interactive Hash Calculator */}
-      <div className="space-y-3 bg-slate-950/60 p-4 sm:p-5 rounded-2xl border border-white/5">
+      <div className="space-y-3 bg-[#070E17] p-4 sm:p-5 rounded-2xl border border-[#C5CEE0]/15">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-            <Hash className="w-3.5 h-3.5 text-violet-400" />
+          <label className="text-xs font-semibold text-[#898F9D] flex items-center gap-1.5">
+            <Hash className="w-3.5 h-3.5 text-[#9E9EFF]" />
             <span>Paste File Content / SHA-256 Hash or Upload File:</span>
           </label>
           <div>
@@ -148,7 +148,7 @@ export function ChecksumVerifier({ checksums }: ChecksumVerifierProps) {
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold bg-violet-600/30 hover:bg-violet-600/50 text-violet-200 border border-violet-500/40 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold bg-[#9E9EFF]/15 hover:bg-[#9E9EFF]/25 text-[#9E9EFF] border border-[#9E9EFF]/30 transition-all cursor-pointer"
             >
               <Upload className="w-3.5 h-3.5" />
               <span>{uploadedFileName ? `Loaded: ${uploadedFileName}` : "Upload .txt File"}</span>
@@ -164,13 +164,13 @@ export function ChecksumVerifier({ checksums }: ChecksumVerifierProps) {
           }}
           placeholder="Paste downloaded tracker list text or SHA-256 hash here, or click 'Upload .txt File' above..."
           rows={3}
-          className="w-full p-3 bg-slate-900/90 border border-white/10 rounded-xl text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 transition-all resize-none"
+          className="w-full p-3 bg-[#0B0F16] border border-[#C5CEE0]/15 rounded-xl text-xs font-mono text-white placeholder-[#898F9D] focus:outline-none focus:ring-1 focus:ring-[#9E9EFF] focus:border-[#9E9EFF] transition-all resize-none"
         />
 
         {calculatedHash && (
-          <div className="p-3 rounded-xl border transition-all text-xs font-mono flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="p-3.5 rounded-xl bg-[#0B0F16] border border-[#C5CEE0]/15 transition-all text-xs font-mono flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
-              <div className="text-[10px] text-slate-400 uppercase tracking-wider">
+              <div className="text-[10px] text-[#84878C] uppercase tracking-wider">
                 {uploadedFileName ? `SHA-256 (${uploadedFileName}):` : "Computed SHA-256:"}
               </div>
               <div className="text-white font-bold select-all break-all">{calculatedHash}</div>
@@ -178,16 +178,16 @@ export function ChecksumVerifier({ checksums }: ChecksumVerifierProps) {
 
             {matchResult ? (
               <div className="flex flex-col sm:items-end gap-1 shrink-0">
-                <div className="px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 flex items-center gap-1.5 font-sans font-bold">
+                <div className="px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 flex items-center gap-1.5 font-sans font-bold text-xs">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   <span>MATCH: {matchResult.filename}</span>
                 </div>
                 {matchNotes && (
-                  <span className="text-[10px] text-emerald-400/90 font-sans">{matchNotes}</span>
+                  <span className="text-[10px] text-[#898F9D] font-sans">{matchNotes}</span>
                 )}
               </div>
             ) : (
-              <div className="px-3 py-1.5 rounded-lg bg-rose-500/15 border border-rose-500/30 text-rose-300 flex items-center gap-1.5 shrink-0 font-sans font-semibold">
+              <div className="px-3.5 py-1.5 rounded-full bg-[#070E17] border border-[#C5CEE0]/20 text-[#898F9D] flex items-center gap-1.5 shrink-0 font-sans font-semibold text-xs">
                 <XCircle className="w-4 h-4 text-rose-400" />
                 <span>No Match (Custom Content)</span>
               </div>
@@ -198,22 +198,22 @@ export function ChecksumVerifier({ checksums }: ChecksumVerifierProps) {
 
       {/* Official Signatures Table */}
       <div className="space-y-3">
-        <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+        <h4 className="text-xs font-bold text-white uppercase tracking-wider">
           Official SHA-256 Release Hashes (SHA256SUMS.txt)
         </h4>
-        <div className="divide-y divide-white/5 border border-white/5 rounded-2xl overflow-hidden bg-slate-950/40">
+        <div className="divide-y divide-[#C5CEE0]/10 border border-[#C5CEE0]/15 rounded-2xl overflow-hidden bg-[#070E17]">
           {checksums.map((item, idx) => (
             <div
               key={idx}
-              className="p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-white/[0.02] transition-colors"
+              className="p-3.5 px-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-[#9E9EFF]/5 transition-colors"
             >
               <div className="flex items-center gap-2">
-                <FileCheck className="w-4 h-4 text-violet-400 shrink-0" />
+                <FileCheck className="w-4 h-4 text-[#9E9EFF] shrink-0" />
                 <span className="text-xs font-semibold text-white font-mono">{item.filename}</span>
               </div>
 
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-mono text-slate-400 select-all truncate max-w-xs sm:max-w-md">
+                <span className="text-[11px] font-mono text-[#898F9D] select-all truncate max-w-xs sm:max-w-md">
                   {item.hash}
                 </span>
                 <CopyButton text={item.hash} label="Hash" />
@@ -225,3 +225,4 @@ export function ChecksumVerifier({ checksums }: ChecksumVerifierProps) {
     </div>
   );
 }
+

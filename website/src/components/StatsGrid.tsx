@@ -13,32 +13,32 @@ export function StatsGrid({ stats }: StatsGridProps) {
       value: stats.total.toLocaleString(),
       sub: "Verified Live Peers",
       icon: Radio,
-      color: "text-violet-400",
-      bg: "bg-violet-500/10 border-violet-500/20",
+      iconColor: "text-[#9E9EFF]",
+      badgeBorder: "border-[#9E9EFF]/40",
     },
     {
       label: "UDP Trackers (BEP 15)",
       value: stats.protocols.udp.toLocaleString(),
       sub: "Low-overhead Datagrams",
       icon: Zap,
-      color: "text-emerald-400",
-      bg: "bg-emerald-500/10 border-emerald-500/20",
+      iconColor: "text-white",
+      badgeBorder: "border-[#C5CEE0]/20",
     },
     {
       label: "HTTP & HTTPS Trackers",
       value: (stats.protocols.http + stats.protocols.https).toLocaleString(),
       sub: `${stats.protocols.https} HTTPS / ${stats.protocols.http} HTTP`,
       icon: Layers,
-      color: "text-cyan-400",
-      bg: "bg-cyan-500/10 border-cyan-500/20",
+      iconColor: "text-[#9E9EFF]",
+      badgeBorder: "border-[#C5CEE0]/20",
     },
     {
       label: "Blacklist Eliminated",
       value: `${stats.blacklistRemoved} Hosts`,
       sub: "Dead & Malicious Purged",
       icon: ShieldCheck,
-      color: "text-rose-400",
-      bg: "bg-rose-500/10 border-rose-500/20",
+      iconColor: "text-[#898F9D]",
+      badgeBorder: "border-[#C5CEE0]/20",
     },
   ];
 
@@ -49,17 +49,17 @@ export function StatsGrid({ stats }: StatsGridProps) {
         return (
           <div
             key={i}
-            className="glass-card p-4 rounded-2xl flex items-center gap-3.5 relative overflow-hidden"
+            className="glass-card p-4 sm:p-5 rounded-[20px] flex items-center gap-3.5 relative overflow-hidden"
           >
-            <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 border ${c.bg}`}>
-              <Icon className={`w-5 h-5 ${c.color}`} />
+            <div className={`w-11 h-11 rounded-full flex items-center justify-center shrink-0 bg-[#070E17] border ${c.badgeBorder}`}>
+              <Icon className={`w-5 h-5 ${c.iconColor}`} />
             </div>
             <div className="min-w-0">
-              <div className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+              <div className="text-xl sm:text-2xl font-extrabold text-white tracking-tight font-sans">
                 {c.value}
               </div>
-              <div className="text-xs font-medium text-slate-400 truncate">{c.label}</div>
-              <div className="text-[10px] text-slate-500 truncate">{c.sub}</div>
+              <div className="text-xs font-medium text-[#898F9D] truncate">{c.label}</div>
+              <div className="text-[10px] text-[#84878C] truncate font-mono">{c.sub}</div>
             </div>
           </div>
         );
@@ -67,3 +67,4 @@ export function StatsGrid({ stats }: StatsGridProps) {
     </div>
   );
 }
+

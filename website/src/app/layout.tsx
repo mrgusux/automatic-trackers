@@ -26,11 +26,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className="min-h-screen bg-[#090c15] text-slate-100 flex flex-col selection:bg-violet-500/30 selection:text-violet-200">
-        {/* Subtle background glow */}
+      <body className="min-h-screen bg-[#090E19] text-white flex flex-col selection:bg-[#9E9EFF]/30 selection:text-white antialiased">
+        {/* Atmospheric Space Background & Perspective Grid Floor */}
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-          <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-gradient-to-b from-violet-600/10 via-indigo-600/5 to-transparent rounded-full blur-3xl opacity-70" />
-          <div className="absolute top-1/3 -right-40 w-[500px] h-[500px] bg-cyan-600/5 rounded-full blur-3xl" />
+          {/* Subtle Deep Navy Ambient Glow */}
+          <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-gradient-to-b from-[#9E9EFF]/10 via-[#070E17]/40 to-transparent rounded-full blur-3xl opacity-60" />
+          {/* Grid Floor */}
+          <div className="absolute inset-0 grid-floor opacity-50" />
         </div>
 
         <Navbar />
@@ -40,3 +42,4 @@ export default function RootLayout({
     </html>
   );
 }
+
