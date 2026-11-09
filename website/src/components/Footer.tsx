@@ -12,8 +12,8 @@ export function Footer() {
               Blacklist Sanitization
             </h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Every tracking endpoint is cross-referenced against 343+ blacklisted, dead, malware, and honey-pot
-              domains. Zero blank lines and malformed URI elimination.
+              Every tracking endpoint is cross-referenced against 391 blocklist entries, actively purging 241+ dead,
+              malicious, and honeypot trackers. Zero blank lines and malformed URI elimination.
             </p>
           </div>
 
@@ -23,7 +23,7 @@ export function Footer() {
               Automated Swarm Cycle
             </h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Automated GitHub Action aggregator runs every 3 hours across 44 high-yield public sources with live UDP
+              Automated GitHub Actions aggregator runs every 6 hours across 95+ community sources with live UDP
               handshakes and SHA-256 hash generation.
             </p>
           </div>

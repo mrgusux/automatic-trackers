@@ -28,7 +28,7 @@ export default function HomePage() {
           </h1>
 
           <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-xl">
-            Sanitized every 3 hours from 44 high-yield sources. Purged of 343 dead mirrors and spam hosts.
+            Rebuilt every 6 hours from 95+ community sources. Purged of 241+ dead, malicious, and flooded trackers via 391 blacklist rules.
             Instant 1-click formats for qBittorrent tier balancing, aria2 CLI, and live SVG badges.
           </p>
         </div>

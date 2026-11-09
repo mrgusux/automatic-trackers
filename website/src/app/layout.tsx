@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 export const metadata: Metadata = {
   title: "AutomaticTrackers — Curated High-Speed BitTorrent Tracker Hub",
   description:
-    "1,234+ verified alive BitTorrent trackers with UDP BEP 15, HTTP, HTTPS, and WebSocket support. Sanitized against blacklists every 3 hours with SHA-256 integrity verification.",
+    "1,234+ verified alive BitTorrent trackers with UDP BEP 15, HTTP, HTTPS, and WebSocket support. Sanitized against blacklists every 6 hours with SHA-256 integrity verification.",
   keywords: [
     "bittorrent trackers",
     "trackers list",
