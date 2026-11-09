@@ -12,9 +12,3 @@
 
 # Official ngosang blacklist (dead/cheater trackers)
 https://raw.githubusercontent.com/ngosang/trackerslist/master/blacklist.txt
-
-# crazy-max blocklist (bad trackers collection)
-https://raw.githubusercontent.com/crazy-max/blocklist/master/trackers.txt
-
-# bitjerry BlackList (malicious/dead tracker list)
-https://raw.githubusercontent.com/bitjerry/BlackList/master/TrackerList.txt

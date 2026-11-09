@@ -19,6 +19,7 @@ sanitize() {
   tr ',' '\n' | \
   LC_ALL=C sed 's/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]//g' | \
   sed 's/<[^>]*>//g' | \
+  sed 's/[[:space:]]*#.*$//' | \
   sed 's/^[[:space:]]*//; s/[[:space:]]*$//' | \
   grep -iE '^(udp|https?|wss?)://[^[:space:]]+$' | \
   grep -vE '://.*://' | \
@@ -183,6 +184,17 @@ teardown() {
   sanitize < "${INPUT}" > "${OUT}"
   run grep "^http://trailing.host:80/announce$" "${OUT}"
   [ "${status}" -eq 0 ]
+}
+
+@test "inline comments with # are stripped" {
+  echo "udp://open.demonii.com:1337/announce # shut down" | sanitize > "${OUT}"
+  run grep "^udp://open.demonii.com:1337/announce$" "${OUT}"
+  [ "${status}" -eq 0 ]
+}
+
+@test "pure comment lines are ignored" {
+  echo "# Just a comment" | sanitize > "${OUT}"
+  [ ! -s "${OUT}" ]
 }
 
 @test "announce+ garbage entries are dropped" {

@@ -201,6 +201,7 @@ sanitize_stream() {
   tr ',' '\n' | \
   LC_ALL=C sed 's/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]//g' | \
   sed 's/<[^>]*>//g' | \
+  sed 's/[[:space:]]*#.*$//' | \
   sed 's/^[[:space:]]*//; s/[[:space:]]*$//' | \
   grep -iE '^(udp|https?|wss?)://[^[:space:]]+$' | \
   grep -vE '://.*://' | \
@@ -308,11 +309,11 @@ if [ "${PREV_COUNT}" -gt 0 ]; then
   fi
 fi
 
-# ── Write output files (blank-line separated, aria2 friendly) ──
+# ── Write output files (clean single-line output for modern BitTorrent clients) ──
 format_output() {
   local src="$1" dst="$2"
   if [ -s "${src}" ]; then
-    awk 'NR>1{print ""} {print}' "${src}" > "${dst}"
+    cat "${src}" > "${dst}"
   else
     : > "${dst}"
   fi
@@ -322,7 +323,14 @@ format_output "${WORK_DIR}/udp.txt"    "${OUTPUT_DIR}/udp.txt"
 format_output "${WORK_DIR}/https.txt"  "${OUTPUT_DIR}/https.txt"
 format_output "${WORK_DIR}/http.txt"   "${OUTPUT_DIR}/http.txt"
 format_output "${WORK_DIR}/ws.txt"     "${OUTPUT_DIR}/ws.txt"
-paste -sd ',' "${WORK_DIR}/sorted.txt" > "${OUTPUT_DIR}/all_trackers_comma.txt" 2> /dev/null || : > "${OUTPUT_DIR}/all_trackers_comma.txt"
+
+# Dedicated formats: aria2 (comma-separated) and tier (double-spaced)
+paste -sd ',' "${WORK_DIR}/sorted.txt" > "${OUTPUT_DIR}/all_trackers_aria2.txt" 2> /dev/null || : > "${OUTPUT_DIR}/all_trackers_aria2.txt"
+cp "${OUTPUT_DIR}/all_trackers_aria2.txt" "${OUTPUT_DIR}/all_trackers_comma.txt"
+
+# Tier-separated format (double-spaced, blank line between trackers for tier-based load balancing)
+awk 'NR>1{print ""} {print}' "${WORK_DIR}/sorted.txt" > "${OUTPUT_DIR}/all_trackers_tier.txt"
+
 # Keep the legacy trackers.txt in sync (users may hotlink it)
 cp "${OUTPUT_DIR}/all_trackers.txt" "${OUTPUT_DIR}/trackers.txt"
 
