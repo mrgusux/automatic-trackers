@@ -43,7 +43,7 @@ export default function HomePage() {
               <span className="text-[11px] font-mono text-slate-400 ml-2 font-medium">aria2 & curl quickstart</span>
             </div>
             <CopyButton
-              text="aria2c --bt-tracker='$(curl -s https://trackers.veloroute.dev/api/v1/trackers?format=txt | paste -sd, -)'"
+              text="aria2c --bt-tracker='$(curl -s https://automatic-trackers.vercel.app/api/v1/trackers?format=txt | paste -sd, -)'"
               label="Copy"
             />
           </div>

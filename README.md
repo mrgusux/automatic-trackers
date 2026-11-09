@@ -5,13 +5,19 @@
 
   **A frequently updated, automatically sanitized, blacklist-filtered list of BitTorrent Trackers — rebuilt every 6 hours from 95+ community sources.**
 
+  [![Live Website](https://img.shields.io/badge/Live%20Website-automatic--trackers.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://automatic-trackers.vercel.app)
+
+  <br/>
+
   [![Update Trackers](https://github.com/mrgusux/automatic-trackers/actions/workflows/update-trackers.yml/badge.svg)](https://github.com/mrgusux/automatic-trackers/actions/workflows/update-trackers.yml)
   [![Tests](https://github.com/mrgusux/automatic-trackers/actions/workflows/test.yml/badge.svg)](https://github.com/mrgusux/automatic-trackers/actions/workflows/test.yml)
   [![Security Scorecard](https://api.securityscorecards.dev/projects/github.com/mrgusux/automatic-trackers/badge)](https://securityscorecards.dev/viewer/?uri=github.com/mrgusux/automatic-trackers)
-  [![Trackers Status](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/api/badge.json&label=Active%20Trackers&color=brightgreen)](https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/all_trackers.txt)
+  [![Active Trackers](https://automatic-trackers.vercel.app/api/badge/trackers.svg)](https://automatic-trackers.vercel.app)
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-  [Read the Documentation](https://mrgusux.github.io/automatic-trackers) • [Report a Bug](../../issues/new?template=bug_report.yml) • [Request a Feature](../../issues/new?template=feature_request.yml) • [Discussions](../../discussions)
+  <br/>
+
+  [🌐 Live Web Portal](https://automatic-trackers.vercel.app) • [Read the Documentation](https://mrgusux.github.io/automatic-trackers) • [Report a Bug](https://github.com/mrgusux/automatic-trackers/issues/new?template=bug_report.yml) • [Request a Feature](https://github.com/mrgusux/automatic-trackers/issues/new?template=feature_request.yml) • [Discussions](https://github.com/mrgusux/automatic-trackers/discussions)
 </div>
 
 ---
@@ -21,7 +27,7 @@
 Finding reliable and active BitTorrent trackers is a hassle: public lists are often stale, duplicated, or polluted with dead and malicious trackers. This repository solves that with a fully automated GitHub Actions pipeline that fetches, sanitizes, blacklist-filters, and publishes fresh tracker lists — with zero human intervention.
 
 - **⏱️ Always Fresh:** Lists are rebuilt **every 6 hours** from 95+ sources ([full list](SOURCES.md)).
-- **🚫 Blacklist-Filtered:** Known-bad trackers (dead, malicious, flooded) are actively **excluded** via [`blacklist.txt`](blacklist.txt), built from dedicated blocklist sources.
+- **🚫 Blacklist-Filtered:** Restored and strictly enforced blacklist filtering with **391 blocklist entries** in [`blacklist.txt`](blacklist.txt), actively purging **241+ dead, malicious, and flooded trackers** from every production build.
 - **🛡️ Deeply Sanitized:** A multi-stage pipeline strips junk, normalizes URLs, removes duplicates, and drops private/localhost/reserved hosts.
 - **💥 Crash-Safe:** Built-in guards abort any update where sources mass-fail, so the published lists are never wiped by a bad run.
 - **🔌 API Ready:** Developer-friendly JSON endpoints for seamless app integration.
@@ -109,6 +115,7 @@ Building an app or tool? Pure JSON outputs are updated alongside the raw lists:
 | [`/api/trackers.json`](https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/api/trackers.json) | Complete tracker list as a JSON array + metadata |
 | [`/api/stats.json`](https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/api/stats.json) | Protocol breakdown, success rate, blacklist removals |
 | [`/api/badge.json`](https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/api/badge.json) | [Shields.io endpoint](https://shields.io/badges/endpoint-badge) for dynamic badges |
+| [`/api/badge/trackers.svg`](https://automatic-trackers.vercel.app/api/badge/trackers.svg) | Live dynamic SVG badge hosted on Vercel |
 
 Example — extract all UDP trackers with `jq`:
 
@@ -117,18 +124,51 @@ curl -fsSL https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/api
   | jq -r '.trackers[] | select(startswith("udp://"))'
 ```
 
-Embed the live tracker-count badge in your own project:
+### 🏷️ Dynamic SVG Badge
+
+Embed the live tracker-count badge directly into your README or documentation:
 
 ```markdown
-![Trackers](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/api/badge.json)
+![Active Trackers](https://automatic-trackers.vercel.app/api/badge/trackers.svg)
 ```
+
+With custom label & color:
+
+```markdown
+![Trackers](https://automatic-trackers.vercel.app/api/badge/trackers.svg?label=swarms&color=8b5cf6)
+```
+
+---
+
+## 🌐 Next.js 16 Web Portal & Tracker Studio
+
+Explore, test, and customize BitTorrent tracker lists in real-time on our interactive web portal deployed on Vercel:
+
+[![Live Website](https://img.shields.io/badge/Live%20Website-automatic--trackers.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://automatic-trackers.vercel.app)
+
+- **Live URL**: [https://automatic-trackers.vercel.app](https://automatic-trackers.vercel.app)
+- **Tracker Studio**: Instant 1-click format switcher:
+  - **qBittorrent (Tiered)**: Double newline-separated (`\n\n`) format for tier balancing.
+  - **aria2 CLI**: Instant `--bt-tracker="url1,url2,..."` format for terminal downloads.
+  - **Comma-Separated**: Single-line comma-delimited output (`all_trackers_comma.txt`).
+  - **Clean 1-per-line**: Plain list for scripts and automation.
+- **Real-Time Dynamic SVG Badges**: Embed live badge `https://automatic-trackers.vercel.app/api/badge/trackers.svg` in any GitHub repo or documentation.
+- **Live Search & Protocol Filtering**: Filter over 1,200 active trackers across UDP (BEP 15), HTTPS (BEP 03), HTTP (BEP 03), and WebSocket (BEP 48).
+- **Cryptographic Verifier**: Verify `SHA256SUMS.txt` hashes directly in the browser.
+- **Vercel Edge REST API**: Query live tracker lists on the fly:
+  - `GET https://automatic-trackers.vercel.app/api/v1/trackers?protocol=udp`
+  - `GET https://automatic-trackers.vercel.app/api/v1/trackers?format=aria2`
+  - `GET https://automatic-trackers.vercel.app/api/v1/trackers?format=tier`
+  - `GET https://automatic-trackers.vercel.app/api/v1/trackers?format=txt`
+
+---
 
 ## 🔄 Update Schedule & Manual Trigger
 
 | Trigger | Schedule | Details |
 |---------|----------|---------|
 | **Automated** | Every 6 hours (00:00, 06:00, 12:00, 18:00 UTC) | Cron: `0 */6 * * *` |
-| **Manual** | On-demand | [Actions → Update Trackers → Run workflow](../../actions/workflows/update-trackers.yml) (supports `force_fetch` and `debug_mode` options) |
+| **Manual** | On-demand | [Actions → Update Trackers → Run workflow](https://github.com/mrgusux/automatic-trackers/actions/workflows/update-trackers.yml) (supports `force_fetch` and `debug_mode` options) |
 
 Each run:
 - ✅ Fetches from **95+ reputable sources** in parallel (with retries + cached fallback)
@@ -208,7 +248,7 @@ curl -fsSLO https://raw.githubusercontent.com/mrgusux/automatic-trackers/main/SH
 sha256sum --check --ignore-missing SHA256SUMS.txt
 ```
 
-**Signatures** — every [release](../../releases) asset is keyless-signed with [Sigstore Cosign](https://docs.sigstore.dev/):
+**Signatures** — every [release](https://github.com/mrgusux/automatic-trackers/releases) asset is keyless-signed with [Sigstore Cosign](https://docs.sigstore.dev/):
 
 ```bash
 cosign verify-blob \
@@ -265,9 +305,9 @@ automatic-trackers/
 
 Contributions make the open source community an amazing place to learn, inspire, and create. Any contribution is **greatly appreciated** — you don't even need to write code:
 
-- 🌐 **Propose a tracker source** → [Feature Request](../../issues/new?template=feature_request.yml) (good source = public, plain-text, actively maintained)
-- 🐛 **Report a bug** → [Bug Report](../../issues/new?template=bug_report.yml)
-- 💡 **Share an idea** → [Discussions](../../discussions)
+- 🌐 **Propose a tracker source** → [Feature Request](https://github.com/mrgusux/automatic-trackers/issues/new?template=feature_request.yml) (good source = public, plain-text, actively maintained)
+- 🐛 **Report a bug** → [Bug Report](https://github.com/mrgusux/automatic-trackers/issues/new?template=bug_report.yml)
+- 💡 **Share an idea** → [Discussions](https://github.com/mrgusux/automatic-trackers/discussions)
 
 For code contributions:
 

@@ -16,7 +16,7 @@ export function BadgePreview() {
   }, []);
 
   const badgePath = `/api/badge/trackers.svg?label=${encodeURIComponent(badgeLabel)}&color=${badgeColor.replace("#", "")}`;
-  const fullBadgeUrl = origin ? `${origin}${badgePath}` : `https://trackers.veloroute.dev${badgePath}`;
+  const fullBadgeUrl = origin ? `${origin}${badgePath}` : `https://automatic-trackers.vercel.app${badgePath}`;
   const markdownCode = `![Trackers](${fullBadgeUrl})`;
   const htmlCode = `<img src="${fullBadgeUrl}" alt="Active Trackers Badge" />`;
 

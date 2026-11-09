@@ -45,7 +45,7 @@ export function Footer() {
           <div className="flex items-center gap-4">
             <a href="/api/v1/trackers" className="hover:text-violet-400 transition-colors">API</a>
             <a href="/api/badge/trackers.svg" className="hover:text-violet-400 transition-colors">Live SVG Badge</a>
-            <a href="https://github.com/mrguseynov/automatic-trackers" className="hover:text-violet-400 transition-colors">GitHub</a>
+            <a href="https://github.com/mrgusux/automatic-trackers" className="hover:text-violet-400 transition-colors">GitHub</a>
           </div>
         </div>
       </div>
