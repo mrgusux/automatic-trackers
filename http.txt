@@ -108,6 +108,8 @@ http://210.244.71.25:6969/announce
 http://210.244.71.26:6969/announce
 http://211.20.122.47:6969/announce
 http://211.22.29.93/announce
+http://211.75.205.187:80/announce
+http://211.75.205.188:6969/announce
 http://211.75.205.188:80/announce
 http://211.75.210.221:6969/announce
 http://211.75.29.254:6969/announce
