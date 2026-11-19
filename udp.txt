@@ -10,6 +10,7 @@ udp://109.201.134.183:80/announce
 udp://11.rarbg.com:80/announce
 udp://114.55.113.60:6969/announce
 udp://119.28.71.45:8080/announce
+udp://123.245.62.62:6969/announce
 udp://128.199.70.66:5944/announce
 udp://135.125.106.92:6969/announce
 udp://135.125.198.235:1984/announce
@@ -33,10 +34,12 @@ udp://172.105.235.127:6969/announce
 udp://173.249.201.201:6969/announce
 udp://176.31.250.174:6969/announce
 udp://177.112.215.133:6969/announce
+udp://177.172.66.244:6969/announce
 udp://178.170.48.154:1337/announce
 udp://178.239.19.29:80/announce
 udp://178.33.73.26:2710/announce
 udp://182.176.139.129:6969/announce
+udp://184.174.97.26:6969/announce
 udp://185.102.219.163:6969/announce
 udp://185.121.168.96:1337/announce
 udp://185.181.60.155:80/announce
@@ -47,11 +50,13 @@ udp://185.44.82.25:1337/announce
 udp://185.5.97.139:8089/announce
 udp://185.86.149.205:1337/announce
 udp://188.165.253.109:1337/announce
+udp://190.22.55.78:1337/announce
 udp://191.101.229.236:1337/announce
 udp://192.95.46.115:6969/announce
 udp://192.99.100.68:6969/announce
 udp://193.37.214.12:6969/announce
 udp://194.106.216.222:80/announce
+udp://194.169.160.46:1212/announce
 udp://194.38.21.77:6969/announce
 udp://195.123.209.37:1337/announce
 udp://195.123.209.40:80/announce
@@ -60,8 +65,12 @@ udp://1c.premierzal.ru:6969/announce
 udp://207.241.226.111:6969/announce
 udp://207.241.231.226:6969/announce
 udp://208.67.16.113:8000/announce
+udp://208.83.20.20:6969/announce
 udp://209.126.11.233:6969/announce
+udp://209.141.59.25:6969/announce
 udp://211.75.205.187:6969/announce
+udp://211.75.205.188:80/announce
+udp://211.75.210.221:6969/announce
 udp://211.75.210.221:80/announce
 udp://211.75.29.254:6969/announce
 udp://212.42.38.197:6969/announce
@@ -70,6 +79,7 @@ udp://217.30.10.77:6969/announce
 udp://23.137.251.45:6969/announce
 udp://23.157.120.14:6969/announce
 udp://23.94.174.203:1337/announce
+udp://31.56.179.159:6969/announce
 udp://31.59.141.120:6969/announce
 udp://34.66.57.33:1337/announce
 udp://34.66.57.33:80/announce
@@ -80,8 +90,10 @@ udp://37.59.48.81:6969/announce
 udp://38.180.157.12:2715/announce
 udp://43.250.54.126:6969/announce
 udp://45.137.199.107:6969/announce
+udp://45.38.170.167:6969/announce
 udp://45.9.60.30:6969/announce
 udp://46.138.242.240:6969/announce
+udp://46.188.15.49:6969/announce
 udp://46.4.109.148:6969/announce
 udp://47.76.201.250:6969/announce
 udp://47.ip-51-68-199.eu:6969/announce
@@ -100,6 +112,7 @@ udp://51.81.222.188:6969/announce
 udp://52.211.139.85:27022/announce
 udp://52.58.128.163:6969/announce
 udp://6.pocketnet.app:6969/announce
+udp://60.172.236.18:6969/announce
 udp://62.138.0.158:6969/announce
 udp://62.212.85.66:2710/announce
 udp://65.109.28.17:6969/announce
@@ -109,6 +122,8 @@ udp://74.119.149.136:6969/announce
 udp://74.82.52.209:6969/announce
 udp://82.65.115.10:6969/announce
 udp://83.102.180.21:80/announce
+udp://85.121.148.217:2710/announce
+udp://85.159.231.214:1212/announce
 udp://85.17.19.180:80/announce
 udp://88.80.28.7:6969/announce
 udp://88.99.2.212:6969/announce
@@ -267,6 +282,8 @@ udp://static.54.161.216.95.clients.your-server.de:6969/announce
 udp://su-data.com:6969/announce
 udp://t.overflow.biz:6969/announce
 udp://t.zerg.pw:6969/announce
+udp://t1.itrus.su:1212/announce
+udp://t2.itrus.su:1212/announce
 udp://tamas3.ynh.fr:6969/announce
 udp://thagoat.rocks:6969/announce
 udp://theodoric.fr:6969/announce
@@ -291,6 +308,7 @@ udp://tracker.004430.xyz:1337/announce
 udp://tracker.0x.tf:6969/announce
 udp://tracker.0x7c0.com:6969/announce
 udp://tracker.1h.is:1337/announce
+udp://tracker.23794.top:6969/announce
 udp://tracker.4.babico.name.tr:3131/announce
 udp://tracker.aletorrenty.pl:2710/announce
 udp://tracker.alt.cx:6969/announce

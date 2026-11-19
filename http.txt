@@ -68,6 +68,7 @@ http://171.104.226.31:6969/announce
 http://171.104.226.87:6969/announce
 http://173.254.204.71:1096/announce
 http://177.112.215.133:6969/announce
+http://177.172.66.244:6969/announce
 http://178.175.143.27/announce
 http://178.33.73.26:2710/announce
 http://179.100.24.134:6969/announce
@@ -89,6 +90,7 @@ http://187.57.14.62:6969/announce
 http://188.165.253.109:1337/announce
 http://189.0.196.51:6969/announce
 http://189.110.233.96:6969/announce
+http://190.22.55.78:1337/announce
 http://192.3.165.191:6969/announce
 http://192.9.228.30:6699/announce
 http://193.37.214.12:6969/announce
@@ -111,6 +113,8 @@ http://211.20.122.47:6969/announce
 http://211.22.29.93/announce
 http://211.75.205.187:6969/announce
 http://211.75.205.188:6969/announce
+http://211.75.205.188:80/announce
+http://211.75.210.221:6969/announce
 http://211.75.210.221:80/announce
 http://211.75.29.254:6969/announce
 http://212.6.3.67/announce
@@ -150,6 +154,7 @@ http://45.63.111.135:6961/announce
 http://45.63.111.135:8080/announce
 http://45.67.35.111:6969/announce
 http://46.17.46.112:8080/announce
+http://46.188.15.49:6969/announce
 http://46.231.241.43:6969/announce
 http://46.4.109.148:6969/announce
 http://47.243.23.189:6969/announce
@@ -351,6 +356,7 @@ http://opentracker.acgnx.se/announce
 http://opentracker.i2p.rocks:6969/announce
 http://opentracker.io/announce
 http://opentracker.io:80/announce
+http://opentracker.lain.moscow:6969/announce
 http://opentracker.xyz/announce
 http://opentracker.xyz:80/announce
 http://p4p.arenabg.ch:1337/announce
@@ -503,6 +509,7 @@ http://tracker.noobsubs.net:80/announce
 http://tracker.novaopcj.eu.org:6969/announce
 http://tracker.nucozer-tracker.ml:2710/announce
 http://tracker.nyacat.pw:7000/announce.php
+http://tracker.okade.pro:1337/announce
 http://tracker.openbittorrent.com/announce
 http://tracker.openbittorrent.com:80/announce
 http://tracker.openbittorrrent.com/announce
