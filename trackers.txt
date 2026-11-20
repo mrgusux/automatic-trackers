@@ -14,6 +14,7 @@ udp://123.245.62.62:6969/announce
 udp://128.199.70.66:5944/announce
 udp://135.125.106.92:6969/announce
 udp://135.125.198.235:1984/announce
+udp://143.20.154.228:42069/announce
 udp://143.20.154.229:42069/announce
 udp://144.91.88.22:6969/announce
 udp://148.251.53.72:6969/announce
@@ -46,7 +47,9 @@ udp://185.230.4.150:1337/announce
 udp://185.44.82.25:1337/announce
 udp://185.5.97.139:8089/announce
 udp://185.86.149.205:1337/announce
+udp://185.87.45.163:6969/announce
 udp://188.165.253.109:1337/announce
+udp://190.22.49.98:1337/announce
 udp://190.22.55.78:1337/announce
 udp://191.101.229.236:1337/announce
 udp://192.95.46.115:6969/announce
@@ -65,6 +68,7 @@ udp://208.67.16.113:8000/announce
 udp://209.126.11.233:6969/announce
 udp://209.141.59.25:6969/announce
 udp://211.75.205.187:6969/announce
+udp://211.75.205.188:6969/announce
 udp://211.75.205.188:80/announce
 udp://211.75.29.254:6969/announce
 udp://212.42.38.197:6969/announce
@@ -81,6 +85,7 @@ udp://37.187.111.136:6969/announce
 udp://37.187.95.112:6969/announce
 udp://37.19.5.155:2710/announce
 udp://37.59.48.81:6969/announce
+udp://38.180.157.12:2715/announce
 udp://43.250.54.126:6969/announce
 udp://45.137.199.107:6969/announce
 udp://45.38.170.167:6969/announce
@@ -372,6 +377,7 @@ udp://tracker.qu.ax:6969/announce
 udp://tracker.riverarmy.xyz:6969/announce
 udp://tracker.sela.st:6969/announce
 udp://tracker.sktorrent.net:6969/announce
+udp://tracker.skynetcloud.site:6969/announce
 udp://tracker.skyts.net:6969/announce
 udp://tracker.srv00.com:6969/announce
 udp://tracker.swateam.org.uk:2710/announce
@@ -686,6 +692,7 @@ http://116.9.207.164:6969/announce
 http://116.9.207.198:6969/announce
 http://116.9.207.226:6969/announce
 http://119.28.71.45:8080/announce
+http://123.245.62.58:6969/announce
 http://123.245.62.62:6969/announce
 http://125.227.35.196:6969/announce
 http://128.199.70.66:5944/announce
@@ -755,6 +762,7 @@ http://187.57.14.62:6969/announce
 http://188.165.253.109:1337/announce
 http://189.0.196.51:6969/announce
 http://189.110.233.96:6969/announce
+http://190.22.49.98:1337/announce
 http://190.22.55.78:1337/announce
 http://192.3.165.191:6969/announce
 http://192.9.228.30:6699/announce
@@ -777,6 +785,7 @@ http://210.244.71.26:6969/announce
 http://211.20.122.47:6969/announce
 http://211.22.29.93/announce
 http://211.75.205.187:6969/announce
+http://211.75.205.188:6969/announce
 http://211.75.205.188:80/announce
 http://211.75.29.254:6969/announce
 http://212.6.3.67/announce
@@ -1275,3 +1284,4 @@ wss://tracker.magnetoo.io/announce
 wss://tracker.openwebtorrent.com/announce
 wss://tracker.openwebtorrent.com:443
 wss://tracker.openwebtorrent.com:443/announce
+wss://tracker.webtorrent.dev:443
