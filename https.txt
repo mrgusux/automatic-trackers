@@ -2,7 +2,6 @@ https://004430.xyz/announce
 https://004430.xyz:443/announce
 https://021912.xyz:443/announce
 https://1.tracker.eu.org:443/announce
-https://104.28.17.69/announce
 https://1337.abcvg.info/announce
 https://337hhh.xyz/announce
 https://aaa.army:8866/announce
