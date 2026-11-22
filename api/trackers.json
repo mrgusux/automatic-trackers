@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-11-22T06:17:57+00:00",
-  "total": 1280,
+  "generated": "2026-11-22T19:23:53+00:00",
+  "total": 1281,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://103.27.158.117:1914/announce",
@@ -1282,6 +1282,7 @@
     "wss://tracker.magnetoo.io/announce",
     "wss://tracker.openwebtorrent.com/announce",
     "wss://tracker.openwebtorrent.com:443",
-    "wss://tracker.openwebtorrent.com:443/announce"
+    "wss://tracker.openwebtorrent.com:443/announce",
+    "wss://tracker.webtorrent.dev:443"
   ]
 }
