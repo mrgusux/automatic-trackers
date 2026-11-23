@@ -1,14 +1,14 @@
 {
   "version": "1.1",
-  "updated_at": "2026-11-22T19:23:53+00:00",
-  "total": 1281,
+  "updated_at": "2026-11-23T07:09:20+00:00",
+  "total": 1286,
   "sources": 44,
   "success_rate": "100.00%",
   "blacklist_removed": 230,
   "protocols": {
-    "udp": 436,
+    "udp": 439,
     "https": 232,
-    "http": 602,
+    "http": 604,
     "ws": 11
   }
 }
