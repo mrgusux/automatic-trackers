@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-11-25T08:03:42+00:00",
-  "total": 1285,
+  "generated": "2026-11-25T21:30:47+00:00",
+  "total": 1286,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://103.27.158.117:1914/announce",
@@ -483,6 +483,7 @@
     "https://k.avc.cx/announce.php",
     "https://k.avc.cx:443/announce.php",
     "https://k3tracker.cc/announce/0b0b5b2bb71770aa0df56f80a4863f07",
+    "https://lattice.peerrelay.workers.dev:443/announce",
     "https://open.ftorrent.com:443/announce",
     "https://open.kickasstracker.com/announce",
     "https://open.kickasstracker.com:443/announce",
