@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "generated": "2026-11-26T07:54:34+00:00",
-  "total": 1289,
+  "generated": "2026-11-26T21:18:36+00:00",
+  "total": 1288,
   "trackers": [
     "udp://103.122.21.50:6969/announce",
     "udp://103.27.158.117:1914/announce",
@@ -311,7 +311,6 @@
     "udp://tracker.0x.tf:6969/announce",
     "udp://tracker.0x7c0.com:6969/announce",
     "udp://tracker.1h.is:1337/announce",
-    "udp://tracker.23794.top:6969/announce",
     "udp://tracker.4.babico.name.tr:3131/announce",
     "udp://tracker.aletorrenty.pl:2710/announce",
     "udp://tracker.alt.cx:6969/announce",

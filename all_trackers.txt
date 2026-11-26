@@ -306,7 +306,6 @@ udp://tracker.004430.xyz:1337/announce
 udp://tracker.0x.tf:6969/announce
 udp://tracker.0x7c0.com:6969/announce
 udp://tracker.1h.is:1337/announce
-udp://tracker.23794.top:6969/announce
 udp://tracker.4.babico.name.tr:3131/announce
 udp://tracker.aletorrenty.pl:2710/announce
 udp://tracker.alt.cx:6969/announce
